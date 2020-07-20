@@ -1,0 +1,9 @@
+NAME		= opt-lifemapper-cherrypy
+VERSION		= 17.4.2
+ARCHIVENAME = CherryPy
+RELEASE		= 1
+TARBALL_POSTFIX	= tar.gz
+
+RPM.FILES	= $(PYTHON36_PACKAGES)/*
+
+# TODO: update

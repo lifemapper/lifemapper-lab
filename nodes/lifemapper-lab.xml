@@ -1,0 +1,91 @@
+<?xml version="1.0" standalone="no"?>
+
+<kickstart>
+
+
+    <description>
+    Lifemapper-lab roll 
+    Install on the frontend ONLY of the lmlab cluster. 
+    </description>
+
+    <copyright>
+    Copyright (c) 2000 - 2012 The Regents of the University of California.
+    All rights reserved. Rocks(r) v5.5/v6.0 www.rocksclusters.org
+    
+    </copyright>
+
+    <changelog>
+    $Log$
+    </changelog>
+
+    <package>screen</package>
+
+    <package>opt-lifemapper-mod_wsgi</package>
+    
+    <!-- for cherrypy -->
+    <package>opt-lifemapper-backports.functools_lru_cache</package>
+    <package>opt-lifemapper-cheroot</package>
+    <package>opt-lifemapper-cherrypy</package>
+    <package>opt-lifemapper-contextlib2</package>
+    <package>opt-lifemapper-jaraco.functools</package>
+    <package>opt-lifemapper-more-itertools</package>
+    <package>opt-lifemapper-portend</package>
+    <package>opt-lifemapper-pytz</package>
+    <package>opt-lifemapper-six</package>
+    <package>opt-lifemapper-tempora</package>
+    <package>opt-lifemapper-zc.lockfile</package>
+
+    <!-- lifemapper distro -->
+    <package>roll-lifemapper-lab-kickstart</package>
+    <package>roll-lifemapper-lab-usersguide</package>
+
+<post>
+
+ID=`/bin/egrep -i "^lmwriter" /etc/group`
+if [ "$ID" == "" ] ; then
+    # adding lmwriter user with group
+    /usr/sbin/useradd -c "Lifemapper user" lmwriter
+else
+    # adding lmwriter user, group already exists
+    /usr/sbin/useradd -c "Lifemapper user" -g lmwriter lmwriter
+fi
+
+/usr/bin/systemctl restart autofs.service
+/opt/rocks/bin/rocks sync users
+/opt/rocks/bin/rocks run host compute "/usr/bin/systemctl restart autofs.service"
+
+/bin/mkdir -p /var/www/tmp
+/bin/chown apache:apache /var/www/tmp
+
+# for writing web logs
+/usr/sbin/usermod -G lmwriter apache
+
+
+# FE directory NOT exported to /share, for web logs, uploads, cherrypy sessions
+/bin/mkdir -p          /state/partition1/lmscratch/log/apache
+/bin/mkdir -p          /state/partition1/lmscratch/sessions
+/bin/mkdir -p          /state/partition1/lmscratch/tmpUpload
+/bin/chgrp -R lmwriter /state/partition1/lmscratch
+/bin/chmod -R g+ws     /state/partition1/lmscratch
+
+
+/usr/bin/systemctl restart autofs.service
+/opt/rocks/bin/rocks sync users
+/opt/rocks/bin/rocks run host compute "/usr/bin/systemctl restart autofs.service"
+
+# FE directory exported to /share
+/bin/mkdir -p /state/partition1/lmlab
+/bin/mkdir -p /state/partition1/lmlab/data
+/bin/chgrp -R lmwriter /state/partition1/lmlab
+/bin/chmod -R g+ws     /state/partition1/lmlab
+
+/usr/bin/systemctl restart httpd.service
+
+# Mounts /export/lmlab to /share/lmlab
+<file name="/etc/auto.share" mode="append">
+lm &Kickstart_PrivateHostname;:/export/&amp;
+</file>
+
+</post>
+
+</kickstart>

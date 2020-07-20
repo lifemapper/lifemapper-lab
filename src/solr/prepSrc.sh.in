@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Purpose: Fetch Solr source  
+
+# SRC_URL="http://apache.mirrors.tds.net/lucene/solr/8.1.1/solr-8.1.1-src.tgz"
+# JTS_URL="https://sourceforge.net/projects/jts-topo-suite/files/jts/1.8/"
+# JTS_URL="http://central.maven.org/maven2/org/locationtech/jts/jts-core/1.15.0/"
+
+SRC_URL=http://archive.apache.org/dist/lucene/@ARCHIVENAME@/@VERSION@
+SRC_PKG=@ARCHIVENAME@-@VERSION@.@TARBALL_POSTFIX@
+SRC_SHA=@ARCHIVENAME@-@VERSION@.@TARBALL_POSTFIX@.sha512
+
+get_source_file () {
+  echo "Fetch @ARCHIVENAME@ code"
+  wget "$SRC_URL/$SRC_PKG" 
+}
+
+check_source_file() {
+  echo "Check downloaded @ARCHIVENAME@ code"
+  wget "$SRC_URL/$SRC_SHA" 
+  
+  IS_OK=`/usr/bin/sha512sum -c $SRC_SHA | awk '{print $2}'`
+  if [ $IS_OK = 'OK' ]; then
+  	 echo "$SRC_PKG is verified."
+  else
+  	 echo "$SRC_PKG sha512 sum does not match, do NOT proceed."
+  fi
+}
+
+### main ###
+get_source_file
+check_source_file

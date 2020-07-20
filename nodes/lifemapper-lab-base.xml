@@ -1,0 +1,102 @@
+<?xml version="1.0" standalone="no"?>
+
+<kickstart>
+
+
+    <description>
+    Lifemapper-lab roll 
+    Install on the frontend and compute nodes of the lmlab cluster  
+    </description>
+
+    <copyright>
+    Copyright (c) 2000 - 2012 The Regents of the University of California.
+    All rights reserved. Rocks(r) v5.5/v6.0 www.rocksclusters.org
+    
+    </copyright>
+
+    <changelog>
+    $Log$
+    </changelog>
+
+    <!-- java for nodes -->
+    <package>copy-jdk-configs</package>
+    <package>java-1.8.0-openjdk-headless</package>
+    <package>javapackages-tools</package>
+    <package>lksctp-tools</package>
+    <package>pcsc-lite-libs</package>
+    <package>python-lxml</package>
+    <package>python-ipaddress</package>
+    <package>python-javapackages</package>
+    <package>python-urllib3</package>
+    <package>tzdata-java</package>
+    
+    <!-- lifemapper dependencies built from source -->
+    <package>lifemapper-solr</package>
+
+    <!-- for requests -->
+    <package>opt-lifemapper-certifi</package>
+    <package>opt-lifemapper-chardet</package>
+    <package>opt-lifemapper-idna</package>
+    <package>opt-lifemapper-requests</package>
+    <package>opt-lifemapper-urllib3</package>
+
+    <package>rocks-lmlab</package>
+
+
+<post>
+
+/sbin/ldconfig
+
+# set up lmwriter user
+ID=`/bin/egrep -i "^lmwriter" /etc/group`
+if [ "$ID" == "" ] ; then
+    # adding lmwriter user
+    /usr/sbin/useradd -c "Lifemapper user" lmwriter
+else
+    # adding lmwriter user, group already exists (from lifemapper-compute roll)
+    /usr/sbin/useradd -c "Lifemapper user" -g lmwriter lmwriter
+fi
+
+# set up solr user
+ID=`/bin/egrep -i "^solr" /etc/group`
+if [ "$ID" == "" ] ; then
+    # adding solr user
+    /usr/sbin/useradd -c "Solr user" solr
+fi
+
+# Sync users on Frontend
+HN=`eval hostname`
+isFE=`rocks list host $HN | grep Frontend | wc -l`
+if [ $isFE = 1 ]; then
+    echo "Executing lifemapper-lab-base on FE" | tee -a $LOG
+    /opt/rocks/bin/rocks sync users
+else  
+    echo "Executing lifemapper-compute-base on node" | tee -a $LOG
+fi    
+
+</post>
+
+<post>
+
+# Node directory NOT shared from frontend
+/bin/mkdir -p /state/partition1/lmscratch/.java/.systemPrefs
+/bin/mkdir -p /state/partition1/lmscratch/.java/.userPrefs
+/bin/mkdir -p /state/partition1/lmscratch/log
+/bin/mkdir -p /state/partition1/lmscratch/temp
+/bin/mkdir -p /state/partition1/lmscratch/test
+/bin/chgrp -R lmwriter /state/partition1/lmscratch
+/bin/chmod -R g+ws     /state/partition1/lmscratch
+
+<file name="/etc/rc.d/rocksconfig.d/post-99-lifemapper-lmcompute" perms="0700">
+#!/bin/bash
+# do LM initialization
+
+/sbin/ldconfig
+/opt/lifemapper/rocks/bin/init_lmlab
+rm -rf /etc/rc.d/rocksconfig.d/post-99-lifemapper-lab
+
+</file>
+
+</post>
+
+</kickstart>

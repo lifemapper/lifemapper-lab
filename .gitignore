@@ -1,0 +1,51 @@
+# build directory
+FOSSILS/
+RPMS/x86_64
+RPMS/noarch
+SOURCES/
+BUILD/
+SPECS/
+disk1/
+lifemapper-server-*disk1.iso
+
+_os
+_arch
+_distribution
+.rpmmacros
+bootstrap.py
+
+# ignore version* files
+rocks-version.mk
+rocks-version-common.mk
+
+# ignore python files
+python.mk
+*.pyc
+
+# ignore Rules* files
+Rules-install.mk
+Rules-linux-centos.mk
+Rules-linux.mk
+Rules-rcfiles.mk
+Rules-scripts.mk
+Rules.mk
+Rolls.mk
+roll*.mk
+
+# ignore roll files 
+roll-lifemapper-server.*
+roll-profile.mk
+
+# ignore src files
+src/lmserver/components/
+src/lmserver/*.tar.gz
+
+# ignore subversion everywhere
+src/lmserver/.subversion/
+.subversion/
+
+# ignore species data
+src/lmdata-species/*.txt
+src/lmdata-species/*.gz
+/.project
+/.pydevproject

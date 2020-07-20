@@ -1,0 +1,63 @@
+# prefork MPM
+<IfModule prefork.c>
+StartServers       3
+MinSpareServers    1
+MaxSpareServers    3
+ServerLimit       15
+MaxClients        10
+MaxRequestsPerChild  50
+</IfModule>
+
+# For lifemapper-server roll
+<VirtualHost *:80>
+
+
+# Enable MapServer debugging
+SetEnv MS_ERRORFILE "@MAPSERVER_TMP@/mapserver_error.txt"
+SetEnv MS_DEBUGLEVEL 2
+
+
+# Custom logs
+LogLevel debug
+CustomLog @LMSCRATCHDISK@/log/apache/lifemapper_access combined
+ErrorLog  @LMSCRATCHDISK@/log/apache/lifemapper_error
+
+
+# Make sure Mapserver finds projection files
+SetEnv PROJ_LIB "@LMHOME@/share/proj"
+
+
+# Root for lifemapper content
+RewriteEngine on
+
+# On KU Only: redirect any requests to (svc|yeti).lifemapper.org 
+#             to client.lifemapper.org 
+# RewriteCond %{HTTP_HOST} ^(svc|yeti)\.lifemapper\.org$
+# RewriteRule ^/(.*)$ http://client.lifemapper.org/$1 [R=301]
+## Redirect old boom page requests to new biotaphy url
+# Redirect /boom/ http://client.lifemapper.org/biotaphy/
+
+
+<Directory "@LMHOME@/LmWebServer/services/common/">
+    Require all granted
+</Directory>
+
+# LmDashboard
+Alias /dashboard "@LMHOME@/LmWebServer/public_html/lmdashboard/"
+<Directory "@LMHOME@/LmWebServer/public_html/lmdashboard">
+   Options FollowSymLinks Indexes
+   AllowOverride None
+   Require all granted
+</Directory>
+
+# Download directory
+Alias /dl "@LMHOME@/LmWebServer/public_html/dl/"
+<Directory "@LMHOME@/LmWebServer/public_html/dl">
+   Options FollowSymLinks Indexes
+   AllowOverride None
+   Require all granted
+</Directory>
+
+# Favicon.ico and robots.txt
+
+</VirtualHost>

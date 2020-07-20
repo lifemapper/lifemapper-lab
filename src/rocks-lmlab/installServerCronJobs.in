@@ -1,0 +1,61 @@
+#!/bin/bash 
+#
+# Add scripts for scheduled tasks to cron.daily, cron.hourly directories. 
+# Called by initLM.
+#
+usage () 
+{
+    echo "Usage: $0"
+    echo "This script copies maintenance scripts to the cron directories and "
+    echo "sets execute permissions."
+}
+
+### define varibles
+setDefaults () {
+    THISNAME=`/bin/basename $0`
+    gname=lmwriter
+    CRON_HOURLY_DIR=/etc/cron.hourly
+    CRON_DAILY_DIR=/etc/cron.daily
+    CRON_D_DIR=/etc/cron.d
+    LOG=@LMSCRATCHDISK@/log/$THISNAME.log
+    rm -f $LOG
+    touch $LOG
+}
+
+TimeStamp () {
+    echo $1 `/bin/date` >> $LOG
+}
+
+# remove obsolete Lifemapper cron jobs
+removeOldTasks () {
+    rm -vf  ${CRON_HOURLY_DIR}/lmserver_*
+    rm -vf  ${CRON_DAILY_DIR}/lmserver_*
+    echo "Removed old tasks in ${CRON_HOURLY_DIR} and ${CRON_DAILY_DIR} on frontend ..." | tee -a $LOG
+}
+
+# install daily cron jobs (security, cleanup, tests)
+installDailyTasks () {
+    # run daily 
+    install @LMHOME@/rocks/etc/lmserver_count_completed ${CRON_DAILY_DIR}
+    echo "Installed daily tasks to ${CRON_DAILY_DIR} ..." | tee -a $LOG
+}
+
+# install daily cron jobs (security, cleanup, tests)
+installUserTasks () {
+    # run on specified timing with specified user
+    install @LMHOME@/rocks/etc/lmserver_cycle_matt ${CRON_D_DIR}
+    echo "Installed user-specific tasks to ${CRON_D_DIR} ..." | tee -a $LOG
+}
+
+#### Main ####
+if [ $# -ne 0 ]; then
+    usage
+    exit 0
+fi 
+
+setDefaults
+TimeStamp "# Start"
+removeOldTasks
+installDailyTasks
+installUserTasks
+TimeStamp "# End"

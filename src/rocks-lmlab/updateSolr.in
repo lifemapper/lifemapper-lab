@@ -1,0 +1,49 @@
+#!/bin/bash 
+#
+
+
+usage () 
+{
+    echo "Usage: $0"
+    echo "This script re-initializes solr indexes" 
+}
+
+TimeStamp () {
+    echo $1 `/bin/date` >> $LOG
+}
+
+
+set_defaults() {
+	ROCKS_VER=`rocks list roll | grep base | awk '{print $2}'`
+	
+    THISNAME=`/bin/basename $0`
+    BIN=@PKGROOT@/rocks/bin
+    LOG=@LMSCRATCHDISK@/log/$THISNAME.log
+
+	# load opt-python
+	source /usr/share/Modules/init/bash
+	module load opt-python
+	. /etc/profile.d/lifemapper.sh
+	    
+    rm -f $LOG
+    touch $LOG
+}
+
+
+
+#### Main ####
+
+if [ $# -ne 0 ]; then
+    usage
+    exit 0
+fi 
+
+set_defaults
+TimeStamp "# Start"
+
+# uses service instead of systemctl
+/usr/sbin/service solr stop
+$BIN/solr-index
+/usr/sbin/service solr start
+
+TimeStamp "# End"
