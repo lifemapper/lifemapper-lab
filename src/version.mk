@@ -1,10 +1,11 @@
 PKGROOT			= /opt/lifemapper
 LMHOME			= /opt/lifemapper
-MAPSERVER_TMP	= /var/www/tmp
+APACHE_TMP	    = /var/www/tmp
 LMURL			= http://yeti.lifemapper.org/dl
-LMDISK          = /share/lm
-LMLABDISK          = /share/lmlab
 
+LMDISK          = /share/lm
+LMLABDISK       = /share/lmlab
+SOLRDATA        = $(LMDISK)/solr
 LMSCRATCHDISK	= /state/partition1/lmscratch
 
 PYTHONVER			= python3.6

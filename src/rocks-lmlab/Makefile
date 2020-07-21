@@ -72,13 +72,11 @@ SEDSPEC += \
         -e 's%@LMHOME@%$(LMHOME)%g' \
         -e 's%@LMDISK@%$(LMDISK)%g' \
         -e 's%@LMSCRATCHDISK@%$(LMSCRATCHDISK)%g' \
+        -e 's%@SOLRDATA@%$(SOLRDATA)%g' \
         -e 's%@PYTHONVER@%$(PYTHONVER)%g' \
         -e 's%@PYBIN@%$(PY.PATH)%g' \
         -e 's%@PYTHON36_PACKAGES@%$(PYTHON36_PACKAGES)%g' \
-        -e 's%@MYSQLDB@%$(MYSQLDB)%g' \
         -e 's%@PKGROOT@%$(PKGROOT)%g' \
-        -e 's%@UNIXSOCKET@%$(UNIXSOCKET)%g' \
-        -e 's%@DATADIR_SHARED@%$(DATADIR_SHARED)%g' \
         -e 's%@LMURL@%$(LMURL)%g' \
         -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g'
         
@@ -92,12 +90,11 @@ CONFIGS = \
 
 
 PROGS = \
-	clean-lm-lab-roll.sh \
-	init_lmlab \
-	install_lmlab_cron \
+	clean-lmlab-roll.sh \
+	init-lmlab \
+	install-lmlab-cron \
     solr-lmlab-index \
-	update_config \
-	update_lmlab
+	update-lmlab
 
 PYFILES = __init__.py
 
@@ -113,20 +110,17 @@ install::
 	mkdir -p $(ROOT)/etc/profile.d
 	install -m 755 $(PROFILES) $(ROOT)/etc/profile.d
 
-	mkdir -p $(ROOT)/etc/sysctl.d
-	install -m 644 lifemapper.postgresd $(ROOT)/etc/sysctl.d
-	
 	mkdir -p $(ROOT)/etc/httpd/conf.d
-	install -m 644 lifemapper.conf $(ROOT)/etc/httpd/conf.d
+	install -m 644 lifemapper-lab-http.conf $(ROOT)/etc/httpd/conf.d
 
 	mkdir -p $(ROOT)/etc/ld.so.conf.d
-	install -m 644 lifemapper-server.conf $(ROOT)/etc/ld.so.conf.d
+	install -m 644 lifemapper-lab-ld.conf $(ROOT)/etc/ld.so.conf.d
 	
 	mkdir -p $(ROOT)/etc/logrotate.d
 	install -m 644 lifemapper-httpd $(ROOT)/etc/logrotate.d
 	
 	mkdir -p $(ROOT)/etc/systemd/system/httpd.service.d
-	install -m 644 lifemapper_umask.conf $(ROOT)/etc/systemd/system/httpd.service.d
+	install -m 644 lifemapper-lab-umask.conf $(ROOT)/etc/systemd/system/httpd.service.d
 
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
 	install -m 755 $(PROGS) $(ROOT)/$(PKGROOT)/rocks/bin
