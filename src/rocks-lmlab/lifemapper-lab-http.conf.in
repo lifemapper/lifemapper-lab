@@ -1,0 +1,23 @@
+# Apache config
+
+# prefork MPM
+<IfModule prefork.c>
+StartServers       3
+MinSpareServers    1
+MaxSpareServers    3
+ServerLimit       15
+MaxClients        10
+MaxRequestsPerChild  50
+</IfModule>
+
+<VirtualHost *:80>
+
+# Custom logs
+LogLevel debug
+CustomLog @LMSCRATCHDISK@/log/apache/lifemapper_access combined
+ErrorLog  @LMSCRATCHDISK@/log/apache/lifemapper_error
+
+# Root for lifemapper content
+RewriteEngine on
+
+</VirtualHost>

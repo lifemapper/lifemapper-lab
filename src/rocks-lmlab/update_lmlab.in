@@ -1,0 +1,53 @@
+#!/bin/bash 
+#
+# Update @LMHOME@/config/config.lmserver.ini file with correct ip info  
+#
+
+
+usage () 
+{
+    echo "Usage: $0"
+    echo "This script runs update scripts, and is intended to be run after" 
+    echo "code and rocks-l* rpms are updated on a Lifemapper installation"
+    echo "The script runs:"
+    echo "    updateCfg which updates variables in"
+    echo "              @LMHOME@/config/config.lmserver.ini file"
+    echo "    updateDB which applies needed database updates"
+}
+
+set_defaults() {
+	# load opt-python and environment
+	source /usr/share/Modules/init/bash
+	module load opt-python
+	. /etc/profile.d/lifemapper-lmlab.sh
+	
+    THISNAME=`/bin/basename $0`
+    LOG=@LMSCRATCHDISK@/log/$THISNAME.log
+    rm -f $LOG
+    touch $LOG
+
+    BIN=@PKGROOT@/rocks/bin
+}
+
+time_stamp () {
+    echo $1 `/bin/date` >> $LOG
+}
+
+update_solr () {
+    echo "-- re-index solr" >> $LOG
+    # uses service instead of systemctl
+    /usr/sbin/service solr stop
+    $BIN/solr-index
+    /usr/sbin/service solr start
+}
+
+
+#### Main ####
+
+if [ $# -ne 0 ]; then
+    usage
+    exit 0
+fi 
+
+set_defaults
+update_solr

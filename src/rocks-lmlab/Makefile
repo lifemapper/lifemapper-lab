@@ -72,88 +72,41 @@ SEDSPEC += \
         -e 's%@LMHOME@%$(LMHOME)%g' \
         -e 's%@LMDISK@%$(LMDISK)%g' \
         -e 's%@LMSCRATCHDISK@%$(LMSCRATCHDISK)%g' \
-        -e 's%@LMSERVERDISK@%$(LMSERVERDISK)%g' \
-        -e 's%@MAPSERVER_TMP@%$(MAPSERVER_TMP)%g' \
-        -e 's%@PGSQLVER@%$(PGSQLVER)%g' \
         -e 's%@PYTHONVER@%$(PYTHONVER)%g' \
         -e 's%@PYBIN@%$(PY.PATH)%g' \
         -e 's%@PYTHON36_PACKAGES@%$(PYTHON36_PACKAGES)%g' \
         -e 's%@MYSQLDB@%$(MYSQLDB)%g' \
         -e 's%@PKGROOT@%$(PKGROOT)%g' \
         -e 's%@UNIXSOCKET@%$(UNIXSOCKET)%g' \
-        -e 's%@SCENARIO_PACKAGE@%$(SCENARIO_PACKAGE)%g' \
-        -e 's%@ENV_DATA_DIR@%$(ENV_DATA_DIR)%g' \
-        -e 's%@DATADIR_SERVER@%$(DATADIR_SERVER)%g' \
         -e 's%@DATADIR_SHARED@%$(DATADIR_SHARED)%g' \
         -e 's%@LMURL@%$(LMURL)%g' \
-        -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g' \
-        -e 's%@LMCLIENT@%$(LMCLIENT)%g' \
-        -e 's%@DASHBOARD@%$(DASHBOARD)%g' \
-        -e 's%@PUBLIC_USER@%$(PUBLIC_USER)%g' \
-        -e 's%@GRID_NAME@%$(GRID_NAME)%g' \
-        -e 's%@GRID_CELLSIZE@%$(GRID_CELLSIZE)%g' \
-        -e 's%@GRID_NUM_SIDES@%$(GRID_NUM_SIDES)%g' \
-        -e 's%@GBIF_VERSION@%$(GBIF_VERSION)%g' \
-        -e 's%@GBIF_TAXONOMY@%$(GBIF_TAXONOMY)%g' \
-        -e 's%@GBIF_OCCURRENCES@%$(GBIF_OCCURRENCES)%g' \
-        -e 's%@GBIF_PROVIDER@%$(GBIF_PROVIDER)%g' \
-        -e "s%@SPECIES_EXP_YEAR@%$(YR)%g" \
-        -e "s%@SPECIES_EXP_MONTH@%$(MO)%g" \
-        -e "s%@SPECIES_EXP_DAY@%$(DY)%g" 
+        -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g'
         
 PROFILES = \
-	lifemapper.sh \
-	lifemapper.csh 
+	lifemapper-lab.sh \
+	lifemapper-lab.csh 
 
-SCRIPTS = \
-	dbDefineTables.sql \
-	dbAddFunctions.sql \
-	dbUpdateTables.sql \
-	lifemapper.conf \
-	lifemapper-server.conf
+CONFIGS = \
+	lifemapper-lab-http.conf \
+	lifemapper-lab-ld.conf
 
-CRONS = \
-	lmserver_cycle_matt \
-	lmserver_count_completed
 
 PROGS = \
-	catalogDefaultDataInputs \
-	initWorkflow \
-	checkLibs \
-	clean-lm-server-roll.sh \
-	clearData \
-	confconst.py \
-	matt_daemon \
-	exportTaxonomyToCsv \
-	initDbserver \
-	initLM \
-	initPostgis \
-	installServerCronJobs \
-	getScenPackageForUser \
-	getBoomPackageForUser \
-	indexTaxonomySolr \
-	updateDB \
-	updateCfg \
-	updateLM \
-	updateSolr
+	clean-lm-lab-roll.sh \
+	init_lmlab \
+	install_lmlab_cron \
+    solr-index \
+	update_config \
+	update_lmlab
 
-PYFILES = __init__.py \
-	confconst.py \
-	confbase.py
-
-EXECFILES = \
-	confDbconnect \
-	confPgbouncer \
-	confPostgres \
-	confUsers 
-
+PYFILES = __init__.py
 
 %: %.in
 	$(SED) $(SEDSPEC) $^ > $@
 
 .SUFFIXES:
 
-build: $(SCRIPTS) $(PROFILES) $(CRONS) $(PROGS) $(PYFILES) $(EXECFILES) 
+build: $(CONFIGS) $(PROFILES) $(PROGS) $(PYFILES) 
 	
 install::
 
@@ -192,7 +145,7 @@ install::
 	install -m 644 roles.sql.template $(ROOT)/$(PKGROOT)/rocks/sql
 
 clean::
-	rm -rf version.mk $(SCRIPTS) $(PROFILES) $(PROGS) confconst.py
+	rm -rf version.mk $(CONFIGS) $(PROFILES) $(PROGS) confconst.py
 	rm -rf *.pyc 
 
 	

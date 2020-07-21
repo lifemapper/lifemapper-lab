@@ -8,19 +8,11 @@
 module unload opt-python
 yum install src/RPMS/screen-4.1.0-0.25.20120314git3c2946.el7.x86_64.rpm
 
-# yumdownloader --resolve --enablerepo epel cmake3
-rpm -i src/RPMS/cmake3-3.17.1-2.el7.x86_64.rpm     
-rpm -i src/RPMS/cmake3-data-3.17.1-2.el7.noarch.rpm     
-
-### do this only once for roll distro to keep known RPMS in the roll src
-#cd src/RPMS
-# yumdownloader --resolve --enablerepo base screen.x86_64
-
 # add dynamic libs
-echo "/etc/alternatives/jre/lib/amd64" > /etc/ld.so.conf.d/lifemapper-lab.conf
-echo "/etc/alternatives/jre/lib/amd64/server" >> /etc/ld.so.conf.d/lifemapper-lab.conf
-echo "/opt/lifemapper/lib" >> /etc/ld.so.conf.d/lifemapper-lab.conf
-echo "/opt/python/lib/" >> /etc/ld.so.conf.d/lifemapper-lab.conf
+echo "/etc/alternatives/jre/lib/amd64" > /etc/ld.so.conf.d/lifemapper-lab-ld.conf
+echo "/etc/alternatives/jre/lib/amd64/server" >> /etc/ld.so.conf.d/lifemapper-lab-ld.conf
+echo "/opt/lmlab/lib" >> /etc/ld.so.conf.d/lifemapper-lab-ld.conf
+echo "/opt/python/lib/" >> /etc/ld.so.conf.d/lifemapper-lab-ld.conf
 /sbin/ldconfig
 
 # pip for wheels

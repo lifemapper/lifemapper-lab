@@ -11,7 +11,7 @@ REDHAT.ROOT = $(CURDIR)/../../
 include Rules.mk
 
 EXPORTDIR=$(subst share,state/partition1,$(SOLRDATA))
-SCRIPTS = solr.txt solr solr-index
+SCRIPTS = solr.txt solr
 
 
 SEDSPEC += \
@@ -73,9 +73,6 @@ install::
    
 	mkdir -p $(ROOT)/etc/rc.d/init.d
 	$(INSTALL) -m 755 solr $(ROOT)/etc/rc.d/init.d
-
-	mkdir -p $(ROOT)/$(LMHOME)/rocks/bin
-	$(INSTALL) -m 755 solr-index  $(ROOT)/$(LMHOME)/rocks/bin
 
 clean::
 	rm -rf $(ARCHIVENAME)-$(VERSION) 
