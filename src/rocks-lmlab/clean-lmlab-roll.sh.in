@@ -168,7 +168,18 @@ del-automount-entry () {
    fi
 }
 
-check_lm_processes () {
+finish-cleanup () {
+    echo >> $LOG
+    echo "Removing roll lifemapper-lab" >> $LOG 
+    $ROCKS_CMD remove roll lifemapper-lab
+    
+    echo "Rebuilding the distro" >> $LOG
+    module unload opt-python
+    (cd /export/rocks/install; $ROCKS_CMD create distro; yum clean all)
+    echo >> $LOG
+}
+
+check-lm-processes () {
     LMUSER_PROCESSES=`ps -Alf | grep lmwriter | grep -v grep | wc -l`
     if [ $LMUSER_PROCESSES -ne 0 ]; then
         echo "Stop all lmwriter processes before running this script"
@@ -178,7 +189,7 @@ check_lm_processes () {
 
 ### main ###
 
-check_lm_processes
+check-lm-processes
 
 set_defaults
 TimeStamp "# Start"
@@ -188,7 +199,6 @@ stop-services
 del-lifemapper
 del-directories
 del-webstuff
-del-attr
 del-cron-jobs
 del-automount-entry
 
@@ -198,13 +208,6 @@ if [ $LMROLL_COUNT = 1 ]; then
 	del-shared-user-group
 fi
 
-echo
-echo "Removing roll lifemapper-server"
-$ROCKS_CMD remove roll lifemapper-server
+finish-cleanup
 
-echo "Rebuilding the distro"
-module unload opt-python
-(cd /export/rocks/install; $ROCKS_CMD create distro; yum clean all)
-
-echo
 TimeStamp "# End"
