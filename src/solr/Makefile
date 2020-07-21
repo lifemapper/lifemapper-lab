@@ -36,9 +36,6 @@ solr.txt: solr.txt.in
 solr: solr.in
 	$(SED) $(SEDSPEC) $^ > $@
 
-solr-index: solr-index.in
-	$(SED) $(SEDSPEC) $^ > $@
-
 prepSrc.sh: prepSrc.sh.in
 	$(SED) $(SEDSPEC) $^ > $@
 	chmod 755 $@

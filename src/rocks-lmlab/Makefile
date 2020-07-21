@@ -95,7 +95,7 @@ PROGS = \
 	clean-lm-lab-roll.sh \
 	init_lmlab \
 	install_lmlab_cron \
-    solr-index \
+    solr-lmlab-index \
 	update_config \
 	update_lmlab
 
