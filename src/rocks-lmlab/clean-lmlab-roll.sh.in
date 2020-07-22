@@ -12,7 +12,7 @@ ROCKS_CMD=/opt/rocks/bin/rocks
 LMUSER_COUNT=`/bin/egrep -i "^lmwriter" /etc/passwd  | wc -l`
 LMROLL_COUNT=`$ROCKS_CMD list roll | grep lifemapper | wc -l`
 LMCOMPUTE_ROLL_COUNT=`$ROCKS_CMD list roll | grep lifemapper-compute |  wc -l`
-LMSERVER_ROLL_COUNT = `$ROCKS_CMD list roll | grep lifemapper-server |  wc -l`
+LMSERVER_ROLL_COUNT=`$ROCKS_CMD list roll | grep lifemapper-server |  wc -l`
 
 TimeStamp () {
     echo $1 `/bin/date` >> $LOG
@@ -31,8 +31,8 @@ set_defaults() {
 del-lifemapper() {
    echo "Removing lifemapper-* and prerequisite RPMS" >> $LOG
    $RM lifemapper-solr-common
-   $RM rocks-lifemapper
-   $RM roll-lifemapper-server-usersguide
+   $RM rocks-lmlab
+   $RM roll-lifemapper-lab-usersguide
 }
 
 del-lifemapper-shared() {
@@ -68,8 +68,6 @@ del-lifemapper-shared() {
        $RM opt-lifemapper-cherrypy
        $RM opt-lifemapper-mod_wsgi
        $RM opt-lifemapper-portend
-       $RM opt-lifemapper-psycopg2
-       $RM opt-lifemapper-pytest
        $RM opt-lifemapper-pytz
        $RM opt-lifemapper-six
        $RM opt-lifemapper-tempora
@@ -197,9 +195,10 @@ TimeStamp "# Start"
 stop-services
 
 del-lifemapper
-del-directories
+del-config
 del-webstuff
 del-cron-jobs
+del-directories
 del-automount-entry
 
 if [ $LMROLL_COUNT = 1 ]; then

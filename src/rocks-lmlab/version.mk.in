@@ -10,4 +10,4 @@ RPM.FILES =  \
     /etc/ld.so.conf.d/lifemapper-lab-ld.conf  \n\
     /etc/logrotate.d/lifemapper-httpd  \n\
     /etc/profile.d/lifemapper-lab.*  \n\
-    /etc/systemd/system/httpd.service.d/lifemapper-lab_umask.conf
+    /etc/systemd/system/httpd.service.d/lifemapper-lab-umask.conf

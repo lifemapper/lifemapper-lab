@@ -125,18 +125,10 @@ install::
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
 	install -m 755 $(PROGS) $(ROOT)/$(PKGROOT)/rocks/bin
 	install -m 644 $(PYFILES) $(ROOT)/$(PKGROOT)/rocks/bin
-	install -m 755 $(EXECFILES) $(ROOT)/$(PKGROOT)/rocks/bin
 
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
-	install -m 644 clean-lm-server-roll.sh $(ROOT)/$(PKGROOT)/rocks/etc
-	install -m 755 $(CRONS) $(ROOT)/$(PKGROOT)/rocks/etc
+	install -m 644 clean-lmlab-roll.sh $(ROOT)/$(PKGROOT)/rocks/etc
 
-	mkdir -p $(ROOT)/$(PKGROOT)/rocks/sql
-	install -m 644 dbDefineTables.sql $(ROOT)/$(PKGROOT)/rocks/sql
-	install -m 644 dbAddFunctions.sql $(ROOT)/$(PKGROOT)/rocks/sql
-	install -m 644 dbUpdateTables.sql $(ROOT)/$(PKGROOT)/rocks/sql
-	install -m 644 postgis.sql $(ROOT)/$(PKGROOT)/rocks/sql 
-	install -m 644 roles.sql.template $(ROOT)/$(PKGROOT)/rocks/sql
 
 clean::
 	rm -rf version.mk $(CONFIGS) $(PROFILES) $(PROGS) confconst.py
