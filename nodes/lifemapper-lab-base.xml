@@ -31,16 +31,14 @@
     <package>tzdata-java</package>
     
     <!-- lifemapper dependencies built from source -->
-    <package>lifemapper-solr</package>
-
-    <!-- for requests -->
     <package>opt-lifemapper-certifi</package>
     <package>opt-lifemapper-chardet</package>
     <package>opt-lifemapper-idna</package>
     <package>opt-lifemapper-requests</package>
-    <package>opt-lifemapper-urllib3</package>
-
     <package>rocks-lmlab</package>
+    <package>lifemapper-solr</package>
+    <package>opt-lifemapper-urllib3</package>    
+    <package>opt-lifemapper-wheel</package>
 
 
 <post>
