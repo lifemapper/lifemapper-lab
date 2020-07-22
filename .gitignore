@@ -6,7 +6,7 @@ SOURCES/
 BUILD/
 SPECS/
 disk1/
-lifemapper-server-*disk1.iso
+lifemapper-lab-*disk1.iso
 
 _os
 _arch
@@ -33,19 +33,9 @@ Rolls.mk
 roll*.mk
 
 # ignore roll files 
-roll-lifemapper-server.*
+roll-lifemapper-lab.*
 roll-profile.mk
 
-# ignore src files
-src/lmserver/components/
-src/lmserver/*.tar.gz
-
-# ignore subversion everywhere
-src/lmserver/.subversion/
-.subversion/
-
-# ignore species data
-src/lmdata-species/*.txt
-src/lmdata-species/*.gz
+# ignore eclipse files
 /.project
 /.pydevproject
