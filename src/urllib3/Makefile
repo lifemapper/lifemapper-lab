@@ -67,24 +67,24 @@ SEDSPEC += \
         -e 's%@VERSION@%$(VERSION)%g'
 
 prepSrc.sh: prepSrc.sh.in
-    $(SED) $(SEDSPEC) $^ > $@
-    chmod 755 $@
+	$(SED) $(SEDSPEC) $^ > $@
+	chmod 755 $@
 
 prep: prepSrc.sh
-    rm -rf version.mk
-    make version.mk
-    make prepSrc.sh
-    ./prepSrc.sh
+	rm -rf version.mk
+	make version.mk
+	make prepSrc.sh
+	./prepSrc.sh
 
 version.mk:
-    cat ../version.mk version.mk.in > version.mk
+	cat ../version.mk version.mk.in > version.mk
 
 build: version.mk
-    echo $(ARCHIVENAME)-$(VERSION)
+	echo $(ARCHIVENAME)-$(VERSION)
 
 install::
-    mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
-    install -m 664 @ARCHIVENAME@-@VERSION@-py2.py3-none-any.whl $(ROOT)/$(PKGROOT)/rocks/etc
+	mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
+	install -m 664 $(ARCHIVENAME)-$(VERSION)-py2.py3-none-any.whl $(ROOT)/$(PKGROOT)/rocks/etc
 
 clean::
-    rm -rf $(ARCHIVENAME)-$(VERSION) version.mk prepSrc.sh
+	rm -rf $(ARCHIVENAME)-$(VERSION) version.mk prepSrc.sh
