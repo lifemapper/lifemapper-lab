@@ -27,7 +27,6 @@
     <package>python-lxml</package>
     <package>python-ipaddress</package>
     <package>python-javapackages</package>
-    <package>python-urllib3</package>
     <package>tzdata-java</package>
     
     <!-- lifemapper dependencies built from source -->
@@ -37,7 +36,7 @@
     <package>opt-lifemapper-requests</package>
     <package>rocks-lmlab</package>
     <package>lifemapper-solr</package>
-    <package>opt-lifemapper-urllib3</package>    
+    <package>opt-lifemapper-urllib3</package>
     <package>opt-lifemapper-wheel</package>
 
 
@@ -85,7 +84,7 @@ fi
 /bin/chgrp -R lmwriter /state/partition1/lmscratch
 /bin/chmod -R g+ws     /state/partition1/lmscratch
 
-<file name="/etc/rc.d/rocksconfig.d/post-99-lifemapper-lmcompute" perms="0700">
+<file name="/etc/rc.d/rocksconfig.d/post-99-lifemapper-lab" perms="0700">
 #!/bin/bash
 # do LM initialization
 

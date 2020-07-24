@@ -36,20 +36,23 @@ del-lifemapper() {
 }
 
 del-lifemapper-shared() {
-    echo "Removing lifemapper RPMs shared" >> $LOG
-    # for requests
-    $RM opt-lifemapper-certifi
-    $RM opt-lifemapper-chardet
-    $RM opt-lifemapper-idna
-    $RM opt-lifemapper-requests
-    $RM opt-lifemapper-urllib3
-    $RM opt-lifemapper-wheel
+    if [[ $LMROLL_COUNT <= 1 ]] ; then
+        echo "Removing lifemapper RPMs shared" >> $LOG
+        # for requests on all lm rolls
+        $RM opt-lifemapper-certifi
+        $RM opt-lifemapper-chardet
+        $RM opt-lifemapper-idna
+        $RM opt-lifemapper-requests
+        $RM opt-lifemapper-wheel
+        $RM opt-lifemapper-urllib3
+    
+        module load opt-python
+        $PYBIN@ -m pip uninstall -y wheel
+        $PYBIN@ -m pip uninstall -y urllib3
+        module unload opt-python
+    fi 
 
-    module load opt-python
-    $PYBIN@ -m pip uninstall -y wheel
-    module unload opt-python
-
-    if [ $LMCOMPUTE_ROLL_COUNT = 0 ] ; then
+    if [[ $LMCOMPUTE_ROLL_COUNT = 0 ]] ; then
         echo "Removing lmcompute/lmlab RPMs shared" >> $LOG
         # java deps
         $RM copy-jdk-configs
@@ -62,7 +65,7 @@ del-lifemapper-shared() {
         $RM tzdata-java
     fi
 
-    if [ $LMSERVER_ROLL_COUNT = 0 ] ; then
+    if [[ $LMSERVER_ROLL_COUNT = 0 ]] ; then
         echo "Removing lmlab/lmserver RPMs shared" >> $LOG
        $RM opt-lifemapper-cheroot
        $RM opt-lifemapper-cherrypy
@@ -201,7 +204,7 @@ del-cron-jobs
 del-directories
 del-automount-entry
 
-if [ $LMROLL_COUNT = 1 ]; then
+if [[ $LMROLL_COUNT > 1 ]]; then
 	del-lifemapper-shared
 	del-shared-directories
 	del-shared-user-group
