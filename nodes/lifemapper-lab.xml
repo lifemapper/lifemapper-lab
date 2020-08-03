@@ -32,7 +32,6 @@
     <package>opt-lifemapper-portend</package>
     <package>opt-lifemapper-pytz</package>
     <package>opt-lifemapper-six</package>
-    <package>lifemapper-solr-common</package>
     <package>opt-lifemapper-tempora</package>
     <package>opt-lifemapper-zc.lockfile</package>
 

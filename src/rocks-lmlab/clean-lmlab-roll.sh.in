@@ -96,8 +96,9 @@ del-shared-directories() {
 
 del-shared-user-group () {
     echo "Remove lmwriter user/group/dirs" >> $LOG
-    userdel lmwriter
-    groupdel lmwriter
+    /usr/bin/gpasswd -d apache lmwriter
+    /usr/sbin/userdel lmwriter
+    /usr/sbin/groupdel lmwriter
     /bin/rm -f /var/spool/mail/lmwriter
     /bin/rm -rf /export/home/lmwriter
 
