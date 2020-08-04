@@ -8,19 +8,9 @@ usage ()
 {
     echo "Usage: $0"
     echo "This script is run during the roll install and will:"
-    echo "     - initialize postgress db"
-    echo "     - create lifemapper db users"
-    echo "     - creating roles and postgis tables"
-    echo "     - create new config and auth files for postgres "
-    echo "     - create new config for pgbouncer "
-    echo "     - set postgres unix socket PGHOST=@UNIXSOCKET@"
-    echo "     - restart postgres/pgbouncer with new configuration\n"
-    echo "     - inserts host IP in @LMHOME@/config/config.lmserver.ini\n"
+    echo "     - inserts host IP in @LMHOME@/config/config.lmlab.ini\n"
     echo "     - installs cron files\n"
-    echo "     - installs mapfile imagery\n"
     echo "   "
-    echo "The script can be run at any time to remove all previous configuration and to create"
-    echo "a new one. In this case, old postgres db data (/var/lib/pgsql/*/data/*) is removed."
 }
 
 if [ $# -ne 0 ]; then
@@ -33,7 +23,7 @@ set_defaults() {
     rm -f $LOG
     touch $LOG
 
-    PROF=/etc/profile.d/lifemapper.sh
+    PROF=/etc/profile.d/lifemapper-lab.sh
     echo "-- set environment"  >> $LOG
     if [ -f $PROF ] ; then
 	 . $PROF 
@@ -47,86 +37,26 @@ set_defaults() {
 
     # Rocks version
     ROCKS_VER=`/opt/rocks/bin/rocks list roll | grep base | awk '{print $2}'`
-    if [ "$ROCKS_VER" = "7.0" ]; then
-    	PG=postgresql-@PGSQLVER@.service
-    else
-    	PG=postgresql-@PGSQLVER@
-    fi
    
     PROFILE=/var/lib/pgsql/.bash_profile
     BIN=@PKGROOT@/rocks/bin
-    USERSFILE=@PKGROOT@/rocks/etc/users
-
-    DEFINE_TABLES_SQL=@LMHOME@/rocks/sql/dbDefineTables.sql
-    UPDATE_TABLES_SQL=@LMHOME@/rocks/sql/dbUpdateTables.sql
-    ADD_FUNCTIONS_SQL=@LMHOME@/rocks/sql/dbAddFunctions.sql
-    
-    tmp=@PGSQLVER@
-    PVER=${tmp/.}
-    PGSETUP_CMD=/usr/pgsql-@PGSQLVER@/bin/postgresql$PVER-setup
-
-    MAP_BACKGROUND=@LMHOME@/LmWebServer/public_html/images/BMNG.geotiff
-    IMAGE_DIR=@DATADIR_SERVER@/image
-    # link url address to install of lifemapper-webclient rpm
-    LMCLIENT_DIR=@DATADIR_SERVER@/@LMCLIENT@
-    DASHBOARD_DIR=@LMHOME@/LmWebServer/public_html/@DASHBOARD@
+    MYPY3=@PYBIN@
     
     # config files
-    CONFIG_FILE=@LMHOME@/config/config.lmserver.ini
+    CONFIG_FILE=@LMHOME@/config/config.lmlab.ini
     SITE_CONFIG_FILE=@LMHOME@/config/config.site.ini
-    PUBLIC_ARCHIVE_CONFIG_FILE=@LMHOME@/config/boom.public.params
-    
-    # Find SCENARIO_PACKAGE
-    if [ -f $PUBLIC_ARCHIVE_CONFIG_FILE ] ; then        
-        echo "Find SCENARIO_PACKAGE in public archive config file" >> $LOG
-        SCEN_PKG=`grep -i ^SCENARIO_PACKAGE $PUBLIC_ARCHIVE_CONFIG_FILE | awk '{print $2}'`
-    fi    
-    if [ -z ${SCEN_PKG} ] ; then
-        echo "Error: Missing configured value for SCENARIO_PACKAGE" >> $LOG
-        exit 1
-    fi
-
-    # Find PUBLIC_USER
-    if [ -f $SITE_CONFIG_FILE ] ; then        
-        echo "Find PUBLIC_USER in site config file" >> $LOG
-        PUBLIC_USER=`grep -i ^PUBLIC_USER $SITE_CONFIG_FILE |  awk '{print $2}'`
-    fi
-    if [ -z ${PUBLIC_USER} ] ; then 
-        echo "Find PUBLIC_USER in installed config file" >> $LOG
-        PUBLIC_USER=`grep -i ^PUBLIC_USER $CONFIG_FILE | awk '{print $2}'`
-    fi
-    if [ -z ${PUBLIC_USER} ] ; then
-        echo "Error: Missing configured value for PUBLIC_USER" >> $LOG
-        exit 1
-    fi
-    
+        
     # Source function library.
     INITD=/etc/rc.d/init.d
     . $INITD/functions
-
-    if [ -d /var/lib/pgsql/@PGSQLVER@/data ] && [ "$(ls -A /var/lib/pgsql/@PGSQLVER@/data)" ]; then
-	    echo "postgres db exists" >> $LOG
-	    EXISTING_DB=true
-	 else
-	    EXISTING_DB=false
-    fi
 }
 
-cmd_service () {
-	svc=$1
-	cmd=$2
-    if [ "$ROCKS_VER" = "7.0" ]; then
-    	/usr/bin/systemctl $2 $1 >> $LOG
-    else
-    	/sbin/service $1 $2 >> $LOG
-    fi
-}
 
 cmd_opt_python () {
 	cmd=$1
     echo "-- $1 opt-python" >> $LOG
     module $1 opt-python
-    @PYBIN@ --version >> $LOG
+    $MYPY3 --version >> $LOG
 }
 
 set_permissions () {
@@ -143,81 +73,13 @@ set_permissions () {
     done
 }
 
-### sets the password for db "admin" user to execute sql commands
-set_password () {
-    # check if users file exists
-    if [ ! -f $USERSFILE ] ; then
-        echo "Error: missing file $USERSFILE" >> $LOG
-        exit 1
-    fi
-
-    # check who is running the scipt
-    cat $USERSFILE > /dev/null
-    RETVAL=$?
-    if [ $RETVAL -ne 0 ]; then
-        echo "Error: You must be root to run this script" >> $LOG
-        exit 1
-    fi
-
-    # get the password from 'users' file
-    echo "-- setting postgres password" >> $LOG
-    PASS=`grep admin $USERSFILE | awk '{print $2}'`
-    export PGPASSWORD=$PASS
-}
-
-# stop services if running
-stop_services () {
-    echo "-- stop $PG and pgbouncer daemons " >> $LOG
-
-    if [ -f /var/run/pgbouncer/pgbouncer.pid ]; then
-    	cmd_service pgbouncer stop
-    fi
-
-    if [ -f /var/run/$PG.pid ] ; then
-    	cmd_service $PG stop
-    fi
-
-    prog="postmaster"
-    if [ -n "`pidof $prog`" ]; then
-        killproc  $prog
-    fi
-}
-
-# Command listed when making rpm
-finish_libevent_install () {
-    # Complete installs
-    echo "-- complete libevent install" >> $LOG
-    /usr/bin/libtool --finish @LMHOME@/lib
-}
-
-# sym link mapserver library filenames to this one
-# TODO: update this when updating mapserver version
-finish_mapserver_install () {
-    # Complete installs
-    echo "-- add symlinks to mapserver library" >> $LOG
-    (\
-    /usr/bin/cd $PKGROOT/lib; \
-    /usr/bin/ln -s libmapserver.so.2 libmapserver.so.7.4.4; \
-    /usr/bin/ln -s libmapserver.so   libmapserver.so.2; \
-    )     
-}
-
 # Install all python wheel files with pip
 finish_wheel_installs () {
-    @PYBIN@ -m ensurepip --default-pip
-    @PYBIN@ -m pip install --upgrade pip
+    $MYPY3 -m ensurepip --default-pip
+    $MYPY3 -m pip install --upgrade pip
     WHL_DIR=@PKGROOT@/rocks/etc
-    # these are filename prefixes
-    echo "-- install ordered wheel dependencies ..." >> $LOG
-    ORDERED_DEPS="numpy python_dateutil pyparsing kiwisolver cycler matplotlib scipy"
-    for dep in $ORDERED_DEPS
-        do
-            wname=$WHL_DIR/$dep*whl
-            echo "install ordered dependency $dep ..." >> $LOG
-            @PYBIN@ -m pip install $wname
-        done
 
-    INSTALLED_PKGS=`@PYBIN@ -m pip list | /usr/bin/grep -v Package | /usr/bin/grep -v "^----" | /usr/bin/awk '{print $1}'`
+    INSTALLED_PKGS=`$MYPY3 -m pip list | /usr/bin/grep -v Package | /usr/bin/grep -v "^----" | /usr/bin/awk '{print $1}'`
     # install rest of wheel files, ignore previously installed files
     echo "-- install remaining wheel dependencies ..." >> $LOG
     FILES=$WHL_DIR/*whl
@@ -231,7 +93,7 @@ finish_wheel_installs () {
                 echo "$pkgname installed already ..."
             else
                 echo "install remaining dependency $pkgname ..."
-                @PYBIN@ -m pip install $f
+                $MYPY3 -m pip install $f
             fi
         done
 }
@@ -244,88 +106,7 @@ run_ldconfig () {
 }
 
 
-# run initdb, start postgres daemon
-init_postgres () {
-    # initdb creates postgres data/*
-    echo "-- run postgres initdb" >> $LOG
-    # this option will not work via "service"
-    # OPT="-E 'UTF-8' --lc-collate='en_US.UTF-8' --lc-ctype='en_US.UTF-8'"
-    # OPT needs testing
-    OPT="en_US.UTF-8"
-    
-    if [ "$ROCKS_VER" = "7.0" ]; then
-    	$PGSETUP_CMD initdb >> $LOG
-    else
-    	/sbin/service $PG initdb $OPT  >> $LOG
-    fi
 
-    # start postgres with default config
-    echo "-- start postgres with default config" >> $LOG
-    cmd_service $PG start
-    /bin/sleep 15
-}
-
-# initialize postgres db
-# create lifemapper db users and roles.sql 
-# and initialize postgres db with user/postgis data
-init_db() {
-    init_postgres
-    cmd_opt_python load
-    echo "-- Start initDbserver script" >> $LOG
-    $BIN/initDbserver >> $LOG
-    echo "-- End initDbserver script" >> $LOG
-}
-
-# populate Lifemapper tables
-fill_db() {
-    cmd_opt_python load
-    echo "-- Start catalogDefaultDataInputs" >> $LOG
-    $BIN/catalogDefaultDataInputs >> $LOG
-    echo "-- End catalogDefaultDataInputs" >> $LOG
-}
-
-# update password file for python
-update_connect_file() {
-    echo "-- Start confDbconnect" >> $LOG
-    $BIN/confDbconnect >> $LOG  2>&1
-    echo "-- End confDbconnect" >> $LOG
-}
-
-### define databases 
-define_lm_database () {
-    if [ -f $DEFINE_TABLES_SQL ] ; then
-        echo "-- Start $DEFINE_TABLES_SQL" >> $LOG
-        psql -U admin -d template1 -f $DEFINE_TABLES_SQL 2>&1 >> $LOG
-        echo "-- End $DEFINE_TABLES_SQL" >> $LOG
-    else
-        echo "Error: missing file $DEFINE_TABLES_SQL" >> $LOG
-        exit 1
-    fi
-}
-
-### add database views, types, functions 
-update_lm_tables () {
-    if [ -f $UPDATE_TABLES_SQL ] ; then
-        echo "Start $UPDATE_TABLES_SQL" >> $LOG
-        psql -U admin -d template1 -f $UPDATE_TABLES_SQL 2>&1 >> $LOG
-        echo "End $UPDATE_TABLES_SQL" >> $LOG
-    else
-        echo "Error: missing file $UPDATE_TABLES_SQL" >> $LOG
-        exit 1
-    fi
-}
-
-### add database views, types, functions 
-add_lm_functions () {
-    if [ -f $ADD_FUNCTIONS_SQL ] ; then
-        echo "Start $ADD_FUNCTIONS_SQL" >> $LOG
-        psql -U admin -d template1 -f $ADD_FUNCTIONS_SQL 2>&1 >> $LOG
-        echo "End $ADD_FUNCTIONS_SQL" >> $LOG
-    else
-        echo "Error: missing file $ADD_FUNCTIONS_SQL" >> $LOG
-        exit 1
-    fi
-}
 
 # need to update openssl for postgres
 update_openssl() {
@@ -337,56 +118,15 @@ update_openssl() {
 
 # install cron jobs for daily execution
 install_cron_jobs () {
-    echo "-- Start installServerCronJobs" >> $LOG
-    $BIN/installServerCronJobs
-    echo "-- End installServerCronJobs" >> $LOG
+    echo "-- Start install-lmlab-cron" >> $LOG
+    $BIN/install-lmlab-cron
+    echo "-- End install-lmlab-cron" >> $LOG
 }
 
-install_opt_python_dependent_rpms() {
-    # opt-lifemapper-mapserver cannot be installed with other rpms by yum 
-    # because it depends on python3.6 and yum cannot co-exist with opt-python
-    DIST_DIR=/state/partition1/rocks/install/rocks-dist/x86_64/RedHat/RPMS
-    RPM_FILE=$DIST_DIR/opt-lifemapper-mapserver*rpm
-    cmd_opt_python load
-    echo "-- Install opt-lifemapper-mapserver rpm" >> $LOG
-    rpm -i $RPM_FILE >> $LOG
-}
-
-# set unix socket; restart postgres and pgbouncer with new config
-start_services() {
-    # set unix socket dir
-    echo "-- update unix socket " >> $LOG
-    export PGHOST=@UNIXSOCKET@
-    if [ ! -f $PROFILE ] ; then
-        touch $PROFILE
-        chown postgres:postgres $PROFILE
-    fi
-    echo "export PGHOST=@UNIXSOCKET@" >> $PROFILE
-
-    # restart postgres with updated configuration
-    echo "-- restart postgres with new configuration" >> $LOG
-    cmd_service $PG restart
-
-    # start pgbouncer
-    echo "-- restart pgbouncer with new configuration" >> $LOG
-    cmd_service pgbouncer restart
-}
-
-# run updateCfg to put correct IP, makeflow parameters lmserver's config.lmserver.ini 
+# run updateCfg to put correct IP, makeflow parameters lmlab's config.lmlab.ini 
 update_config() {
-    echo "-- update host IP and CCTools params in @LMHOME@/config/config.lmserver.ini" >> $LOG
-    $BIN/updateCfg >> $LOG  2>&1
-}
-
-make_web_links () {
-    if [ -d $LMCLIENT_DIR ] ; then
-        echo "-- create lmclient link" >> $LOG
-        (cd /var/www/html; /usr/bin/ln -s $LMCLIENT_DIR)
-    fi
-    if [ -d $DASHBOARD_DIR ] ; then
-        echo "-- create dashboard link" >> $LOG
-        (cd /var/www/html; /usr/bin/ln -s $DASHBOARD_DIR)
-    fi
+    echo "-- update host IP and CCTools params in @LMHOME@/config/config.lmlab.ini" >> $LOG
+    $BIN/update-lmlab >> $LOG  2>&1
 }
 
 
@@ -397,35 +137,10 @@ TimeStamp () {
 ####### Main #######
 set_defaults
 TimeStamp "# Start"
+
 finish_wheel_installs
-finish_libevent_install
-finish_mapserver_install
 set_permissions
-stop_services
-
-if [ "$EXISTING_DB" = false ] ; then
-    echo "Create new database" >> $LOG
-    init_db
-    start_services
-    set_password
-    define_lm_database
-else
-    echo "Update existing database" >> $LOG
-    start_services
-    set_password 
-    update_connect_file
-    update_lm_tables
-fi
-
-add_lm_functions
 install_cron_jobs
-#install_opt_python_dependent_rpms
 update_config
-
-if [ "$EXISTING_DB" = false ] ; then
-    fill_db
-fi
-
-make_web_links
 
 TimeStamp "# End"

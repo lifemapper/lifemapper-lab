@@ -89,7 +89,7 @@ fi
 # do LM initialization
 
 /sbin/ldconfig
-/opt/lifemapper/rocks/bin/init_lmlab
+/opt/lifemapper/rocks/bin/init-lmlab
 rm -rf /etc/rc.d/rocksconfig.d/post-99-lifemapper-lab
 
 </file>

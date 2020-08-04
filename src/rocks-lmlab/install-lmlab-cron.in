@@ -28,22 +28,20 @@ TimeStamp () {
 
 # remove obsolete Lifemapper cron jobs
 removeOldTasks () {
-    rm -vf  ${CRON_HOURLY_DIR}/lmserver_*
-    rm -vf  ${CRON_DAILY_DIR}/lmserver_*
+    rm -vf  ${CRON_HOURLY_DIR}/lmlab_*
+    rm -vf  ${CRON_DAILY_DIR}/lmlab_*
     echo "Removed old tasks in ${CRON_HOURLY_DIR} and ${CRON_DAILY_DIR} on frontend ..." | tee -a $LOG
 }
 
 # install daily cron jobs (security, cleanup, tests)
 installDailyTasks () {
     # run daily 
-    install @LMHOME@/rocks/etc/lmserver_count_completed ${CRON_DAILY_DIR}
     echo "Installed daily tasks to ${CRON_DAILY_DIR} ..." | tee -a $LOG
 }
 
 # install daily cron jobs (security, cleanup, tests)
 installUserTasks () {
     # run on specified timing with specified user
-    install @LMHOME@/rocks/etc/lmserver_cycle_matt ${CRON_D_DIR}
     echo "Installed user-specific tasks to ${CRON_D_DIR} ..." | tee -a $LOG
 }
 
