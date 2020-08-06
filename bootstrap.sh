@@ -38,62 +38,45 @@ cd ../..
 compile wheel
 module unload opt-python
 
-
-# cherrypy 17.4.2 requires six>=1.11.0, cheroot>=6.2.4, portend>=2.1.1, 
-#                    and for exec, not build:
-#                          more-itertools=5.0.0 
-#                          contextlib2==0.6.0.post1
-#                          zc.lockfile=2.0
-#                          backports.functools_lru_cache=1.6.1
-#                          jaraco.functools=2.0
-# cheroot requires six and setuptools
-# portend requires tempora requires six, pytz
-
-# needed for cheroot build (on devapp, not in LM install?)
-cd src/six
+# cython > 0.23.4 for scipy 
+cd src/cython
 make prep
 cd ../..
 module load opt-python
-compile six
+compile cython
 module unload opt-python
-install opt-lifemapper-six
-/sbin/ldconfig
+install opt-lifemapper-cython
 
-cd src/cheroot
+# numpy for scipy and matplotlib
+cd src/numpy
 make prep
-cd ../..
 module load opt-python
-compile cheroot
+python3.6 -m ensurepip --default-pip
+python3.6 -m pip install *.whl
+cd ../..
+compile numpy
 module unload opt-python
-install opt-lifemapper-cheroot
-/sbin/ldconfig
 
-cd src/pytz
+# matplotlib and dependencies (for biotaphypy)
+# rpm only installs wheel files
+cd src/matplotlib
 make prep
-cd ../..
 module load opt-python
-compile pytz
+python3.6 -m ensurepip --default-pip
+python3.6 -m pip install *.whl
+cd ../..
 module unload opt-python
-install opt-lifemapper-pytz
-/sbin/ldconfig
 
-cd src/tempora
+cd src/scipy
 make prep
-cd ../..
 module load opt-python
-compile tempora
+python3.6 -m ensurepip --default-pip
+python3.6 -m pip install *.whl
+cd ../..
+compile scipy
 module unload opt-python
-install opt-lifemapper-tempora
-/sbin/ldconfig
+install opt-lifemapper-scipy
 
-cd src/portend
-make prep
-cd ../..
-module load opt-python
-compile portend
-module unload opt-python
-install opt-lifemapper-portend
-/sbin/ldconfig
 
 # Leave with opt-python loaded
 module load opt-python

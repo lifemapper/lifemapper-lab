@@ -7,7 +7,7 @@ Lifemapper Lab roll
 
 Introduction
 ------------
-This roll installs solr and apache for Lifemapper S^n services.
+This roll installs Lifemapper tools for S^n services.
 All prerequisite software listed below are a part of the roll and 
 will be installed and configured during roll installation. 
 The roll has been tested with Rocks 7.
@@ -35,8 +35,8 @@ Building a roll
 
 Checkout roll distribution from git repo :: 
 
-   # git clone https://github.com/lifemapper/lmlab.git 
-   # cd lmlab/
+   # git clone https://github.com/lifemapper/lifemapper-lab.git 
+   # cd lifemapper-lab/
 
 To build a roll, first execute a script that downloads and installs some packages 
 and RPMS that are prerequisites for other packages during the roll build stage: ::
@@ -45,7 +45,7 @@ and RPMS that are prerequisites for other packages during the roll build stage: 
 
 For each dependency to be built as an RPM ::  
 
-   # cd src/solr
+   # cd src/lmpy
    # make prep 
    # make rpm
 

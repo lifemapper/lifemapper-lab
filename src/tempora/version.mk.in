@@ -1,9 +1,0 @@
-NAME		= opt-lifemapper-tempora
-VERSION		= 1.14.1
-ARCHIVENAME	= tempora
-RELEASE		= 1
-TARBALL_POSTFIX	= tar.gz
-
-RPM.FILES	= $(PYTHON36_PACKAGES)/*
-
-# TODO: update

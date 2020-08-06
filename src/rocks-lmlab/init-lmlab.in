@@ -79,6 +79,16 @@ finish_wheel_installs () {
     $MYPY3 -m pip install --upgrade pip
     WHL_DIR=@PKGROOT@/rocks/etc
 
+    # these are filename prefixes
+    echo "-- install ordered wheel dependencies ..." >> $LOG
+    ORDERED_DEPS="numpy python_dateutil pyparsing kiwisolver cycler matplotlib scipy"
+    for dep in $ORDERED_DEPS
+        do
+            wname=$WHL_DIR/$dep*whl
+            echo "install ordered dependency $dep ..." >> $LOG
+            @PYBIN@ -m pip install $wname
+        done
+
     INSTALLED_PKGS=`$MYPY3 -m pip list | /usr/bin/grep -v Package | /usr/bin/grep -v "^----" | /usr/bin/awk '{print $1}'`
     # install rest of wheel files, ignore previously installed files
     echo "-- install remaining wheel dependencies ..." >> $LOG
@@ -98,15 +108,11 @@ finish_wheel_installs () {
         done
 }
 
-
 # update linker paths
 run_ldconfig () {
     echo "-- run ldconfig" >> $LOG
     /sbin/ldconfig
 }
-
-
-
 
 # need to update openssl for postgres
 update_openssl() {
@@ -140,6 +146,7 @@ TimeStamp "# Start"
 
 finish_wheel_installs
 set_permissions
+run_ldconfig
 install_cron_jobs
 update_config
 

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Purpose: download release of lmpy, lm python objects, from Github repository 
+https://github.com/biotaphy/BiotaPhyPy/releases/download/1.2.2/biotaphypy-1.2.2-py3-none-any.whl
+URL=https://github.com/biotaphy/BiotaPhyPy/releases/download/@VERSION@
+FNAME=@ARCHIVENAME@-@VERSION@-py3-none-any.whl
+
+
+# download release from lifemapper github
+download_source () {
+  echo "Starting download from $URL"
+  wget "$URL/$FNAME" 
+}
+
+### main ###
+download_source

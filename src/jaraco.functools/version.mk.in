@@ -1,9 +1,0 @@
-NAME		= opt-lifemapper-jaraco.functools
-VERSION		= 2.0
-ARCHIVENAME = jaraco.functools
-RELEASE		= 1
-TARBALL_POSTFIX	= tar.gz
-
-RPM.FILES	= $(PYTHON36_PACKAGES)/*
-
-# TODO: update
