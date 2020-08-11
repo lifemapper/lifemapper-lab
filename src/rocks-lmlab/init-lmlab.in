@@ -38,14 +38,10 @@ set_defaults() {
     # Rocks version
     ROCKS_VER=`/opt/rocks/bin/rocks list roll | grep base | awk '{print $2}'`
    
-    PROFILE=/var/lib/pgsql/.bash_profile
     BIN=@PKGROOT@/rocks/bin
-    MYPY3=@PYBIN@
+    PY3=@PYBIN@
+    WHL_DIR=@PKGROOT@/rocks/etc
     
-    # config files
-    CONFIG_FILE=@LMHOME@/config/config.lmlab.ini
-    SITE_CONFIG_FILE=@LMHOME@/config/config.site.ini
-        
     # Source function library.
     INITD=/etc/rc.d/init.d
     . $INITD/functions
@@ -56,7 +52,7 @@ cmd_opt_python () {
 	cmd=$1
     echo "-- $1 opt-python" >> $LOG
     module $1 opt-python
-    $MYPY3 --version >> $LOG
+    $PY3 --version >> $LOG
 }
 
 set_permissions () {
@@ -75,21 +71,10 @@ set_permissions () {
 
 # Install all python wheel files with pip
 finish_wheel_installs () {
-    $MYPY3 -m ensurepip --default-pip
-    $MYPY3 -m pip install --upgrade pip
-    WHL_DIR=@PKGROOT@/rocks/etc
+    $PY3 -m ensurepip --default-pip
+    $PY3 -m pip install --upgrade pip
 
-    # these are filename prefixes
-    echo "-- install ordered wheel dependencies ..." >> $LOG
-    ORDERED_DEPS="numpy python_dateutil pyparsing kiwisolver cycler matplotlib scipy"
-    for dep in $ORDERED_DEPS
-        do
-            wname=$WHL_DIR/$dep*whl
-            echo "install ordered dependency $dep ..." >> $LOG
-            @PYBIN@ -m pip install $wname
-        done
-
-    INSTALLED_PKGS=`$MYPY3 -m pip list | /usr/bin/grep -v Package | /usr/bin/grep -v "^----" | /usr/bin/awk '{print $1}'`
+    INSTALLED_PKGS=`$PY3 -m pip list | /usr/bin/grep -v Package | /usr/bin/grep -v "^----" | /usr/bin/awk '{print $1}'`
     # install rest of wheel files, ignore previously installed files
     echo "-- install remaining wheel dependencies ..." >> $LOG
     FILES=$WHL_DIR/*whl
@@ -103,7 +88,7 @@ finish_wheel_installs () {
                 echo "$pkgname installed already ..."
             else
                 echo "install remaining dependency $pkgname ..."
-                $MYPY3 -m pip install $f
+                $PY3 -m pip install $f
             fi
         done
 }
@@ -129,9 +114,9 @@ install_cron_jobs () {
     echo "-- End install-lmlab-cron" >> $LOG
 }
 
-# run updateCfg to put correct IP, makeflow parameters lmlab's config.lmlab.ini 
+# run updateCfg to index solr and run other updates
 update_config() {
-    echo "-- update host IP and CCTools params in @LMHOME@/config/config.lmlab.ini" >> $LOG
+    echo "-- update configuration and re-index solr" >> $LOG
     $BIN/update-lmlab >> $LOG  2>&1
 }
 
@@ -147,7 +132,7 @@ TimeStamp "# Start"
 finish_wheel_installs
 set_permissions
 run_ldconfig
-install_cron_jobs
+# install_cron_jobs
 update_config
 
 TimeStamp "# End"
