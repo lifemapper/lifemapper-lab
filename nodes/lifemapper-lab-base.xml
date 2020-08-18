@@ -18,6 +18,44 @@
     $Log$
     </changelog>
 
+    <!-- gdal-libs -->
+    <package>gdal-libs</package>
+    <package>CharLS</package> 
+    <package>SuperLU</package> 
+    <package>armadillo</package>
+    <package>arpack</package>
+    <package>atlas</package>
+    <package>atlas-devel</package>
+    <package>blas</package> 
+    <package>blas-devel</package>
+    <package>cfitsio</package> 
+    <package>freexl</package> 
+    <package>geos</package>
+    <package>geos-devel</package>
+    <package>hdf5</package>
+    <package>hdf5-devel</package>
+    <package>lapack</package>
+    <package>lapack-devel</package>
+    <package>libaec</package>
+    <package>libaec-devel</package>
+    <package>libdap</package> 
+    <package>libgeotiff</package>
+    <package>libgeotiff-devel</package>
+    <package>libgta</package>
+    <package>libtiff-devel</package>
+    <package>netcdf</package> 
+    <package>ogdi</package> 
+    <package>openblas-openmp</package> 
+    <package>openjpeg2</package> 
+    <package>postgresql-libs</package>
+    <package>proj</package> 
+    <package>unixODBC</package> 
+    <package>xerces-c</package> 
+    <!-- gdal -->
+    <package>gpsbabel</package>
+    <package>libusb</package>
+    <package>shapelib</package>
+
     <!-- java for nodes -->
     <package>copy-jdk-configs</package>
     <package>java-1.8.0-openjdk-headless</package>
@@ -28,17 +66,22 @@
     <package>python-javapackages</package>
     <package>tzdata-java</package>
     
-    <!-- lifemapper dependencies built from source -->
-    <package>opt-lifemapper-certifi</package>
-    <package>opt-lifemapper-chardet</package>
-    <package>opt-lifemapper-idna</package>
+    <!-- build from source dependencies -->
+    <package>opt-lifemapper-biotaphypy</package>
+    <package>opt-lifemapper-cython</package>
+    <package>opt-lifemapper-dendropy</package>  
+    <package>opt-lifemapper-gdal</package>
+    <package>opt-lifemapper-idigbio</package>
+    <package>opt-lifemapper-lmpy</package>    
     <package>opt-lifemapper-matplotlib</package>
     <package>opt-lifemapper-numpy</package>
-    <package>opt-lifemapper-requests</package>
-    <package>opt-lifemapper-scipy</package>
+    <package>    lifemapper-proj</package>  
+    <package>opt-lifemapper-pytest</package>
+    <package>opt-lifemapper-scipy</package> 
+
+    <!-- lifemapper lab distro -->
     <package>rocks-lmlab</package>
-    <package>opt-lifemapper-urllib3</package>
-    <package>opt-lifemapper-wheel</package>
+    <package>roll-lifemapper-lab</package>
 
 
 <post>

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Purpose: Fetch cython source
+
+DL_URL=https://files.pythonhosted.org/packages/49/8a/6a4135469372da2e3d9f88f71c6d00d8a07ef65f121eeca0c7ae21697219
+DL_PKG=@ARCHIVENAME@-@VERSION@.@TARBALL_POSTFIX@
+
+get_source_files () {
+  echo "Fetch Cython source code"
+  wget "$DL_URL/$DL_PKG"
+}
+
+### main ###
+get_source_files

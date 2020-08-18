@@ -33,14 +33,6 @@ time_stamp () {
     echo $1 `/bin/date` >> $LOG
 }
 
-update_solr () {
-    echo "-- re-index solr" >> $LOG
-    # uses service instead of systemctl
-    /usr/sbin/service solr stop
-    $BIN/solr-index
-    /usr/sbin/service solr start
-}
-
 
 #### Main ####
 
@@ -50,4 +42,3 @@ if [ $# -ne 0 ]; then
 fi 
 
 set_defaults
-update_solr

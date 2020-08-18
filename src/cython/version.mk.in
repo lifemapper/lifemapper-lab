@@ -1,0 +1,9 @@
+NAME		= opt-lifemapper-cython
+ARCHIVENAME = Cython
+VERSION		= 0.29.16
+RELEASE		= 1
+TARBALL_POSTFIX	= tar.gz
+
+RPM.FILES	= $(PYTHON36_PACKAGES)/*
+
+# TODO: update

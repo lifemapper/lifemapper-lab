@@ -1,6 +1,0 @@
-NAME        	= opt-lifemapper-setuptools
-ARCHIVENAME     = setuptools
-VERSION     	= 46.0.0
-RELEASE			= 0
-
-RPM.FILES	= $(PYTHON36_PACKAGES)/*

@@ -33,6 +33,7 @@ del-lifemapper() {
    $RM lifemapper-solr-common
    $RM rocks-lmlab
    $RM roll-lifemapper-lab-usersguide
+   $RM roll-lifemapper-lab-kickstart
 }
 
 del-lifemapper-shared() {
@@ -117,7 +118,7 @@ del-shared-user-group () {
 # stop services if running
 stop-services () {
     SOLR_PROCESSES=`ps -Af | grep solr | grep -v "grep" | wc -l`
-    if [[ $LMSERVER_ROLL_COUNT = 0 ] && $SOLR_PROCESSES = 1 ]]; then
+    if [[ $LMSERVER_ROLL_COUNT = 0  && $SOLR_PROCESSES = 1 ]]; then
         echo "-- stop Solr process " >> $LOG
         # uses service instead of systemctl
         /usr/sbin/service solr stop
