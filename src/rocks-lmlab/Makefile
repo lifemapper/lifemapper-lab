@@ -88,9 +88,10 @@ CONFIGS = \
 	lifemapper-lab-http.conf \
 	lifemapper-lab-ld.conf
 
+SCRIPTS = \
+    clean-lmlab-roll.sh
 
 PROGS = \
-	clean-lmlab-roll.sh \
 	init-lmlab \
 	install-lmlab-cron \
     solr-lmlab-index \
@@ -103,7 +104,7 @@ PYFILES = __init__.py
 
 .SUFFIXES:
 
-build: $(CONFIGS) $(PROFILES) $(PROGS) $(PYFILES) 
+build: $(SCRIPTS) $(CONFIGS) $(PROFILES) $(PROGS) $(PYFILES) 
 	
 install::
 
