@@ -71,7 +71,6 @@
     <package>opt-lifemapper-cython</package>
     <package>opt-lifemapper-dendropy</package>  
     <package>opt-lifemapper-gdal</package>
-    <package>opt-lifemapper-idigbio</package>
     <package>opt-lifemapper-lmpy</package>    
     <package>opt-lifemapper-matplotlib</package>
     <package>opt-lifemapper-numpy</package>
@@ -79,9 +78,8 @@
     <package>opt-lifemapper-pytest</package>
     <package>opt-lifemapper-scipy</package> 
 
-    <!-- lifemapper lab distro -->
+    <!-- tools -->
     <package>rocks-lmlab</package>
-    <package>roll-lifemapper-lab</package>
 
 
 <post>

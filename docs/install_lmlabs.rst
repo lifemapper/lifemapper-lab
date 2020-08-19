@@ -14,6 +14,41 @@ Current versions
 
    # sha256sum -c *sha
 
+
+New roll install or update existing roll
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#. **Remove old roll**::
+
+   # rocks remove roll lifemapper-lab
+      
+#. **Add new roll with rpms**, ensuring that old versions of rpms and files 
+   are replaced::
+
+   # rocks add roll lifemapper-lab-*.iso clean=1
+   
+#. **Create distribution**::
+
+   # rocks enable roll lifemapper-lab
+   # (module unload opt-python; \
+      cd /export/rocks/install; \
+      rocks create distro; \
+      yum clean all)
+
+#. **Create and run install script**::
+
+    # (module unload opt-python; \
+       rocks run roll lifemapper-lab > add-lab.sh; \
+       bash add-lab.sh 2>&1 | tee add-lab.out)
+
+#. **Finish FE with reboot** ::  
+
+   # shutdown -r now
+   
+#. **Rebuild the compute nodes from FE** ::  
+
+   # rocks set host boot compute action=install
+   # rocks run host compute reboot     
+
 (If update) Stop processes
 --------------------------
 
@@ -52,42 +87,6 @@ Update existing code and script RPMs (without new roll)
 #. Update nodes with non-roll rpms::
    
    # rocks run host compute "(hostname; rpm -iv /share/lm/*rpm)"
-
-
-New roll install or update existing roll
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#. **Remove old roll**::
-
-   # rocks remove roll lifemapper-lab
-      
-#. **Add new roll with rpms**, ensuring that old versions of rpms and files 
-   are replaced::
-
-   # rocks add roll lifemapper-lab-*.iso clean=1
-   
-#. **Create distribution**::
-
-   # rocks enable roll lifemapper-lab
-   # (module unload opt-python; \
-      cd /export/rocks/install; \
-      rocks create distro; \
-      yum clean all)
-
-#. **Create and run install script**::
-
-    # (module unload opt-python; \
-       rocks run roll lifemapper-lab > add-lab.sh; \
-       bash add-lab.sh 2>&1 | tee add-lab.out)
-
-#. **Finish FE with reboot** ::  
-
-   # shutdown -r now
-   
-#. **Rebuild the compute nodes from FE** ::  
-
-   # rocks set host boot compute action=install
-   # rocks run host compute reboot     
-
       
 Look for Errors
 ---------------
