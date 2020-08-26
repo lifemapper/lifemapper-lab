@@ -7,6 +7,7 @@
 #    user accounts and groups : postgres, pgbouncer, solr, lmwriter
 
 RM="rpm -evl --quiet --nodeps"
+PY3=@PYBIN@
 PIP3=/opt/python/bin/pip3.6
 ROCKS_CMD=/opt/rocks/bin/rocks
 LMUSER_COUNT=`/bin/egrep -i "^lmwriter" /etc/passwd  | wc -l`
@@ -48,8 +49,8 @@ del-lifemapper-shared() {
         $RM opt-lifemapper-urllib3
     
         module load opt-python
-        $PYBIN@ -m pip uninstall -y wheel
-        $PYBIN@ -m pip uninstall -y urllib3
+        $PY3 -m pip uninstall -y wheel
+        $PY3 -m pip uninstall -y urllib3
         module unload opt-python
     fi 
 
@@ -113,16 +114,6 @@ del-shared-user-group () {
 
     echo "Syncing users info" >> $LOG
     $ROCKS_CMD sync users
-}
-
-# stop services if running
-stop-services () {
-    SOLR_PROCESSES=`ps -Af | grep solr | grep -v "grep" | wc -l`
-    if [[ $LMSERVER_ROLL_COUNT -eq 0  && $SOLR_PROCESSES -eq 1 ]]; then
-        echo "-- stop Solr process " >> $LOG
-        # uses service instead of systemctl
-        /usr/sbin/service solr stop
-    fi    
 }
 
 del-config () {
@@ -196,8 +187,6 @@ check-lm-processes
 
 set_defaults
 TimeStamp "# Start"
-
-stop-services
 
 del-lifemapper
 del-config
