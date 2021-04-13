@@ -1,0 +1,44 @@
+#!/bin/bash
+
+PYPI_URL=https://files.pythonhosted.org/packages
+
+# opt-lmlab-sharepy rpm contains:
+#   more-itertools (cherrypy, specify-open-api-tools) (8.7.0)
+#   six (cherrypy, specify-open-api-tools) (1.15.0)
+#   setuptools (cherrypy, specify-open-api-tools) (56.0.0)
+#   wheel (0.36.2)
+#   zipp (cherrypy, specify-open-api-tools) (3.1.0)
+
+# more-itertools
+MITERTOOLS_URL=$PYPI_URL/05/47/514062a0798c2e9bdfd4514bacf9971fc8961b715f01487e4cfda3cc45a7
+MITERTOOLS=more_itertools-8.7.0-py3-none-any.whl
+
+# setuptools
+SETUP_URL=$PYPI_URL/ae/42/2876a3a136f8bfa9bd703518441c8db78ff1eeaddf174baa85c083c1fd15
+SETUP=setuptools-56.0.0-py3-none-any.whl
+
+# six
+SIX_URL=$PYPI_URL/ee/ff/48bde5c0f013094d729fe4b0316ba2a24774b3ff1c52d924a8a4cb04078a
+SIX=six-1.15.0-py2.py3-none-any.whl
+
+# wheel
+WHEEL_URL=$PYPI_URL/65/63/39d04c74222770ed1589c0eaba06c05891801219272420b40311cd60c880
+WHEEL=wheel-0.36.2-py2.py3-none-any.whl
+
+# zipp
+ZP_URL=$PYPI_URL/b2/34/bfcb43cc0ba81f527bc4f40ef41ba2ff4080e047acb0586b56b3d017ace4
+ZP=zipp-3.1.0-py3-none-any.whl
+
+
+get_wheel_files () {
+  echo "Fetch common python dependencies"
+  wget $MITERTOOLS_URL/$MITERTOOLS
+  wget $SETUP_URL/$SETUP
+  wget $SIX_URL/$SIX
+  wget $WHEEL_URL/$WHEEL
+  wget $ZP_URL/$ZP
+
+}
+
+### main ###
+get_wheel_files

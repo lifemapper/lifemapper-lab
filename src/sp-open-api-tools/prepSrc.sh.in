@@ -1,0 +1,143 @@
+#!/bin/bash
+
+PYPI_URL=https://files.pythonhosted.org/packages
+
+# ----------------------------------------------
+# openapi-core==0.13.7
+OA_URL=$PYPI_URL/f8/86/1c281729a95fe23a5cd416f50d6819f5f0a4282ac66ba7e98b335e39a7c3
+OA=openapi_core-0.13.7-py3-none-any.whl
+
+# attrs
+ATTRS_URL=$PYPI_URL/d6/e1/3aa3b03e7643ffd6e499b203fd2a44f79893443e8b0b520d05d3e5c638d5
+ATTRS=attrs-20.1.0-py2.py3-none-any.whl
+# CherryPy==18.6.0 (separate RPM with deps)
+
+# openapi-schema-validator
+OASV_URL=$PYPI_URL/61/de/67a615be34d76a1b18ee13861ffd584ffc982e465499c67d5b029bd1084a
+OASV=openapi_schema_validator-0.1.5-py3-none-any.whl
+
+# jsonschema (needs some old versions and some handled in other RPMs):
+JS_URL=$PYPI_URL/c5/8f/51e89ce52a085483359217bc72cdbf6e75ee595d5b1d4b5ade40c7e018b8
+JS=jsonschema-3.2.0-py2.py3-none-any.whl
+
+# pyrsistent
+PYR_URL=$PYPI_URL/4d/70/fd441df751ba8b620e03fd2d2d9ca902103119616f0f6cc42e6405035062
+PYR=pyrsistent-0.17.3.tar.gz
+
+# importlib-metadata
+IMP_URL=https://files.pythonhosted.org/packages/8e/58/cdea07eb51fc2b906db0968a94700866fc46249bdc75cac23f9d13168929
+IMP=importlib_metadata-1.7.0-py2.py3-none-any.whl
+
+# # zipp
+# ZP_URL=$PYPI_URL/b2/34/bfcb43cc0ba81f527bc4f40ef41ba2ff4080e047acb0586b56b3d017ace4
+# ZP=zipp-3.1.0-py3-none-any.whl
+
+# isodate
+ISO_URL=$PYPI_URL/9b/9f/b36f7774ff5ea8e428fdcfc4bb332c39ee5b9362ddd3d40d9516a55221b2
+ISO=isodate-0.6.0-py2.py3-none-any.whl
+
+# # more-itertools (also in cherrypy)
+# MITERTOOLS_URL=$PYPI_URL/05/47/514062a0798c2e9bdfd4514bacf9971fc8961b715f01487e4cfda3cc45a7
+# MITERTOOLS=more_itertools-8.7.0-py3-none-any.whl
+
+# werkzeug
+WRK_URL=$PYPI_URL/cc/94/5f7079a0e00bd6863ef8f1da638721e9da21e5bacee597595b318f71d62e
+WRK=Werkzeug-1.0.1-py2.py3-none-any.whl
+
+# lazy-object-proxy
+LOP_URL=$PYPI_URL/46/d4/77e45a07602cfddc0d32bac3feaf4f548de56744a9436d31cb3b00aa96c2
+LOP=lazy_object_proxy-1.6.0-cp36-cp36m-manylinux1_x86_64.whl
+
+# openapi-spec-validator
+OASPV_URL=$PYPI_URL/9c/50/f1c761692659d5c79867d6dbbf8af323564865a121aefe52c983cb2acbb7
+OASPV=openapi_spec_validator-0.3.0-py3-none-any.whl
+
+# PyYAML>=5.1
+PYAML_URL=$PYPI_URL/7a/5b/bc0b5ab38247bba158504a410112b6c03f153c652734ece1849749e5f518
+PYAML=PyYAML-5.4.1-cp36-cp36m-manylinux1_x86_64.whl
+
+# # six (from openapi-core) (1.15.0)
+# SIX_URL=$PYPI_URL/ee/ff/48bde5c0f013094d729fe4b0316ba2a24774b3ff1c52d924a8a4cb04078a
+# SIX=six-1.15.0-py2.py3-none-any.whl
+
+# parse (from openapi-core) (1.19.0)
+PRS_URL=$PYPI_URL/89/a1/82ce536be577ba09d4dcee45db58423a180873ad38a2d014d26ab7b7cb8a
+PRS=parse-1.19.0.tar.gz
+
+# ----------------------------------------------
+# Flask==1.1.2
+FLASK_URL=$PYPI_URL/f2/28/2a03252dfb9ebf377f40fba6a7841b47083260bf8bd8e737b0c6952df83f
+FLASK_PKG=Flask-1.1.2-py2.py3-none-any.whl
+
+# itsdangerous
+URL=$PYPI_URL/76/ae/44b03b253d6fade317f32c24d100b3b35c2239807046a4c953c7b89fa49e/
+DANGER=itsdangerous-1.1.0-py2.py3-none-any.whl
+
+# Jinja2>=2.11.3
+JINJA_URL=$PYPI_URL/7e/c2/1eece8c95ddbc9b1aeb64f5783a9e07a286de42191b7204d67b7496ddf35
+JINJA_PKG=Jinja2-2.11.3-py2.py3-none-any.whl
+
+# click
+CLK_URL=$PYPI_URL/d2/3d/fa76db83bf75c4f8d338c2fd15c8d33fdd7ad23a9b5e57eb6c5de26b430e
+CLK=click-7.1.2-py2.py3-none-any.whl
+
+# MarkupSafe
+MUS_URL=$PYPI_URL/b2/5f/23e0023be6bb885d00ffbefad2942bc51a620328ee910f64abe5a8d18dd1
+MUS=MarkupSafe-1.1.1-cp36-cp36m-manylinux1_x86_64.whl
+
+# ----------------------------------------------
+# openapi3==1.1.0
+OA3_URL=$PYPI_URL/5d/e7/627e2362e9ccd7dddc10dd5e8912550e88a5bd6d9ba7cb19badaf3783789
+OA3_PKG=openapi3-1.4.0-py2.py3-none-any.whl
+
+# simplejson==3.17.2
+SJ_URL=$PYPI_URL/c4/76/6c18cafdd84cb87ea737ec52965dc1d8730f0d8e8d019c1efaf0b58abb32
+SJ_PKG=simplejson-3.17.2-cp36-cp36m-manylinux1_x86_64.whl
+
+# termcolor 1.1.0
+TC_URL=$PYPI_URL/8a/48/a76be51647d0eb9f10e2a4511bf3ffb8cc1e6b14e9e4fab46173aa79f981
+TC=termcolor-1.1.0.tar.gz
+
+# dataclasses
+DC_URL=$PYPI_URL/fe/ca/75fac5856ab5cfa51bbbcefa250182e50441074fdc3f803f6e76451fab43
+DC=dataclasses-0.8-py3-none-any.whl
+
+get_source_files () {
+  echo "Fetch @NAME@ tar.gz dependencies"
+  wget $PYR_URL/$PYR
+  wget $PRS_URL/$PRS
+  wget $TC_URL/$TC
+}
+
+
+get_wheel_files () {
+  echo "Fetch @NAME@ wheel dependencies"
+  wget $OA_URL/$OA_PKG
+  wget $ATTRS_URL/$ATTRS
+  wget $OASV_URL/$OASV
+  wget $JS_URL/$JS
+  wget $PYR_URL/$PYR
+  wget $IMP_URL/$IMP
+  wget $ZP_URL/$ZP
+  wget $ISO_URL/$ISO
+  wget $MITERTOOLS_URL/$MITERTOOLS
+  wget $WRK_URL/$WRK
+  wget $LOP_URL/$LOP
+  wget $OASPV_URL/$OASPV
+  wget $PYAML_URL/$PYAML
+  wget $SIX_URL/$SIX
+  wget $PRS_URL/$PRS
+  wget $FLASK_URL/$FLASK
+  wget $DANGER_URL/$DANGER
+  wget $JINJA_URL/$JINJA
+  wget $CLK_URL/$CLK
+  wget $MUS_URL/$MUS
+  wget $OA3_URL/$OA3
+  wget $SJ_URL/$SJ
+  wget $TC_URL/$TC
+  wget $DC_URL/$DC
+}
+
+### main ###
+get_source_files
+get_wheel_files

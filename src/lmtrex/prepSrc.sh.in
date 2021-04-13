@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# Purpose: checkout distro from lifemapper SVN and create *.tar.gz files to use in RPM. 
+# NOTE: for svn checkout will be prompted for valid user/passwd.
+
+SRC=@REPONAME@
+URL=https://github.com/lifemapper/
+TOPDIR=@REPONAME@-@VERSION@
+SRCNAME=@NAME@
+PYPI_URL=https://files.pythonhosted.org/packages
+
+# CherryPy==18.6.0 (separate RPM with deps)
+# Jinja2>=2.11.3
+JINJA_URL=$PYPI_URL/7e/c2/1eece8c95ddbc9b1aeb64f5783a9e07a286de42191b7204d67b7496ddf35
+JINJA_PKG=Jinja2-2.11.3-py2.py3-none-any.whl
+
+# download archive from lifemapper git
+download_git () {
+      echo "Starting GIT checkout from $URL"
+      wget "$URL/$SRC/archive/@VERSION@.@TARBALL_POSTFIX@" 
+      tar xzvf @VERSION@.@TARBALL_POSTFIX@
+      
+      
+      if [ -d $TOPDIR ]; then
+          echo "Removing .git in $TOPDIR:"
+          DIRS=`find $TOPDIR -name .git`
+          for i in $DIRS; do
+              rm -rf $i
+          done
+
+      else
+          echo "Error with GIT archive download from $URL/$SRC: directory $TOPDIR is not created"
+      fi
+}
+
+
+# create distro files for lmcompute
+create_distro () {
+  if [ -d $TOPDIR ]; then
+      # create lmcompute src distro
+      echo "Creating lmcompute src archive from Github archive download"
+      tar czf $SRCNAME-@VERSION@.@TARBALL_POSTFIX@ $TOPDIR/* \
+          --exclude=dataclean \
+          --exclude=sysadmin
+  else
+      echo "GIT downloaded directory $TOPDIR is not present"
+  fi
+}
+
+### main ###
+download_git
+apply_patches
+collect_configs
+create_distro

@@ -66,17 +66,24 @@
     <package>python-javapackages</package>
     <package>tzdata-java</package>
     
-    <!-- build from source dependencies -->
+    <!-- build from source or wheel dependencies -->
     <package>opt-lifemapper-biotaphypy</package>
+    <package>opt-lifemapper-cherrypy</package>
     <package>opt-lifemapper-cython</package>
-    <package>opt-lifemapper-dendropy</package>  
+    <package>opt-lifemapper-dendropy</package>
+    <package>opt-lifemapper-flask</package>
     <package>opt-lifemapper-gdal</package>
+    <package>opt-lifemapper-lmlab-sharepy</package>
     <package>opt-lifemapper-lmpy</package>    
+    <package>opt-lifemapper-lmtrex</package>    
     <package>opt-lifemapper-matplotlib</package>
     <package>opt-lifemapper-numpy</package>
-    <package>    lifemapper-proj</package>  
-    <package>opt-lifemapper-pytest</package>
+    <package>opt-lifemapper-requests</package>
     <package>opt-lifemapper-scipy</package> 
+    <package>opt-specify-open-api-tools</package>
+
+    <package>lifemapper-proj</package>
+    <package>rocks-lmlab</package>
 
     <!-- tools -->
     <package>rocks-lmlab</package>

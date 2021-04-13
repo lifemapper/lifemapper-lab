@@ -3,15 +3,15 @@
 # Purpose: download release of lmpy, lm python objects, from Github repository 
 
 URL=https://github.com/lifemapper/@ARCHIVENAME@/releases/download/v@VERSION@
-FNAME=@ARCHIVENAME@-@VERSION@-py3-none-any.whl
+FNAME=@ARCHIVENAME@-@VERSION@-py3-none-any.@WHEEL_POSTFIX@
 
 # wget https://github.com/lifemapper/lmpy/archive/1.0.0.tar.gz
 
 # download release from lifemapper github
-download_source () {
+download_wheel () {
   echo "Starting download from $URL"
   wget "$URL/$FNAME" 
 }
 
 ### main ###
-download_source
+download_wheel

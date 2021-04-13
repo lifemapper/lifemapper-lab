@@ -56,7 +56,7 @@
 #
 # $Log$
 
-PKGROOT         = /var/www/html/roll-documentation/lifemapper-lab/$(VERSION)
+PKGROOT         = /var/www/html/roll-documentation/lifemapper-core/$(VERSION)
 REDHAT.ROOT     = $(PWD)/../../
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk

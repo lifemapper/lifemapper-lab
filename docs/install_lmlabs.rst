@@ -99,6 +99,6 @@ Look for Errors
    and may be output appended to the end of an existing logfile (from previous 
    runs) and will be useful if the script must be re-run manually for testing.
    
-   * /tmp/post-99-lifemapper-lab.debug (calls init_lmlab on reboot) 
+   * /tmp/post-99-lifemapper-lab.debug (calls init-lmlab on reboot) 
    * /state/partition1/lmscratch/log/init_lab.log
      

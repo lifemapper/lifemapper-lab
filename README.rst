@@ -25,6 +25,34 @@ Downloads
 
 Individual package dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* biotaphypy 
+    * matplotlib
+
+* lmpy
+
+* gdal
+    * proj
+
+* python wheels
+    * numpy 
+    * scipy
+    * cython
+    * more-itertools
+    
+* dendropy
+
+* cherrypy
+* mod-wsgi
+
+* pytest-cov
+* requests
+* six
+* solr
+* zipp
+
+maybe later:
+ete3 (PyQt4, python-lxml (installed on FE only as part of Centos roll))
+
 
 Required Rolls
 ~~~~~~~~~~~~~~

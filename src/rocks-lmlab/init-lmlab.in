@@ -69,39 +69,12 @@ set_permissions () {
     done
 }
 
-# Install all python wheel files with pip
 finish_wheel_installs () {
-    $PY3 -m ensurepip --default-pip
-    $PY3 -m pip install --upgrade pip
-
-    # these are filename prefixes
-    echo "-- install ordered wheel dependencies ..." >> $LOG
-    ORDERED_DEPS="numpy python_dateutil pyparsing kiwisolver cycler matplotlib scipy"
-    for dep in $ORDERED_DEPS
-        do
-            wname=$WHL_DIR/$dep*whl
-            echo "install ordered dependency $dep ..." >> $LOG
-            $PY3 -m pip install $wname
-        done
-
-    INSTALLED_PKGS=`$PY3 -m pip list | /usr/bin/grep -v Package | /usr/bin/grep -v "^----" | /usr/bin/awk '{print $1}'`
-    # install rest of wheel files, ignore previously installed files
-    echo "-- install remaining wheel dependencies ..." >> $LOG
-    FILES=$WHL_DIR/*whl
-    startidx=$((${#WHL_DIR} + 2))
-    for f in $FILES
-        do
-            filelen=${#f}
-            # filename prefix sometimes differs from package name
-            pkgname=$(echo $f | cut -c$startidx-$filelen | cut -d'-' -f1)
-            if [[ ${INSTALLED_PKGS[*]} =~ $pkgname ]]; then
-                echo "$pkgname installed already ..."
-            else
-                echo "install remaining dependency $pkgname ..."
-                $PY3 -m pip install $f
-            fi
-        done
+    echo "-- Start install_wheels script" >> $LOG
+    $BIN/install_wheels >> $LOG
+    echo "-- End install_wheels script" >> $LOG
 }
+
 
 # update linker paths
 run_ldconfig () {
@@ -124,9 +97,9 @@ install_cron_jobs () {
     echo "-- End install-lmlab-cron" >> $LOG
 }
 
-# run updateCfg to index solr and run other updates
+# run update-lmlab to do any updates
 update_config() {
-    echo "-- update configuration and re-index solr" >> $LOG
+    echo "-- update configuration" >> $LOG
     $BIN/update-lmlab >> $LOG  2>&1
 }
 
@@ -140,9 +113,12 @@ set_defaults
 TimeStamp "# Start"
 
 finish_wheel_installs
-set_permissions
+# Code does not currently exist in this roll
+#set_permissions
 run_ldconfig
+# Cron jobs do not currently exist in this roll
 # install_cron_jobs
-update_config
+# Configuration files do not currently exist in this roll
+# update_config
 
 TimeStamp "# End"

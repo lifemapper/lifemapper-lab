@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# shared dependencies
+BASE_DEPS="more-itertools setuptools six wheel zipp"
+REQUESTS_DEPS="chardet certifi idna urllib3 requests"
+
+# ordered package dependencies (some dependencies shared from BASE_DEPS and REQUESTS_DEPS)
+CHERRYPY_DEPS="tempora portend jaraco.functools cheroot zc.lockfile jaraco.classes importlib-resources jaraco.text jaraco.collections CherryPy"
+CHERRYPY_CORS_DEPS="httpagentparser cherrypy-cors"
+LMPY_DEPS="Rtree DendroPy"
+OPENAPICORE_DEPS="attrs importlib-metadata pyrsistent jsonschema openapi-schema-validator isodate Werkzeug laxy-object-proxy PyYAML openapi-spec-validator parse"
+FLASK_DEPS="itsdangerous Jinja2 click Werkzeug MarkupSafe Flask"
+OPENAPI3_DEPS="PyYAML openAPI3" # and REQUESTS_DEPS 
+SPECIFY_OAT_DEPS="simplejson termcolor setuptools dataclasses"
+

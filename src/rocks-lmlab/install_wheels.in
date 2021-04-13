@@ -1,0 +1,78 @@
+#!/bin/bash
+#
+# This script installs python wheels in order so that dependency versions are controlled 
+# and not pulled in automatically. 
+# The script can be run at any time to re-install included wheels.
+
+set_defaults() {
+    # Source function library.
+    INITD=/etc/rc.d/init.d
+    . $INITD/functions
+
+    # log errors
+    LOG=@LMSCRATCHDISK@/log/`/bin/basename $0`.log
+    rm -f $LOG
+    touch $LOG
+    BIN=@PKGROOT@/rocks/bin
+
+    echo "-- enable modules"  | tee -a $LOG
+    source /usr/share/Modules/init/bash
+}
+
+order_wheel_installs () {
+    DEPENDENCIES=("$@")
+    echo "Install dependencies " $DEPENDENCIES
+    for d in $DEPENDENCIES
+        do
+            echo "install dependency $d from $WHL_DIR ..."
+            wname=$WHL_DIR/$d*whl
+            @PYBIN@ -m pip install $wname
+        done    
+}
+
+# Install all python wheel files with pip
+finish_wheel_installs () {
+    @PYBIN@ -m ensurepip --default-pip
+    @PYBIN@ -m pip install --upgrade pip
+    WHL_DIR=@PKGROOT@/rocks/etc
+
+    echo "-- install python wheels with dependencies ..." >> $LOG
+    $BIN/define_python_dependencies
+    order_wheel_installs "${BASE_DEPS[@]}"
+    order_wheel_installs "${REQUESTS_DEPS[@]}"
+    order_wheel_installs "${CHERRYPY_DEPS[@]}"
+    order_wheel_installs "${CHERRYPY_CORS_DEPS[@]}"
+    order_wheel_installs "${LMPY_DEPS[@]}"
+    order_wheel_installs "${OPENAPICORE_DEPS[@]}"
+    order_wheel_installs "${FLASK_DEPS[@]}"
+    order_wheel_installs "${OPENAPI3_DEPS[@]}"
+    order_wheel_installs "${SPECIFY_OAT_DEPS[@]}"
+    
+    INSTALLED_PKGS=`@PYBIN@ -m pip list | /usr/bin/grep -v Package | /usr/bin/grep -v "^----" | /usr/bin/awk '{print $1}'`
+    # install rest of wheel files, ignore previously installed files
+    echo "-- install remaining wheel dependencies ..." >> $LOG
+    FILES=$WHL_DIR/*whl
+    startidx=$((${#WHL_DIR} + 2))
+    for f in $FILES
+        do
+            filelen=${#f}
+            # filename prefix sometimes differs from package name
+            pkgname=$(echo $f | cut -c$startidx-$filelen | cut -d'-' -f1)
+            if [[ ${INSTALLED_PKGS[*]} =~ $pkgname ]]; then
+                echo "$pkgname installed already ..."
+            else
+                echo "install remaining dependency $pkgname ..."
+                @PYBIN@ -m pip install $f
+            fi
+        done
+}
+
+TimeStamp () {
+    echo $1 `/bin/date` >> $LOG
+}
+
+####### Main #######
+set_defaults
+time_stamp "# Start"
+finish_wheel_installs
+time_stamp "# End"

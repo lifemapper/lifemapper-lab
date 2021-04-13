@@ -1,3 +1,4 @@
+# $Id$
 #
 # @Copyright@
 # 
@@ -53,69 +54,53 @@
 # 
 # @Copyright@
 #
+# $Log$
 
 REDHAT.ROOT = $(CURDIR)/../../
 
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 
-PY.PATH = /opt/python/bin/$(PYTHONVER)
-
-YR=`date +'%Y'`
-MO=`date +'%_m'`
-DY=`date +'%_d'`
-
 version.mk:
 	cat ../version.mk version.mk.in > version.mk
 
+PY.PATH = /opt/python/bin/$(PYTHONVER)
+
 SEDSPEC += \
-        -e 's%@LMHOME@%$(LMHOME)%g' \
+        -e 's%@PKGROOT@%$(PKGROOT)%g' \
+        -e 's%@PYBIN@%$(PY.PATH)%g' \
         -e 's%@LMDISK@%$(LMDISK)%g' \
         -e 's%@LMSCRATCHDISK@%$(LMSCRATCHDISK)%g' \
-        -e 's%@SOLRDATA@%$(SOLRDATA)%g' \
-        -e 's%@PYTHONVER@%$(PYTHONVER)%g' \
-        -e 's%@PYBIN@%$(PY.PATH)%g' \
-        -e 's%@PYTHON36_PACKAGES@%$(PYTHON36_PACKAGES)%g' \
-        -e 's%@PKGROOT@%$(PKGROOT)%g'
-        
-PROFILES = \
-	lifemapper-lab.sh \
-	lifemapper-lab.csh 
+        -e 's%@LMHOME@%$(LMHOME)%g' \
+        -e 's%@SMTPSERVER@%$(SMTPSERVER)%g' \
+        -e 's%@SMTPSENDER@%$(SMTPSENDER)%g' \
+        -e 's%@TEMPDIR@%$(TEMPDIR)%g'  \
+        -e 's%@REPONAME@%$(REPONAME)%g'  \
+        -e 's%@NAME@%$(NAME)%g' \
+        -e 's%@VERSION@%$(VERSION)%g'  \
+        -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g'  \
+        -e 's%@LMSERVER_FQDN@%$(LMSERVER_FQDN)%g'  \
+        -e 's%@JAVABIN@%$(JAVABIN)%g'
 
-CONFIGS = \
-	lifemapper-lab-ld.conf
+TOPDIR = $(REPONAME)-$(VERSION)
 
-PROGS = \
-    clean-lmlab-roll \
-	init-lmlab \
-	install-lmlab-cron \
-	install_wheels \
-    solr-lmlab-index \
-	update-lmlab
-
-PYFILES = __init__.py
-
-%: %.in
+prepSrc.sh: prepSrc.sh.in 
+	make version.mk
 	$(SED) $(SEDSPEC) $^ > $@
+	chmod 755 $@
 
-.SUFFIXES:
+prep: prepSrc.sh
+	./prepSrc.sh
 
-build: $(SCRIPTS) $(CONFIGS) $(PROFILES) $(PROGS) $(PYFILES) 
+build: 
+	tar xzvf $(NAME)-$(VERSION).tar.gz  
+	make $(SCRIPTS)
 
 install::
-	mkdir -p $(ROOT)/etc/profile.d
-	install -m 755 $(PROFILES) $(ROOT)/etc/profile.d
-
-	mkdir -p $(ROOT)/etc/ld.so.conf.d
-	install -m 644 lifemapper-lab-ld.conf $(ROOT)/etc/ld.so.conf.d
-
-	mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
-	install -m 755 $(PROGS) $(ROOT)/$(PKGROOT)/rocks/bin
-	install -m 644 $(PYFILES) $(ROOT)/$(PKGROOT)/rocks/bin
-    install -m 755 define_python_dependencies $(ROOT)/$(PKGROOT)/rocks/bin
+	mkdir -p $(ROOT)/$(PKGROOT)
+	mv $(TOPDIR)/*  $(ROOT)/$(PKGROOT) 
 
 clean::
-	rm -rf version.mk $(CONFIGS) $(PROFILES) $(PROGS) confconst.py
-	rm -rf *.pyc 
-
-	
+	rm -rf $(SCRIPTS) 
+	rm -rf version.mk prepSrc.sh
+	rm -rf $(TOPDIR)

@@ -4,7 +4,7 @@
 #    roll-installed RPMs, 
 #    created directories
 #    rocks host attributes
-#    user accounts and groups : postgres, pgbouncer, solr, lmwriter
+#    lmwriter account and groups
 
 RM="rpm -evl --quiet --nodeps"
 PY3=@PYBIN@
@@ -30,60 +30,19 @@ set_defaults() {
 }
 
 del-lifemapper() {
-   echo "Removing lifemapper-* and prerequisite RPMS" >> $LOG
-   $RM lifemapper-solr-common
+   echo "Removing *lifemapper-* and prerequisite RPMS" >> $LOG
+   $RM opt-lifemapper-biotaphypy
+   $RM opt-lifemapper-cython
+   $RM opt-lifemapper-dendropy
+   $RM opt-lifemapper-gdal
+   $RM opt-lifemapper-lmpy
+   $RM opt-lifemapper-lm-trex
+   $RM opt-lifemapper-matplotlib
+   $RM opt-lifemapper-numpy
+   $RM opt-lifemapper-scipy
    $RM rocks-lmlab
    $RM roll-lifemapper-lab-usersguide
    $RM roll-lifemapper-lab-kickstart
-}
-
-del-lifemapper-shared() {
-    if [[ $LMROLL_COUNT -le 1 ]] ; then
-        echo "Removing lifemapper RPMs shared" >> $LOG
-        # for requests on all lm rolls
-        $RM opt-lifemapper-certifi
-        $RM opt-lifemapper-chardet
-        $RM opt-lifemapper-idna
-        $RM opt-lifemapper-requests
-        $RM opt-lifemapper-wheel
-        $RM opt-lifemapper-urllib3
-    
-        module load opt-python
-        $PY3 -m pip uninstall -y wheel
-        $PY3 -m pip uninstall -y urllib3
-        module unload opt-python
-    fi 
-
-    if [[ $LMCOMPUTE_ROLL_COUNT -eq 0 ]] ; then
-        echo "Removing lmcompute/lmlab RPMs shared" >> $LOG
-        # java deps
-        $RM copy-jdk-configs
-        $RM java-1.8.0-openjdk-headless
-        $RM javapackages-tools
-        $RM lksctp-tools
-        $RM pcsc-lite-libs
-        $RM python-lxml
-        $RM python-javapackages
-        $RM tzdata-java
-    fi
-
-    if [[ $LMSERVER_ROLL_COUNT -eq 0 ]] ; then
-        echo "Removing lmlab/lmserver RPMs shared" >> $LOG
-       $RM opt-lifemapper-cheroot
-       $RM opt-lifemapper-cherrypy
-       $RM opt-lifemapper-mod_wsgi
-       $RM opt-lifemapper-portend
-       $RM opt-lifemapper-pytz
-       $RM opt-lifemapper-six
-       $RM opt-lifemapper-tempora
-       $RM opt-lifemapper-more-itertools
-       $RM opt-lifemapper-contextlib2
-       $RM opt-lifemapper-zc.lockfile
-       $RM opt-lifemapper-backports.functools_lru_cache
-       $RM opt-lifemapper-jaraco.functools
-       #$RM     lifemapper-solr-common
-    fi
-   
 }
 
 del-shared-directories() {
@@ -98,19 +57,10 @@ del-shared-directories() {
 
 del-shared-user-group () {
     echo "Remove lmwriter user/group/dirs" >> $LOG
-    /usr/bin/gpasswd -d apache lmwriter
     /usr/sbin/userdel lmwriter
     /usr/sbin/groupdel lmwriter
     /bin/rm -f /var/spool/mail/lmwriter
     /bin/rm -rf /export/home/lmwriter
-
-    /bin/egrep -i "^solr" /etc/passwd
-    if [[ $? -eq 0 ]]; then
-        echo "Remove solr user" >> $LOG
-        userdel solr
-        /bin/rm -f /var/spool/mail/solr
-        /bin/rm -rf /export/home/solr
-    fi
 
     echo "Syncing users info" >> $LOG
     $ROCKS_CMD sync users
@@ -120,30 +70,11 @@ del-config () {
     echo "Removing system configuration files used by lifemapper" >> $LOG
     rm -rf  /etc/ld.so.conf.d/lifemapper-lab-ld.conf
     rm -rf  /etc/profile.d/lifemapper-lab.*
-
-    if [[ $LMLAB_ROLL_COUNT -eq 0 ]]; then
-        rm -rf  /etc/security/limits.d/lifemapper.solr.conf
-    fi
 }
 
 del-directories () {   
-   echo "Removing dirs" >> $LOG
-   rm -rf /state/partition1/lmscratch/log/apache
-   rm -rf /state/partition1/lmscratch/sessions
-   rm -rf /state/partition1/lmscratch/tmpUpload
-   
-   echo "Removing data directories" >> $LOG
+   echo "Removing data directory" >> $LOG
    rm -rf /state/partition1/lmlab
-}
-
-del-webstuff () {
-    echo "Removing lmlab apache tmp directory" >> $LOG
-    rm -rf /var/www/tmp
-    
-    echo "Removing lifemapper-lab web config" >> $LOG
-    rm -f /etc/httpd/conf.d/lifemapper-lab-http.conf
-    rm -f /etc/systemd/system/httpd.service.d/lifemapper-lab-umask.conf
-    rm -rf  /etc/logrotate.d/lifemapper-lab-httpd.conf
 }
 
 # remove obsolete Lifemapper cron jobs

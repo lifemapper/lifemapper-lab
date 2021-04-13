@@ -1,7 +1,9 @@
 #!/bin/bash 
 #
 # Add scripts for scheduled tasks to cron.daily, cron.hourly directories. 
-# Called by initLM.
+# Called by init-lmlab.
+#
+# All cron scripts must be prefixed with "lmlab_"
 #
 usage () 
 {

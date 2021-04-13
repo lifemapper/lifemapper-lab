@@ -1,13 +1,14 @@
+# $Id$
 #
 # @Copyright@
 # 
-# 				Rocks(r)
-# 		         www.rocksclusters.org
-# 		         version 5.6 (Emerald Boa)
-# 		         version 6.1 (Emerald Boa)
+#               Rocks(r)
+#                www.rocksclusters.org
+#                version 5.6 (Emerald Boa)
+#                version 6.1 (Emerald Boa)
 # 
 # Copyright (c) 2000 - 2013 The Regents of the University of California.
-# All rights reserved.	
+# All rights reserved.  
 # 
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -24,9 +25,9 @@
 # 3. All advertising and press materials, printed or electronic, mentioning
 # features or use of this software must display the following acknowledgement: 
 # 
-# 	"This product includes software developed by the Rocks(r)
-# 	Cluster Group at the San Diego Supercomputer Center at the
-# 	University of California, San Diego and its contributors."
+#   "This product includes software developed by the Rocks(r)
+#   Cluster Group at the San Diego Supercomputer Center at the
+#   University of California, San Diego and its contributors."
 # 
 # 4. Except as permitted for the purposes of acknowledgment in paragraph 3,
 # neither the name or logo of this software nor the names of its
@@ -53,69 +54,38 @@
 # 
 # @Copyright@
 #
+# $Log$
 
 REDHAT.ROOT = $(CURDIR)/../../
-
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 
+version.mk:
+    cat ../version.mk version.mk.in > version.mk
+
 PY.PATH = /opt/python/bin/$(PYTHONVER)
 
-YR=`date +'%Y'`
-MO=`date +'%_m'`
-DY=`date +'%_d'`
-
-version.mk:
-	cat ../version.mk version.mk.in > version.mk
-
 SEDSPEC += \
-        -e 's%@LMHOME@%$(LMHOME)%g' \
-        -e 's%@LMDISK@%$(LMDISK)%g' \
-        -e 's%@LMSCRATCHDISK@%$(LMSCRATCHDISK)%g' \
-        -e 's%@SOLRDATA@%$(SOLRDATA)%g' \
-        -e 's%@PYTHONVER@%$(PYTHONVER)%g' \
-        -e 's%@PYBIN@%$(PY.PATH)%g' \
-        -e 's%@PYTHON36_PACKAGES@%$(PYTHON36_PACKAGES)%g' \
-        -e 's%@PKGROOT@%$(PKGROOT)%g'
-        
-PROFILES = \
-	lifemapper-lab.sh \
-	lifemapper-lab.csh 
+        -e 's%@ARCHIVENAME@%$(ARCHIVENAME)%g'  \
+        -e 's%@VERSION@%$(VERSION)%g'  \
+        -e 's%@WHEEL@%$(WHEEL)%g'
 
-CONFIGS = \
-	lifemapper-lab-ld.conf
+prepSrc.sh: prepSrc.sh.in
+    $(SED) $(SEDSPEC) $^ > $@
+    chmod 755 $@
 
-PROGS = \
-    clean-lmlab-roll \
-	init-lmlab \
-	install-lmlab-cron \
-	install_wheels \
-    solr-lmlab-index \
-	update-lmlab
+prep: prepSrc.sh
+    rm -rf version.mk
+    make version.mk
+    make prepSrc.sh
+    ./prepSrc.sh
 
-PYFILES = __init__.py
-
-%: %.in
-	$(SED) $(SEDSPEC) $^ > $@
-
-.SUFFIXES:
-
-build: $(SCRIPTS) $(CONFIGS) $(PROFILES) $(PROGS) $(PYFILES) 
+build: version.mk
+    echo $(ARCHIVENAME)-$(VERSION)
 
 install::
-	mkdir -p $(ROOT)/etc/profile.d
-	install -m 755 $(PROFILES) $(ROOT)/etc/profile.d
-
-	mkdir -p $(ROOT)/etc/ld.so.conf.d
-	install -m 644 lifemapper-lab-ld.conf $(ROOT)/etc/ld.so.conf.d
-
-	mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
-	install -m 755 $(PROGS) $(ROOT)/$(PKGROOT)/rocks/bin
-	install -m 644 $(PYFILES) $(ROOT)/$(PKGROOT)/rocks/bin
-    install -m 755 define_python_dependencies $(ROOT)/$(PKGROOT)/rocks/bin
+    mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
+    install -m 664 *.$(WHEEL)  $(ROOT)/$(PKGROOT)/rocks/etc
 
 clean::
-	rm -rf version.mk $(CONFIGS) $(PROFILES) $(PROGS) confconst.py
-	rm -rf *.pyc 
-
-	
+    rm -rf $(ARCHIVENAME)-$(VERSION) version.mk prepSrc.sh
