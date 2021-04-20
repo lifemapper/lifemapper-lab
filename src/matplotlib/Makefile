@@ -64,7 +64,8 @@ PY.PATH = /opt/python/bin/$(PYTHONVER)
 
 SEDSPEC += \
         -e 's%@ARCHIVENAME@%$(ARCHIVENAME)%g'  \
-        -e 's%@VERSION@%$(VERSION)%g'
+        -e 's%@VERSION@%$(VERSION)%g'  \
+        -e 's%@WHEEL@%$(WHEEL)%g'
 
 prepSrc.sh: prepSrc.sh.in
 	$(SED) $(SEDSPEC) $^ > $@
