@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Purpose: download release of lmpy, lm python objects, from Github repository 
+# wget root@yeti.lifemapper.org:/tank/data/biotaphy/lmpy-2.9.99-py3-none-any.whl
 
 URL=https://github.com/lifemapper/@ARCHIVENAME@/releases/download/v@VERSION@
-FNAME=@ARCHIVENAME@-@VERSION@-py3-none-any.@WHEEL_POSTFIX@
+FNAME=@ARCHIVENAME@-@VERSION@-py3-none-any.whl
 
-# wget https://github.com/lifemapper/lmpy/archive/1.0.0.tar.gz
 
 # download release from lifemapper github
 download_wheel () {
