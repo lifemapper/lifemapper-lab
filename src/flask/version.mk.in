@@ -1,0 +1,13 @@
+NAME        = opt-lifemapper-flask
+VERSION     = 1.1.2
+ARCHIVENAME = Flask
+RELEASE     = 0
+
+# Flask (1.1.2)
+#    Jinja2>=2.10.1 (2.11.3)
+#       MarkupSafe>=0.23 (1.1.1)
+#    click>=5.1 (7.1.2)
+#    itsdangerous>=0.24 (1.1.0)
+#    Werkzeug>=0.15 (1.0.1)
+
+RPM.FILES =  $(PKGROOT)/*
