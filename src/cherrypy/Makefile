@@ -85,7 +85,7 @@ build: version.mk
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
 	install -m 664 *.whl  $(ROOT)/$(PKGROOT)/rocks/etc
-	install -m 664 wheel_dependencies_cherry_py.sh  $(ROOT)/$(PKGROOT)/rocks/etc
+	install -m 664 wheel_dependencies_cherrypy.sh  $(ROOT)/$(PKGROOT)/rocks/etc
 
 clean::
 	rm -rf $(ARCHIVENAME)-$(VERSION) version.mk prepSrc.sh
