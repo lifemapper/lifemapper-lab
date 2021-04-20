@@ -68,19 +68,11 @@ PY.PATH = /opt/python/bin/$(PYTHONVER)
 
 SEDSPEC += \
         -e 's%@PKGROOT@%$(PKGROOT)%g' \
-        -e 's%@PYBIN@%$(PY.PATH)%g' \
-        -e 's%@LMDISK@%$(LMDISK)%g' \
-        -e 's%@LMSCRATCHDISK@%$(LMSCRATCHDISK)%g' \
         -e 's%@LMHOME@%$(LMHOME)%g' \
-        -e 's%@SMTPSERVER@%$(SMTPSERVER)%g' \
-        -e 's%@SMTPSENDER@%$(SMTPSENDER)%g' \
-        -e 's%@TEMPDIR@%$(TEMPDIR)%g'  \
         -e 's%@REPONAME@%$(REPONAME)%g'  \
         -e 's%@NAME@%$(NAME)%g' \
         -e 's%@VERSION@%$(VERSION)%g'  \
-        -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g'  \
-        -e 's%@LMSERVER_FQDN@%$(LMSERVER_FQDN)%g'  \
-        -e 's%@JAVABIN@%$(JAVABIN)%g'
+        -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g'
 
 TOPDIR = $(REPONAME)-$(VERSION)
 
@@ -93,14 +85,12 @@ prep: prepSrc.sh
 	./prepSrc.sh
 
 build: 
-	tar xzvf $(NAME)-$(VERSION).tar.gz  
-	make $(SCRIPTS)
+	tar xzvf $(NAME)-$(VERSION).tar.gz
 
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)
 	mv $(TOPDIR)/*  $(ROOT)/$(PKGROOT) 
 
 clean::
-	rm -rf $(SCRIPTS) 
 	rm -rf version.mk prepSrc.sh
 	rm -rf $(TOPDIR)

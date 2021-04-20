@@ -1,13 +1,14 @@
 NAME            = opt-lifemapper-lmtrex
 REPONAME        = t-rex
-VERSION         = 0.1.0
+VERSION         = 0.1.2
 RELEASE         = 0
 TARBALL_POSTFIX = tar.gz
 
-# CherryPy==18.6.0 (separate RPM)
-# gdal>=1.11.4
-# Jinja2>=2.11.3
-#     simplejson==3.17.2
+# Dependencies 
+#     CherryPy==18.6.0
+#     Flask==1.1.2
+#     gdal>=1.11.4
+#     requests>=2.25.1
 
 RPM.EXTRAS = %define __os_install_post %{nil}
 
