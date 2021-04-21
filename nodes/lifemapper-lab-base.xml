@@ -18,8 +18,9 @@
     $Log$
     </changelog>
 
-    <!-- gdal-libs -->
+    <!-- for gdal-libs for gdal for numpy -->
     <package>gdal-libs</package>
+    <package>gdal-devel</package>
     <package>CharLS</package> 
     <package>SuperLU</package> 
     <package>armadillo</package>
