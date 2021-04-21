@@ -4,19 +4,19 @@ PYPI_URL=https://files.pythonhosted.org/packages
 
 # Purpose: Fetch Requests source
 CHARDET_URL=$PYPI_URL/19/c7/fa589626997dd07bd87d9269342ccb74b1720384a4d739a1872bd84fbe68
-CHARDET=chardet-4.0.0-py2.py3-none-any.@WHEEL_POSTFIX@
+CHARDET=chardet-4.0.0-py2.py3-none-any.whl
 
 CERTIFI_URL=$PYPI_URL/5e/a0/5f06e1e1d463903cf0c0eebeb751791119ed7a4b3737fdc9a77f1cdfb51f
-CERTIFI=certifi-2020.12.5-py2.py3-none-any.@WHEEL_POSTFIX@
+CERTIFI=certifi-2020.12.5-py2.py3-none-any.whl
 
 IDNA_URL=$PYPI_URL/a2/38/928ddce2273eaa564f6f50de919327bf3a00f091b5baba8dfa9460f3a8a8
-IDNA=idna-2.10-py2.py3-none-any.@WHEEL_POSTFIX@
+IDNA=idna-2.10-py2.py3-none-any.whl
 
 URLLIB3_URL=$PYPI_URL/09/c6/d3e3abe5b4f4f16cf0dfc9240ab7ce10c2baa0e268989a4e3ec19e90c84e
-URLLIB3=urllib3-1.26.4-py2.py3-none-any.@WHEEL_POSTFIX@
+URLLIB3=urllib3-1.26.4-py2.py3-none-any.whl
 
 REQ_URL=$PYPI_URL/29/c1/24814557f1d22c56d50280771a17307e6bf87b70727d975fd6b2ce6b014a
-REQ=@ARCHIVENAME@-@VERSION@-py2.py3-none-any.@WHEEL_POSTFIX@
+REQ=@ARCHIVENAME@-@VERSION@-py2.py3-none-any.whl
 
 get_wheels () {
     echo "Fetch `requests` dependencies"
