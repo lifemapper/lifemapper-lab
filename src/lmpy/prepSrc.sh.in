@@ -6,7 +6,7 @@
 PYPI_URL=https://files.pythonhosted.org/packages
 
 # Rtree requires libspatialindex, built from source in another rpm
-RTREE_URL=https://files.pythonhosted.org/packages/1f/f4/0d893e8fa281d370c728dc42dc457f4f6128ea4a96a98442eb20755daee6/
+RTREE_URL=$PYPI_URL/1f/f4/0d893e8fa281d370c728dc42dc457f4f6128ea4a96a98442eb20755daee6
 RTREE=Rtree-0.9.7-cp36-cp36m-manylinux2010_x86_64.whl
 
 # lmpy wheel, not yet live
