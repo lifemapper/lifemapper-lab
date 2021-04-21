@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Purpose: Fetch source
+
+DL_URL=https://github.com/libspatialindex/libspatialindex/releases/download/@VERSION@
+DL_PKG=@ARCHIVENAME@-src-@VERSION@.@TARBALL_POSTFIX@
+
+get_source_files () {
+  echo "Fetch @ARCHIVENAME@ source code"
+  wget "$DL_URL/$DL_PKG"
+}
+
+### main ###
+get_source_files
+
