@@ -3,12 +3,12 @@
 # Purpose: Fetch @ARCHIVENAME@ source
 PYPI_URL=https://files.pythonhosted.org/packages
 
-NPY_URL=$PYPI_URL/07/08/a549ba8b061005bb629b76adc000f3caaaf881028b963c2e18f811c6edc1
-NPY_WHL=@ARCHIVENAME@-@VERSION@-cp36-cp36m-manylinux1_x86_64.whl
+NPY_URL=$PYPI_URL/45/b2/6c7545bb7a38754d63048c7696804a0d947328125d81bf12beaa692c3ae3
+NPY=@ARCHIVENAME@-@VERSION@-cp36-cp36m-manylinux1_x86_64.whl
 
 get_wheel () {
   echo "Fetch @ARCHIVENAME@ wheel"
-  wget "$NPY_URL/$NPY_WHL"
+  wget "$NPY_URL/$NPY"
 }
 
 ### main ###
