@@ -18,24 +18,24 @@ SIX_URL=$PYPI_URL/ee/ff/48bde5c0f013094d729fe4b0316ba2a24774b3ff1c52d924a8a4cb04
 SIX=six-1.15.0-py2.py3-none-any.whl
 
 CYCLER_URL=$PYPI_URL/f7/d2/e07d3ebb2bd7af696440ce7e754c59dd546ffe1bbe732c8ab68b9c834e61
-CYCLER=cycler-0.10.0-py2.py3-none-any.@WHEEL@
+CYCLER=cycler-0.10.0-py2.py3-none-any.whl
 
 # numpy in separate RPM/wheel
 
 KIWI_URL=$PYPI_URL/a7/1b/cbd8ae738719b5f41592a12057ef5442e2ed5f5cb5451f8fc7e9f8875a1a
-KIWI=kiwisolver-1.3.1-cp36-cp36m-manylinux1_x86_64.@WHEEL@
+KIWI=kiwisolver-1.3.1-cp36-cp36m-manylinux1_x86_64.whl
 
 PILLOW_URL=$PYPI_URL/bb/25/04759b5c6262a4b76998fe79ced2c9b5602c6abe12d5c44ba057946f39ee
-PILLOW=Pillow-8.1.2-cp36-cp36m-manylinux1_x86_64.@WHEEL@
+PILLOW=Pillow-8.1.2-cp36-cp36m-manylinux1_x86_64.whl
 
 PDATE_URL=$PYPI_URL/d4/70/d60450c3dd48ef87586924207ae8907090de0b306af2bce5d134d78615cb
-PDATE=python_dateutil-2.8.1-py2.py3-none-any.@WHEEL@
+PDATE=python_dateutil-2.8.1-py2.py3-none-any.whl
 
 PPRS_URL=$PYPI_URL/8a/bb/488841f56197b13700afd5658fc279a2025a39e22449b7cf29864669b15d
 PPRS=pyparsing-2.4.7-py2.py3-none-any.whl
 
 MPL_URL=$PYPI_URL/09/03/b7b30fa81cb687d1178e085d0f01111ceaea3bf81f9330c937fb6f6c8ca0
-MPL=@ARCHIVENAME@-@VERSION@-cp36-cp36m-manylinux1_x86_64.@WHEEL@
+MPL=@ARCHIVENAME@-@VERSION@-cp36-cp36m-manylinux1_x86_64.whl
 
 get_wheels () {
   echo "Fetch @ARCHIVENAME@ dependencies and wheel"
