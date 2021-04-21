@@ -3,15 +3,23 @@
 # Purpose: download release of lmpy, lm python objects, from Github repository 
 # wget root@yeti.lifemapper.org:/tank/data/biotaphy/lmpy-2.9.99-py3-none-any.whl
 
-URL=https://github.com/lifemapper/@ARCHIVENAME@/releases/download/v@VERSION@
-FNAME=@ARCHIVENAME@-@VERSION@-py3-none-any.whl
+PYPI_URL=https://files.pythonhosted.org/packages
+
+# Rtree requires libspatialindex, built from source in another rpm
+RTREE_URL=https://files.pythonhosted.org/packages/1f/f4/0d893e8fa281d370c728dc42dc457f4f6128ea4a96a98442eb20755daee6/
+RTREE=Rtree-0.9.7-cp36-cp36m-manylinux2010_x86_64.whl
+
+# lmpy wheel, not yet live
+LMPY_URL=https://github.com/lifemapper/@ARCHIVENAME@/releases/download/v@VERSION@
+LMPY=@ARCHIVENAME@-@VERSION@-py3-none-any.whl
 
 
 # download release from lifemapper github
-download_wheel () {
-  echo "Starting download from $URL"
-  wget "$URL/$FNAME" 
+download_wheels () {
+  echo "Downloading wheels for @ARCHIVENAME@ and dependencies"
+  wget "$RTREE_URL/$RTREE" 
+#   wget "$LMPY_URL/$LMPY" 
 }
 
 ### main ###
-download_wheel
+download_wheels
