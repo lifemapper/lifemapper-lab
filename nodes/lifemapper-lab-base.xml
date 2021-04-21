@@ -56,7 +56,10 @@
     <package>gpsbabel</package>
     <package>libusb</package>
     <package>shapelib</package>
-
+    <!-- rtree -->
+    <package>spatialindex</package>
+    <package>spatialindex-devel</package>
+    
     <!-- java for nodes -->
     <package>copy-jdk-configs</package>
     <package>java-1.8.0-openjdk-headless</package>

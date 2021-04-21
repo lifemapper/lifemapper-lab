@@ -28,6 +28,11 @@ compile proj
 install lifemapper-proj
 /sbin/ldconfig
 
+# rtree dependency
+# yumdownloader --resolve --enablerepo epel spatialindex-devel.x86_64
+rpm -i src/RPMS/spatialindex-1.8.5-1.el7.x86_64.rpm
+rpm -i src/RPMS/spatialindex-devel-1.8.5-1.el7.x86_64.rpm
+
 # gdal and dependencies 
 # for gdal
 # # for gdal-libs
