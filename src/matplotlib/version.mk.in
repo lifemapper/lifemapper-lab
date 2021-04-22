@@ -11,6 +11,9 @@ RELEASE 		= 0
 #     pillow>=6.2.0 (8.1.2)
 #     python-dateutil>=2.1 (2.8.1)
 #     pyparsing!=2.0.4,!=2.1.2,!=2.1.6,>=2.0.3 (2.4.7)
+# 
+# shared dependencies: numpy, six
+#
 
 RPM.EXTRAS = "AutoReq: no"
 

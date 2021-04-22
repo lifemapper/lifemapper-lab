@@ -4,48 +4,37 @@ VERSION         = 1.1.1
 RELEASE         = 0
 WHEEL_POSTFIX   = whl
 
-# SPECIFY_OAT_DEPS="simplejson termcolor setuptools dataclasses"
-#                 + OPENAPICORE_DEPS
-#                 + FLASK_DEPS
-#                 + REQUESTS_DEPS
-#                 + OPENAPI3_DEPS
 #
-# OPENAPICORE_DEPS="attrs zipp importlib-metadata pyrsistent jsonschema openapi-schema-validator isodate more-itertools Werkzeug laxy-object-proxy PyYAML openapi-spec-validator six parse"
 # openapi-core (0.13.7)
 #     attrs  (20.1.0)
 #     openapi-schema-validator (0.1.5)
 #         jsonschema>=3.0.0 (3.2.0)
 #             pyrsistent>=0.14.0  (0.17.3)
-#             setuptools (28.8.0)
+#             setuptools (56.0.0)
 #             importlib-metadata; python_version < "3.8" (1.7.0)
 #                 zipp>=0.5  (3.1.0)
 #     isodate (0.6.0)
 #     more-itertools (8.5.0)
-#     werkzeug (1.0.1)
+#     Werkzeug (1.0.1)
 #     lazy-object-proxy (1.6.0)
 #     openapi-spec-validator (0.3.0)
 #         PyYAML>=5.1 (5.4.1)
 #     six  (1.15.0)
 #     parse (1.19.0)
-# FLASK_DEPS="itsdangerous Jinja2 click Werkzeug MarkupSafe Flask"
-# Flask 1.1.2
-#     itsdangerous>=0.24 (0.24)
-#     Jinja2>=2.10.1 (2.11.3)
-#     click>=5.1 (7.1.2)
-#     Werkzeug>=0.15 (1.0.1)
-#     MarkupSafe>=0.23 (1.1.1)
-# OPENAPI3_DEPS="PyYAML openAPI3" # and REQUESTS_DEPS 
+# Flask and deps in RPM: "MarkupSafe Jinja2 click itsdangerous Werkzeug Flask"
 # openapi3==1.4.0
-#     requests (2.5.1) (from requests RPM)
-#         certifi>=2017.4.17 (2020.6.20)
-#         urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1 (1.25.10)
-#         chardet<4,>=3.0.2 (3.0.4)
-#         idna<3,>=2.5 (2.10)
+#     requests and deps in RPM: "chardet certifi idna urllib3 requests"
 #     PyYaml-5.4.1 openapi3-1.4.0
 # simplejson==3.17.2
 # termcolor==1.1.0
-# setuptools==54.1.2
 # dataclasses==0.8
+#
+# shared dependencies: Flask and deps, 
+#                      requests and deps, 
+#                      more-itertools, 
+#                      setuptools, 
+#                      six
+#
 
 RPM.EXTRAS = %define __os_install_post %{nil}
 

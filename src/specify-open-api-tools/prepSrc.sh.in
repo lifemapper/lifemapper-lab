@@ -10,7 +10,6 @@ OA=openapi_core-0.13.7-py3-none-any.whl
 # attrs
 ATTRS_URL=$PYPI_URL/d6/e1/3aa3b03e7643ffd6e499b203fd2a44f79893443e8b0b520d05d3e5c638d5
 ATTRS=attrs-20.1.0-py2.py3-none-any.whl
-# CherryPy==18.6.0 (separate RPM with deps)
 
 # openapi-schema-validator
 OASV_URL=$PYPI_URL/61/de/67a615be34d76a1b18ee13861ffd584ffc982e465499c67d5b029bd1084a
@@ -24,21 +23,24 @@ JS=jsonschema-3.2.0-py2.py3-none-any.whl
 PYR_URL=$PYPI_URL/4d/70/fd441df751ba8b620e03fd2d2d9ca902103119616f0f6cc42e6405035062
 PYR=pyrsistent-0.17.3.tar.gz
 
+SETUP_URL=$PYPI_URL/ae/42/2876a3a136f8bfa9bd703518441c8db78ff1eeaddf174baa85c083c1fd15
+SETUP=setuptools-56.0.0-py3-none-any.whl
+
 # importlib-metadata
 IMP_URL=https://files.pythonhosted.org/packages/8e/58/cdea07eb51fc2b906db0968a94700866fc46249bdc75cac23f9d13168929
 IMP=importlib_metadata-1.7.0-py2.py3-none-any.whl
 
-# # zipp
-# ZP_URL=$PYPI_URL/b2/34/bfcb43cc0ba81f527bc4f40ef41ba2ff4080e047acb0586b56b3d017ace4
-# ZP=zipp-3.1.0-py3-none-any.whl
+# zipp
+ZP_URL=$PYPI_URL/b2/34/bfcb43cc0ba81f527bc4f40ef41ba2ff4080e047acb0586b56b3d017ace4
+ZP=zipp-3.1.0-py3-none-any.whl
 
 # isodate
 ISO_URL=$PYPI_URL/9b/9f/b36f7774ff5ea8e428fdcfc4bb332c39ee5b9362ddd3d40d9516a55221b2
 ISO=isodate-0.6.0-py2.py3-none-any.whl
 
-# # more-itertools (also in cherrypy)
-# MITERTOOLS_URL=$PYPI_URL/05/47/514062a0798c2e9bdfd4514bacf9971fc8961b715f01487e4cfda3cc45a7
-# MITERTOOLS=more_itertools-8.7.0-py3-none-any.whl
+# more-itertools
+MITERTOOLS_URL=$PYPI_URL/05/47/514062a0798c2e9bdfd4514bacf9971fc8961b715f01487e4cfda3cc45a7
+MITERTOOLS=more_itertools-8.7.0-py3-none-any.whl
 
 # werkzeug
 WRK_URL=$PYPI_URL/cc/94/5f7079a0e00bd6863ef8f1da638721e9da21e5bacee597595b318f71d62e
@@ -56,9 +58,9 @@ OASPV=openapi_spec_validator-0.3.0-py3-none-any.whl
 PYAML_URL=$PYPI_URL/7a/5b/bc0b5ab38247bba158504a410112b6c03f153c652734ece1849749e5f518
 PYAML=PyYAML-5.4.1-cp36-cp36m-manylinux1_x86_64.whl
 
-# # six (from openapi-core) (1.15.0)
-# SIX_URL=$PYPI_URL/ee/ff/48bde5c0f013094d729fe4b0316ba2a24774b3ff1c52d924a8a4cb04078a
-# SIX=six-1.15.0-py2.py3-none-any.whl
+# six (from openapi-core) (1.15.0)
+SIX_URL=$PYPI_URL/ee/ff/48bde5c0f013094d729fe4b0316ba2a24774b3ff1c52d924a8a4cb04078a
+SIX=six-1.15.0-py2.py3-none-any.whl
 
 # parse (from openapi-core) (1.19.0)
 PRS_URL=$PYPI_URL/89/a1/82ce536be577ba09d4dcee45db58423a180873ad38a2d014d26ab7b7cb8a
@@ -117,6 +119,7 @@ get_wheel_files () {
   wget $OASV_URL/$OASV
   wget $JS_URL/$JS
   wget $PYR_URL/$PYR
+  wget $SETUP_URL/$SETUP
   wget $IMP_URL/$IMP
   wget $ZP_URL/$ZP
   wget $ISO_URL/$ISO

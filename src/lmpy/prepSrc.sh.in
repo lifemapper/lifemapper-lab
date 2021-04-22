@@ -9,8 +9,14 @@ PYPI_URL=https://files.pythonhosted.org/packages
 RTREE_URL=$PYPI_URL/1f/f4/0d893e8fa281d370c728dc42dc457f4f6128ea4a96a98442eb20755daee6
 RTREE=Rtree-0.9.7-cp36-cp36m-manylinux2010_x86_64.whl
 
-DDPY_URL=$PYPI_URL/f9/10/125c181b1d97ffc4661a60ec897cfe058dc46cb53900d807819464c3510f/
+DDPY_URL=$PYPI_URL/f9/10/125c181b1d97ffc4661a60ec897cfe058dc46cb53900d807819464c3510f
 DDPY=DendroPy-4.5.2.tar.gz
+
+NPY_URL=$PYPI_URL/45/b2/6c7545bb7a38754d63048c7696804a0d947328125d81bf12beaa692c3ae3
+NPY=numpy-1.19.5-cp36-cp36m-manylinux1_x86_64.whl
+
+SPY_URL=$PYPI_URL/c8/89/63171228d5ced148f5ced50305c89e8576ffc695a90b58fe5bb602b910c2
+SPY=scipy-1.5.4-cp36-cp36m-manylinux1_x86_64.whl
 
 # lmpy wheel, not yet live
 LMPY_URL=https://github.com/lifemapper/@ARCHIVENAME@/releases/download/v@VERSION@
@@ -22,6 +28,8 @@ download_wheels () {
   echo "Downloading wheels for @ARCHIVENAME@ and dependencies"
   wget "$RTREE_URL/$RTREE" 
   wget "$DDPY_URL/$DDPY" 
+  wget "$NPY_URL/$NPY" 
+  wget "$SPY_URL/$SPY" 
 #   wget "$LMPY_URL/$LMPY" 
 }
 

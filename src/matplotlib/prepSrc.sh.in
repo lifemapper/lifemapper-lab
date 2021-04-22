@@ -20,7 +20,8 @@ SIX=six-1.15.0-py2.py3-none-any.whl
 CYCLER_URL=$PYPI_URL/f7/d2/e07d3ebb2bd7af696440ce7e754c59dd546ffe1bbe732c8ab68b9c834e61
 CYCLER=cycler-0.10.0-py2.py3-none-any.whl
 
-# numpy in separate RPM/wheel
+NPY_URL=$PYPI_URL/45/b2/6c7545bb7a38754d63048c7696804a0d947328125d81bf12beaa692c3ae3
+NPY=numpy-1.19.5-cp36-cp36m-manylinux1_x86_64.whl
 
 KIWI_URL=$PYPI_URL/a7/1b/cbd8ae738719b5f41592a12057ef5442e2ed5f5cb5451f8fc7e9f8875a1a
 KIWI=kiwisolver-1.3.1-cp36-cp36m-manylinux1_x86_64.whl
@@ -41,6 +42,7 @@ get_wheels () {
   echo "Fetch @ARCHIVENAME@ dependencies and wheel"
   wget "$SIX_URL/$SIX"
   wget "$CYCLER_URL/$CYCLER"
+  wget "$NPY_URL/$NPY"
   wget "$KIWI_URL/$KIWI"
   wget "$PILLOW_URL/$PILLOW"
   wget "$PDATE_URL/$PDATE"

@@ -23,5 +23,6 @@ RELEASE		= 0
 #     httpagentparser>=1.5 (1.9.1)
 #         wheel
 # 
-
+# shared dependencies: more-itertools, six, zipp
+#
 RPM.FILES =  $(PKGROOT)/*
