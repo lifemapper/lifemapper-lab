@@ -112,7 +112,6 @@ install::
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
 	install -m 755 $(PROGS) $(ROOT)/$(PKGROOT)/rocks/bin
 	install -m 644 $(PYFILES) $(ROOT)/$(PKGROOT)/rocks/bin
-    install -m 755 define_python_dependencies $(ROOT)/$(PKGROOT)/rocks/bin
 
 clean::
 	rm -rf version.mk $(CONFIGS) $(PROFILES) $(PROGS) confconst.py

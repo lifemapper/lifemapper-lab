@@ -89,7 +89,8 @@ build: version.mk
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
 	install -m 664 *.whl  $(ROOT)/$(PKGROOT)/rocks/etc
-	install -m 664 wheel_dependencies_requests.sh  $(ROOT)/$(PKGROOT)/rocks/etc
+    mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
+	install -m 755 define_dependencies_requests  $(ROOT)/$(PKGROOT)/rocks/bin
 
 clean::
 	rm -rf $(ARCHIVENAME)-$(VERSION) version.mk prepSrc.sh

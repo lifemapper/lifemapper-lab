@@ -86,7 +86,8 @@ build: version.mk
 install::
     mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
     install -m 664 *.$(WHEEL)  $(ROOT)/$(PKGROOT)/rocks/etc
-    install -m 664 wheel_dependencies_specifyoat.sh  $(ROOT)/$(PKGROOT)/rocks/etc
+    mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
+    install -m 755 define_dependencies_specify_oat  $(ROOT)/$(PKGROOT)/rocks/bin
 
 clean::
     rm -rf $(ARCHIVENAME)-$(VERSION) version.mk prepSrc.sh

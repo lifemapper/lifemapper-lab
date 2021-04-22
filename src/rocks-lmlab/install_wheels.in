@@ -19,6 +19,17 @@ set_defaults() {
     source /usr/share/Modules/init/bash
 }
 
+# REQUESTS_DEPS, CHERRYPY_DEPS, CHERRYPY_CORS_DEPS, FLASK_DEPS, LMPY_DEPS, MATPLOTLIB_DEPS
+# OPENAPICORE_DEPS, OPENAPI3_DEPS, SPECIFY_OAT_DEPS
+define_dependencies () {
+    FILES=$BIN/define_dependencies*
+    for f in $FILES
+        do
+            echo "$f"
+            $f
+        done
+}
+
 order_wheel_installs () {
     DEPENDENCIES=("$@")
     echo "Install dependencies " $DEPENDENCIES
@@ -38,13 +49,13 @@ finish_wheel_installs () {
 
     echo "-- install python wheels with dependencies ..." >> $LOG
     $BIN/define_python_dependencies
-    order_wheel_installs "${BASE_DEPS[@]}"
     order_wheel_installs "${REQUESTS_DEPS[@]}"
     order_wheel_installs "${CHERRYPY_DEPS[@]}"
     order_wheel_installs "${CHERRYPY_CORS_DEPS[@]}"
-    order_wheel_installs "${LMPY_DEPS[@]}"
-    order_wheel_installs "${OPENAPICORE_DEPS[@]}"
     order_wheel_installs "${FLASK_DEPS[@]}"
+    order_wheel_installs "${LMPY_DEPS[@]}"
+    order_wheel_installs "${MATPLOTLIB_DEPS[@]}"
+    order_wheel_installs "${OPENAPICORE_DEPS[@]}"
     order_wheel_installs "${OPENAPI3_DEPS[@]}"
     order_wheel_installs "${SPECIFY_OAT_DEPS[@]}"
     
@@ -74,5 +85,6 @@ TimeStamp () {
 ####### Main #######
 set_defaults
 time_stamp "# Start"
+define_dependencies
 finish_wheel_installs
 time_stamp "# End"
