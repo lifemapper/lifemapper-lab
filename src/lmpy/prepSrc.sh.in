@@ -9,6 +9,9 @@ PYPI_URL=https://files.pythonhosted.org/packages
 RTREE_URL=$PYPI_URL/1f/f4/0d893e8fa281d370c728dc42dc457f4f6128ea4a96a98442eb20755daee6
 RTREE=Rtree-0.9.7-cp36-cp36m-manylinux2010_x86_64.whl
 
+DDPY_URL=$PYPI_URL/f9/10/125c181b1d97ffc4661a60ec897cfe058dc46cb53900d807819464c3510f/
+DDPY=DendroPy-4.5.2.tar.gz
+
 # lmpy wheel, not yet live
 LMPY_URL=https://github.com/lifemapper/@ARCHIVENAME@/releases/download/v@VERSION@
 LMPY=@ARCHIVENAME@-@VERSION@-py3-none-any.whl
