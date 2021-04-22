@@ -21,6 +21,7 @@ LMPY=@ARCHIVENAME@-@VERSION@-py3-none-any.whl
 download_wheels () {
   echo "Downloading wheels for @ARCHIVENAME@ and dependencies"
   wget "$RTREE_URL/$RTREE" 
+  wget "$DDPY_URL/$DDPY" 
 #   wget "$LMPY_URL/$LMPY" 
 }
 
