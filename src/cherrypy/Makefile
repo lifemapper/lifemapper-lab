@@ -85,7 +85,7 @@ build: version.mk
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
 	install -m 664 *.whl  $(ROOT)/$(PKGROOT)/rocks/etc
-    mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
+	mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
 	install -m 755 define_dependencies_cherrypy  $(ROOT)/$(PKGROOT)/rocks/bin
 
 clean::
