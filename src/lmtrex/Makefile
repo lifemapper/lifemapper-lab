@@ -86,7 +86,7 @@ prep: prepSrc.sh
 	./prepSrc.sh
 
 build: 
-	tar xzvf $(NAME)-$(VERSION).tar.gz
+	tar xzvf $(PKGNAME)-$(VERSION).tar.gz
 
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)
