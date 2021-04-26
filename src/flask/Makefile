@@ -85,8 +85,8 @@ build: version.mk
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
 	install -m 664 *.whl  $(ROOT)/$(PKGROOT)/rocks/etc
-    mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
-	install -m 664 define_dependencies_flask.sh  $(ROOT)/$(PKGROOT)/rocks/bin
+	mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
+	install -m 664 define_dependencies_flask  $(ROOT)/$(PKGROOT)/rocks/bin
 
 clean::
 	rm -rf $(ARCHIVENAME)-$(VERSION) version.mk prepSrc.sh
