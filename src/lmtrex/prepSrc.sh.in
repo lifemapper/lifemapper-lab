@@ -4,9 +4,7 @@
 # NOTE: for svn checkout will be prompted for valid user/passwd.
 
 URL=https://github.com/lifemapper/
-REPONAME=t-rex
 TOPDIR=@REPONAME@-@VERSION@
-SRCNAME=@NAME@
 
 # download archive from lifemapper git
 download_git () {
@@ -32,7 +30,7 @@ create_distro () {
   if [ -d $TOPDIR ]; then
       # create lmtrex src distro
       echo "Creating lmtrex src archive from Github archive download"
-      tar czf $PKGNAME-@VERSION@.@TARBALL_POSTFIX@ \
+      tar czf $PKGNAME-@VERSION@.@TARBALL_POSTFIX@ --strip-components=1 \
           $TOPDIR/$PKGNAME \
           $TOPDIR/tests \
           $TOPDIR/solrcores
@@ -44,9 +42,3 @@ create_distro () {
 ### main ###
 download_git
 create_distro
-
-TOPDIR=t-rex-0.1.2
-tar czf lmtrex-0.1.2.tar.gz \
-          $TOPDIR/src \
-          $TOPDIR/tests \
-          $TOPDIR/solrcores

@@ -70,6 +70,7 @@ SEDSPEC += \
         -e 's%@PKGROOT@%$(PKGROOT)%g' \
         -e 's%@LMHOME@%$(LMHOME)%g' \
         -e 's%@NAME@%$(NAME)%g' \
+        -e 's%@REPONAME@%$(REPONAME)%g' \
         -e 's%@PKGNAME@%$(PKGNAME)%g' \
         -e 's%@VERSION@%$(VERSION)%g'  \
         -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g'
@@ -89,12 +90,11 @@ build:
 
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)
-    mv $(TOPDIR)/$(PKGNAME)  $(ROOT)/$(PKGROOT)
-    mv $(TOPDIR)/tests  $(ROOT)/$(PKGROOT)/$(PKGNAME)
-    
-    mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
-    mv $(TOPDIR)/solrcores  $(ROOT)/$(PKGROOT)/rocks/etc 
+	mv $(TOPDIR)/$(PKGNAME)  $(ROOT)/$(PKGROOT)
+	mv $(TOPDIR)/tests  $(ROOT)/$(PKGROOT)/$(PKGNAME)
+	
+	mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
+	mv $(TOPDIR)/solrcores  $(ROOT)/$(PKGROOT)/rocks/etc 
 
 clean::
 	rm -rf version.mk prepSrc.sh
-	rm -rf $(TOPDIR)
