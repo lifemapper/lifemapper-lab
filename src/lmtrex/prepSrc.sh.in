@@ -30,8 +30,8 @@ create_distro () {
   if [ -d $TOPDIR ]; then
       # create lmtrex src distro
       echo "Creating lmtrex src archive from Github archive download"
-      tar czf $PKGNAME-@VERSION@.@TARBALL_POSTFIX@ --strip-components=1 \
-          $TOPDIR/$PKGNAME \
+      tar czf @PKGNAME@-@VERSION@.@TARBALL_POSTFIX@ --strip-components=1 \
+          $TOPDIR/@PKGNAME@ \
           $TOPDIR/tests \
           $TOPDIR/solrcores
   else
