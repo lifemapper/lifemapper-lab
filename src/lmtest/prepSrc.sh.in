@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Purpose: Fetch @ARCHIVENAME@ release
+URL=https://github.com/lifemapper/@ARCHIVENAME@/releases/download/v1.0.0-beta.1/
+PKG=@ARCHIVENAME@-VERSION-py3-none-any.whl
+
+
+get_wheel () {
+  echo "Fetch @ARCHIVENAME@ wheel"
+  wget "$URL/$PKG"
+}
+
+### main ###
+get_wheel
