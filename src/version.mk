@@ -12,3 +12,5 @@ PYTHON36_PACKAGES	= /opt/python/lib/$(PYTHONVER)/site-packages
 SMTPSERVER			= localhost
 SMTPSENDER			= no-reply-lifemapper@@PUBLIC_FQDN@
 JAVABIN				= /etc/alternatives/java
+
+LMTREX_VER          = 0.1.3
