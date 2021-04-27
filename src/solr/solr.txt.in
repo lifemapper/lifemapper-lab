@@ -1,0 +1,14 @@
+SOLR_PID_DIR=@SOLRDATA@
+SOLR_HOME=@SOLRDATA@/data
+LOG4J_PROPS=@SOLRDATA@/log4j2.xml
+SOLR_LOGS_DIR=@SOLRDATA@/logs
+SOLR_PORT=@SOLR_PORT@
+SOLR_JAVA_MEM="-Xms1024m -Xmx1024m"
+SOLR_RECOMMENDED_OPEN_FILES=65000
+SOLR_RECOMMENDED_MAX_PROCESSES=65000
+## Zookeeper connection string; 
+##     only used when running in SolrCloud mode using -c
+##     If neither ZK_HOST is defined in solr.in.sh 
+##     nor the -z parameter is specified,
+##     an embedded ZooKeeper instance will be launched.
+## ZK_HOST=@ZK_HOST@

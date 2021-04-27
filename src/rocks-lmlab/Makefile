@@ -70,7 +70,7 @@ version.mk:
 
 SEDSPEC += \
         -e 's%@LMHOME@%$(LMHOME)%g' \
-        -e 's%@LMDISK@%$(LMDISK)%g' \
+        -e 's%@LMLABDISK@%$(LMLABDISK)%g' \
         -e 's%@LMSCRATCHDISK@%$(LMSCRATCHDISK)%g' \
         -e 's%@SOLRDATA@%$(SOLRDATA)%g' \
         -e 's%@PYTHONVER@%$(PYTHONVER)%g' \
@@ -83,24 +83,23 @@ PROFILES = \
 	lifemapper-lab.csh 
 
 CONFIGS = \
-	lifemapper-lab-ld.conf
+    lifemapper-lab-http.conf \
+    lifemapper-lab-ld.conf
 
 PROGS = \
     clean-lmlab-roll \
 	init-lmlab \
-	install-lmlab-cron \
-	install_wheels \
-    solr-lmlab-index \
-	update-lmlab
-
-PYFILES = __init__.py
+    install-lmlab-cron \
+    install-wheels \
+	update-lmlab \
+    update-solr
 
 %: %.in
 	$(SED) $(SEDSPEC) $^ > $@
 
 .SUFFIXES:
 
-build: $(SCRIPTS) $(CONFIGS) $(PROFILES) $(PROGS) $(PYFILES) 
+build: $(CONFIGS) $(PROFILES) $(PROGS) 
 
 install::
 	mkdir -p $(ROOT)/etc/profile.d
@@ -109,12 +108,14 @@ install::
 	mkdir -p $(ROOT)/etc/ld.so.conf.d
 	install -m 644 lifemapper-lab-ld.conf $(ROOT)/etc/ld.so.conf.d
 
+    mkdir -p $(ROOT)/etc/logrotate.d
+    install -m 644 lifemapper-lab-httpdlog $(ROOT)/etc/logrotate.d
+
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
 	install -m 755 $(PROGS) $(ROOT)/$(PKGROOT)/rocks/bin
-	install -m 644 $(PYFILES) $(ROOT)/$(PKGROOT)/rocks/bin
 
 clean::
-	rm -rf version.mk $(CONFIGS) $(PROFILES) $(PROGS) confconst.py
+	rm -rf version.mk $(CONFIGS) $(PROFILES) $(PROGS)
 	rm -rf *.pyc 
 
 	

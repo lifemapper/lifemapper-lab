@@ -29,52 +29,71 @@ set_defaults() {
     source /usr/share/Modules/init/bash
 }
 
+del-third-party-libs() {
+    $RM gdal-libs gdal-devel
+    $RM CharLS 
+    $RM SuperLU 
+    $RM armadillo 
+    $RM arpack 
+    $RM atlas atlas-devel
+    $RM blas blas-devel
+    $RM cfitsio 
+    $RM freexl 
+    $RM geos geos-devel
+    $RM hdf5 hdf5-devel
+    $RM lapack lapack-devel
+    $RM libaec libaec-devel
+    $RM libdap 
+    $RM libgeotiff libgeotiff-devel
+    $RM libgta
+    $RM libtiff-devel
+    $RM netcdf 
+    $RM ogdi 
+    $RM openblas-openmp 
+    $RM openjpeg2 
+    $RM postgresql-libs
+    $RM proj 
+    $RM unixODBC 
+    $RM xerces-c 
+    $RM gpsbabel
+    $RM libusb
+    $RM shapelib
+    $RM spatialindex
+    $RM spatialindex-devel
+}
+
 del-lifemapper() {
-   echo "Removing *lifemapper-* and prerequisite RPMS" >> $LOG
-   $RM opt-lifemapper-biotaphypy
-   $RM opt-lifemapper-cython
-   $RM opt-lifemapper-dendropy
-   $RM opt-lifemapper-gdal
-   $RM opt-lifemapper-lmpy
-   $RM opt-lifemapper-lm-trex
-   $RM opt-lifemapper-matplotlib
-   $RM opt-lifemapper-numpy
-   $RM opt-lifemapper-scipy
-   $RM rocks-lmlab
-   $RM roll-lifemapper-lab-usersguide
-   $RM roll-lifemapper-lab-kickstart
+    echo "Removing *lifemapper-* and prerequisite RPMS" >> $LOG
+    $RM opt-lifemapper-biotaphypy
+    $RM opt-lifemapper-cherrypy
+    $RM opt-lifemapper-cython
+    $RM opt-lifemapper-flask
+    $RM opt-lifemapper-gdal
+    $RM opt-lifemapper-lmpy
+    $RM opt-lifemapper-lmtest
+    $RM opt-lifemapper-matplotlib
+    $RM opt-lifemapper-requests
+    $RM rocks-lmlab
+    $RM opt-lifemapper-specify-oat
+    $RM roll-lifemapper-lab-usersguide
+    $RM roll-lifemapper-lab-kickstart
 }
 
-del-shared-directories() {
-   echo "Removing lifemapper installation directory" >> $LOG
-   rm -rf @LMHOME@
-   echo "Removing shared lifemapper temp and data directories" >> $LOG
-   rm -rf @LMSCRATCHDISK@
-   rm -rf @LMDISK@
-   echo "Removing shared lifemapper PID directory" >> $LOG
-   rm -rf /var/run/lifemapper
-}
-
-del-shared-user-group () {
-    echo "Remove lmwriter user/group/dirs" >> $LOG
-    /usr/sbin/userdel lmwriter
-    /usr/sbin/groupdel lmwriter
-    /bin/rm -f /var/spool/mail/lmwriter
-    /bin/rm -rf /export/home/lmwriter
-
-    echo "Syncing users info" >> $LOG
-    $ROCKS_CMD sync users
+del-lmtrex() {
+   echo "Removing lifemapper t-rex and directory" >> $LOG
+   rm -rf @LMHOME@/lmtrex
+   $RM opt-lifemapper-lmtrex
 }
 
 del-config () {
-    echo "Removing system configuration files used by lifemapper" >> $LOG
+    echo "Removing system configuration files used by lifemapper-lab" >> $LOG
     rm -rf  /etc/ld.so.conf.d/lifemapper-lab-ld.conf
     rm -rf  /etc/profile.d/lifemapper-lab.*
 }
 
 del-directories () {   
-   echo "Removing data directory" >> $LOG
-   rm -rf /state/partition1/lmlab
+   echo "Removing lifemapper lab data directory" >> $LOG
+   rm -rf @LMLABDISK@
 }
 
 # remove obsolete Lifemapper cron jobs
@@ -104,33 +123,20 @@ finish-cleanup () {
     echo >> $LOG
 }
 
-check-lm-processes () {
-    LMUSER_PROCESSES=`ps -Alf | grep lmwriter | grep -v grep | wc -l`
-    if [[ $LMUSER_PROCESSES -ne 0 ]]; then
-        echo "Stop all lmwriter processes before running this script"
-        exit 0
-    fi 
-}
 
 ### main ###
-
-check-lm-processes
 
 set_defaults
 TimeStamp "# Start"
 
 del-lifemapper
+del-lmtrex
+del-third-party-libs
 del-config
-del-webstuff
+del-directories
 del-cron-jobs
 del-directories
 del-automount-entry
-
-if [[ $LMROLL_COUNT -gt 1 ]]; then
-	del-lifemapper-shared
-	del-shared-directories
-	del-shared-user-group
-fi
 
 finish-cleanup
 

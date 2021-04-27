@@ -1,4 +1,4 @@
-NAME            = opt-specify-open-api-tools
+NAME            = opt-lifemapper-specify-oat
 REPONAME        = open_api_tools
 VERSION         = 1.1.1
 RELEASE         = 0

@@ -1,6 +1,6 @@
 NAME    = rocks-lmlab
 VERSION = $(LMCODE_VERSION)
-RELEASE = 2
+RELEASE = 3
 
 TARBALL_POSTFIX	= tar.gz
 

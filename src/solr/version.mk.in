@@ -1,0 +1,28 @@
+NAME			= lifemapper-solr
+ARCHIVENAME		= solr
+VERSION			= 8.6.2
+JTS				= jts-core-1.15.0.jar
+RELEASE			= 0
+TARBALL_POSTFIX	= tgz
+
+SOLRDIR			= /opt/solr
+JTSDIR			= /opt/solr/server/solr-webapp/webapp/WEB-INF/lib
+# Defined in roll src/version.mk file
+# SOLRDATA		= /var/solr 
+SOLRUSER		= solr
+
+SOLR_PORT		= 8983
+## Second solr node (testing on localhost)
+SOLR_PORT2      = 7574
+## Zookeeper connection string; 
+##   only used when running in SolrCloud mode using -c
+##   defaults to Zookeeper on localhost, SOLR_PORT + 1000
+ZK_HOST         = localhost:9983
+
+RPM.FILES =  \
+    $(PKGROOT)/*                \n\
+    $(SOLRDIR)/*                \n\
+    $(SOLRDATA)/*               \n\
+    /etc/default/solr.in.sh     \n\
+    /etc/rc.d/init.d/solr       \n\
+    /etc/security/limits.d/lifemapper.solr.conf
