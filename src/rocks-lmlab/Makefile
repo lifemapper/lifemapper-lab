@@ -103,6 +103,9 @@ PROGS = \
 build: $(CONFIGS) $(PROFILES) $(PROGS) 
 
 install::
+    mkdir -p $(ROOT)/etc/httpd/conf.d
+    install -m 644 lifemapper-lab-http.conf $(ROOT)/etc/httpd/conf.d
+    
 	mkdir -p $(ROOT)/etc/profile.d
 	install -m 755 $(PROFILES) $(ROOT)/etc/profile.d
 
