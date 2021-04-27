@@ -70,6 +70,7 @@ version.mk:
 
 SEDSPEC += \
         -e 's%@LMHOME@%$(LMHOME)%g' \
+        -e 's%@VERSION@%$(VERSION)%g' \
         -e 's%@LMLABDISK@%$(LMLABDISK)%g' \
         -e 's%@LMSCRATCHDISK@%$(LMSCRATCHDISK)%g' \
         -e 's%@SOLRDATA@%$(SOLRDATA)%g' \
@@ -83,16 +84,16 @@ PROFILES = \
 	lifemapper-lab.csh 
 
 CONFIGS = \
-    lifemapper-lab-http.conf \
-    lifemapper-lab-ld.conf
+	lifemapper-lab-http.conf \
+	lifemapper-lab-ld.conf
 
 PROGS = \
-    clean-lmlab-roll \
+	clean-lmlab-roll \
 	init-lmlab \
-    install-lmlab-cron \
-    install-wheels \
+	install-lmlab-cron \
+	install-wheels \
 	update-lmlab \
-    update-solr
+	update-solr
 
 %: %.in
 	$(SED) $(SEDSPEC) $^ > $@
@@ -108,8 +109,8 @@ install::
 	mkdir -p $(ROOT)/etc/ld.so.conf.d
 	install -m 644 lifemapper-lab-ld.conf $(ROOT)/etc/ld.so.conf.d
 
-    mkdir -p $(ROOT)/etc/logrotate.d
-    install -m 644 lifemapper-lab-httpdlog $(ROOT)/etc/logrotate.d
+	mkdir -p $(ROOT)/etc/logrotate.d
+	install -m 644 lifemapper-lab-httpdlog $(ROOT)/etc/logrotate.d
 
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
 	install -m 755 $(PROGS) $(ROOT)/$(PKGROOT)/rocks/bin

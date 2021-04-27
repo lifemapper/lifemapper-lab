@@ -1,13 +1,10 @@
 NAME    = rocks-lmlab
-VERSION = $(LMCODE_VERSION)
-RELEASE = 3
-
-TARBALL_POSTFIX	= tar.gz
+VERSION = $(LMTREX_VER)
+RELEASE = 0
 
 RPM.FILES =  \
     $(PKGROOT)/*  \n\
     /etc/httpd/conf.d/lifemapper-lab-http.conf  \n\
     /etc/ld.so.conf.d/lifemapper-lab-ld.conf  \n\
-    /etc/logrotate.d/lifemapper-httpd  \n\
-    /etc/profile.d/lifemapper-lab.*  \n\
-    /etc/systemd/system/httpd.service.d/lifemapper-lab-umask.conf
+    /etc/logrotate.d/lifemapper-httpdlog  \n\
+    /etc/profile.d/lifemapper-lab.*

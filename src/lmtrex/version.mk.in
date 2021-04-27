@@ -1,7 +1,7 @@
 NAME            = opt-lifemapper-lmtrex
 PKGNAME         = lmtrex
 REPONAME        = t-rex
-VERSION         = 0.1.3
+VERSION         = $(LMTREX_VER)
 RELEASE         = 0
 TARBALL_POSTFIX = tar.gz
 
