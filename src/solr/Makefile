@@ -10,8 +10,10 @@ REDHAT.ROOT = $(CURDIR)/../../
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 
-SCRIPTS = solr.txt solr solr-index
-
+SCRIPTS = \
+        solr.txt \
+        solr \
+        solr-lmlab-index
 
 SEDSPEC += \
         -e 's%@LMHOME@%$(LMHOME)%g' \
