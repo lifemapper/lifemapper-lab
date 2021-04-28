@@ -67,7 +67,7 @@ PY.PATH = /opt/python/bin/$(PYTHONVER)
 
 SEDSPEC += \
         -e 's%@VERSION@%$(VERSION)%g'  \
-        -e 's%@WHEEL@%$(WHEEL)%g'
+        -e 's%@ARCHIVENAME@%$(ARCHIVENAME)%g'
 
 prepSrc.sh: prepSrc.sh.in
 	$(SED) $(SEDSPEC) $^ > $@
@@ -84,7 +84,8 @@ build: version.mk
 
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
-	install -m 664 *.$(WHEEL)  $(ROOT)/$(PKGROOT)/rocks/etc
+    install -m 664 *.whl  $(ROOT)/$(PKGROOT)/rocks/etc
+    install -m 664 *.gz  $(ROOT)/$(PKGROOT)/rocks/etc
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
 	install -m 755 define_dependencies_specify_oat  $(ROOT)/$(PKGROOT)/rocks/bin
 

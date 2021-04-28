@@ -96,13 +96,13 @@ get_source_files () {
   wget $PYR_URL/$PYR
   wget $PRS_URL/$PRS
   wget $TC_URL/$TC
-  wget $OAT_URL/$OAT
+  wget $OAT_URL/$OAT --output-document=@ARCHIVENAME@-@VERSION@.tar.gz
 }
 
 
 get_wheel_files () {
   echo "Fetch @NAME@ wheel dependencies"
-  wget $OA_URL/$OA_PKG
+  wget $OA_URL/$OA
   wget $ATTRS_URL/$ATTRS
   wget $OASV_URL/$OASV
   wget $JS_URL/$JS

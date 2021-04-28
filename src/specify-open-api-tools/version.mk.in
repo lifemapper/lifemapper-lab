@@ -1,5 +1,5 @@
 NAME            = opt-lifemapper-specify-oat
-REPONAME        = open_api_tools
+ARCHIVENAME     = open_api_tools
 VERSION         = 1.1.1
 RELEASE         = 0
 
