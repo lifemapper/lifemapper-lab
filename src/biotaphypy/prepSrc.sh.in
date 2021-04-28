@@ -7,10 +7,10 @@ FNAME=@ARCHIVENAME@-@VERSION@-py3-none-any.whl
 
 
 # download release from lifemapper github
-download_source () {
+download_wheel () {
   echo "Starting download from $URL"
   wget "$URL/$FNAME" 
 }
 
 ### main ###
-download_source
+download_wheel

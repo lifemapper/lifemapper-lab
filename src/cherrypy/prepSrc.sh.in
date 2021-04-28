@@ -59,6 +59,10 @@ HAP=httpagentparser-1.9.1.tar.gz
 CORS_URL=$PYPI_URL/8c/eb/2dde33117abfb7a856e0ed2f554f0f4ad97477465c7708a53531e3661370
 CP_CORS=cherrypy_cors-1.6-py2.py3-none-any.whl
 
+download_source () {
+  echo "Fetch httpagentparser source code"
+  wget $HAP_URL/$HAP
+}
 
 get_wheel_files () {
   echo "Fetch CherryPy dependencies"
@@ -77,9 +81,8 @@ get_wheel_files () {
   wget $JCLASSES_URL/$JCLASSES
   wget $JCOLLS_URL/$JCOLLS
 
-  echo "Fetch CherryPy CORS handler and which pulls httpagentparser dependency on install"
+  echo "Fetch CherryPy CORS handler"
   wget $WHEEL_URL/$WHEEL
-  wget $HAP_URL/$HAP
   wget $CORS_URL/$CP_CORS
 
   echo "Fetch CherryPy"
@@ -87,4 +90,5 @@ get_wheel_files () {
 }
 
 ### main ###
+download_source
 get_wheel_files
