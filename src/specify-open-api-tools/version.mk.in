@@ -2,7 +2,6 @@ NAME            = opt-lifemapper-specify-oat
 REPONAME        = open_api_tools
 VERSION         = 1.1.1
 RELEASE         = 0
-WHEEL_POSTFIX   = whl
 
 #
 # openapi-core (0.13.7)

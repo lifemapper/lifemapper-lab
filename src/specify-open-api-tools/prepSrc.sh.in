@@ -73,11 +73,11 @@ PRS=parse-1.19.0.tar.gz
 # ----------------------------------------------
 # openapi3==1.1.0
 OA3_URL=$PYPI_URL/5d/e7/627e2362e9ccd7dddc10dd5e8912550e88a5bd6d9ba7cb19badaf3783789
-OA3_PKG=openapi3-1.4.0-py2.py3-none-any.whl
+OA3=openapi3-1.4.0-py2.py3-none-any.whl
 
 # simplejson==3.17.2
 SJ_URL=$PYPI_URL/c4/76/6c18cafdd84cb87ea737ec52965dc1d8730f0d8e8d019c1efaf0b58abb32
-SJ_PKG=simplejson-3.17.2-cp36-cp36m-manylinux1_x86_64.whl
+SJ=simplejson-3.17.2-cp36-cp36m-manylinux1_x86_64.whl
 
 # termcolor 1.1.0
 TC_URL=$PYPI_URL/8a/48/a76be51647d0eb9f10e2a4511bf3ffb8cc1e6b14e9e4fab46173aa79f981
@@ -87,11 +87,16 @@ TC=termcolor-1.1.0.tar.gz
 DC_URL=$PYPI_URL/fe/ca/75fac5856ab5cfa51bbbcefa250182e50441074fdc3f803f6e76451fab43
 DC=dataclasses-0.8-py3-none-any.whl
 
+# specify/open_api_tools
+OAT_URL=https://github.com/specify/@REPONAME@/archive/refs/tags
+OAT=@VERSION@.tar.gz
+
 get_source_files () {
   echo "Fetch @NAME@ tar.gz dependencies"
   wget $PYR_URL/$PYR
   wget $PRS_URL/$PRS
   wget $TC_URL/$TC
+  wget $OAT_URL/$OAT
 }
 
 

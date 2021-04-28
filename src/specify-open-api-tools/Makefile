@@ -61,33 +61,32 @@ REDHAT.ROOT = $(CURDIR)/../../
 include Rules.mk
 
 version.mk:
-    cat ../version.mk version.mk.in > version.mk
+	cat ../version.mk version.mk.in > version.mk
 
 PY.PATH = /opt/python/bin/$(PYTHONVER)
 
 SEDSPEC += \
-        -e 's%@ARCHIVENAME@%$(ARCHIVENAME)%g'  \
         -e 's%@VERSION@%$(VERSION)%g'  \
         -e 's%@WHEEL@%$(WHEEL)%g'
 
 prepSrc.sh: prepSrc.sh.in
-    $(SED) $(SEDSPEC) $^ > $@
-    chmod 755 $@
+	$(SED) $(SEDSPEC) $^ > $@
+	chmod 755 $@
 
 prep: prepSrc.sh
-    rm -rf version.mk
-    make version.mk
-    make prepSrc.sh
-    ./prepSrc.sh
+	rm -rf version.mk
+	make version.mk
+	make prepSrc.sh
+	./prepSrc.sh
 
 build: version.mk
-    echo $(ARCHIVENAME)-$(VERSION)
+	echo $(ARCHIVENAME)-$(VERSION)
 
 install::
-    mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
-    install -m 664 *.$(WHEEL)  $(ROOT)/$(PKGROOT)/rocks/etc
-    mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
-    install -m 755 define_dependencies_specify_oat  $(ROOT)/$(PKGROOT)/rocks/bin
+	mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
+	install -m 664 *.$(WHEEL)  $(ROOT)/$(PKGROOT)/rocks/etc
+	mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
+	install -m 755 define_dependencies_specify_oat  $(ROOT)/$(PKGROOT)/rocks/bin
 
 clean::
-    rm -rf $(ARCHIVENAME)-$(VERSION) version.mk prepSrc.sh
+	rm -rf version.mk prepSrc.sh
