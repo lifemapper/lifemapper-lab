@@ -78,6 +78,7 @@ SEDSPEC += \
         -e 's%@PYTHONVER@%$(PYTHONVER)%g' \
         -e 's%@PYBIN@%$(PY.PATH)%g' \
         -e 's%@PYTHON36_PACKAGES@%$(PYTHON36_PACKAGES)%g' \
+        -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g' \
         -e 's%@PKGROOT@%$(PKGROOT)%g'
         
 PROFILES = \
@@ -121,6 +122,4 @@ install::
 
 clean::
 	rm -rf version.mk $(CONFIGS) $(PROFILES) $(PROGS)
-	rm -rf *.pyc 
-
 	
