@@ -67,25 +67,8 @@ PRS_URL=$PYPI_URL/89/a1/82ce536be577ba09d4dcee45db58423a180873ad38a2d014d26ab7b7
 PRS=parse-1.19.0.tar.gz
 
 # ----------------------------------------------
-# Flask==1.1.2
-FLASK_URL=$PYPI_URL/f2/28/2a03252dfb9ebf377f40fba6a7841b47083260bf8bd8e737b0c6952df83f
-FLASK_PKG=Flask-1.1.2-py2.py3-none-any.whl
-
-# itsdangerous
-URL=$PYPI_URL/76/ae/44b03b253d6fade317f32c24d100b3b35c2239807046a4c953c7b89fa49e/
-DANGER=itsdangerous-1.1.0-py2.py3-none-any.whl
-
-# Jinja2>=2.11.3
-JINJA_URL=$PYPI_URL/7e/c2/1eece8c95ddbc9b1aeb64f5783a9e07a286de42191b7204d67b7496ddf35
-JINJA_PKG=Jinja2-2.11.3-py2.py3-none-any.whl
-
-# click
-CLK_URL=$PYPI_URL/d2/3d/fa76db83bf75c4f8d338c2fd15c8d33fdd7ad23a9b5e57eb6c5de26b430e
-CLK=click-7.1.2-py2.py3-none-any.whl
-
-# MarkupSafe
-MUS_URL=$PYPI_URL/b2/5f/23e0023be6bb885d00ffbefad2942bc51a620328ee910f64abe5a8d18dd1
-MUS=MarkupSafe-1.1.1-cp36-cp36m-manylinux1_x86_64.whl
+# Flask==1.1.2 and dependencies in opt-lifemapper-flask
+# Requests==2.25.1 and dependencies in opt-lifemapper-requests
 
 # ----------------------------------------------
 # openapi3==1.1.0
@@ -118,7 +101,6 @@ get_wheel_files () {
   wget $ATTRS_URL/$ATTRS
   wget $OASV_URL/$OASV
   wget $JS_URL/$JS
-  wget $PYR_URL/$PYR
   wget $SETUP_URL/$SETUP
   wget $IMP_URL/$IMP
   wget $ZP_URL/$ZP
@@ -129,15 +111,8 @@ get_wheel_files () {
   wget $OASPV_URL/$OASPV
   wget $PYAML_URL/$PYAML
   wget $SIX_URL/$SIX
-  wget $PRS_URL/$PRS
-  wget $FLASK_URL/$FLASK
-  wget $DANGER_URL/$DANGER
-  wget $JINJA_URL/$JINJA
-  wget $CLK_URL/$CLK
-  wget $MUS_URL/$MUS
   wget $OA3_URL/$OA3
   wget $SJ_URL/$SJ
-  wget $TC_URL/$TC
   wget $DC_URL/$DC
 }
 

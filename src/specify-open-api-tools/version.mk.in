@@ -29,13 +29,9 @@ WHEEL_POSTFIX   = whl
 # termcolor==1.1.0
 # dataclasses==0.8
 #
-# shared dependencies: Flask and deps, 
-#                      requests and deps, 
-#                      more-itertools, 
-#                      setuptools, 
-#                      six
+# shared dependencies: Flask and deps
+#                      requests and deps
 #
-
 RPM.EXTRAS = %define __os_install_post %{nil}
 
 RPM.FILES = $(PKGROOT)/* 
