@@ -31,12 +31,15 @@ define_dependencies () {
 }
 
 order_wheel_installs () {
+    # httpagentparser (cherrypy), 
+    # pyrsistent, parse, termcolor, open-api-tools (specify-oat)
+    #   are all pip-installable tar.gz file
     DEPENDENCIES=("$@")
     echo "Install dependencies " $DEPENDENCIES
     for d in $DEPENDENCIES
         do
             echo "install dependency $d from $WHL_DIR ..."
-            wname=$WHL_DIR/$d*whl
+            wname=$WHL_DIR/$d*
             @PYBIN@ -m pip install $wname
         done    
 }
