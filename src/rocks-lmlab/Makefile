@@ -69,6 +69,7 @@ version.mk:
 	cat ../version.mk version.mk.in > version.mk
 
 SEDSPEC += \
+        -e 's%@NAME@%$(NAME)%g' \
         -e 's%@LMHOME@%$(LMHOME)%g' \
         -e 's%@VERSION@%$(VERSION)%g' \
         -e 's%@LMLABDISK@%$(LMLABDISK)%g' \
@@ -103,18 +104,18 @@ PROGS = \
 build: $(CONFIGS) $(PROFILES) $(PROGS) 
 
 install::
-    mkdir -p $(ROOT)/etc/httpd/conf.d
-    install -m 644 lifemapper-lab-http.conf $(ROOT)/etc/httpd/conf.d
-    
+	mkdir -p $(ROOT)/etc/httpd/conf.d
+	install -m 644 lifemapper-lab-http.conf $(ROOT)/etc/httpd/conf.d
+	
 	mkdir -p $(ROOT)/etc/profile.d
 	install -m 755 $(PROFILES) $(ROOT)/etc/profile.d
-
+	
 	mkdir -p $(ROOT)/etc/ld.so.conf.d
 	install -m 644 lifemapper-lab-ld.conf $(ROOT)/etc/ld.so.conf.d
-
+	
 	mkdir -p $(ROOT)/etc/logrotate.d
 	install -m 644 lifemapper-lab-httpdlog $(ROOT)/etc/logrotate.d
-
+	
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
 	install -m 755 $(PROGS) $(ROOT)/$(PKGROOT)/rocks/bin
 

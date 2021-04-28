@@ -2,7 +2,6 @@ NAME    = rocks-lmlab
 VERSION = $(LMTREX_VER)
 RELEASE = 0
 
-TARBALL_POSTFIX = tar.gz
 
 RPM.FILES =  \
     $(PKGROOT)/*  \n\
