@@ -70,6 +70,9 @@ set_permissions () {
 }
 
 finish_wheel_installs () {
+    module load opt-python
+    $PY3 -m ensurepip --default-pip
+    $PY3 -m pip install --upgrade pip
     echo "-- Start install_wheels script" >> $LOG
     $BIN/install_wheels >> $LOG
     echo "-- End install_wheels script" >> $LOG

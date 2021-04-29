@@ -65,9 +65,6 @@ YR=`date +'%Y'`
 MO=`date +'%_m'`
 DY=`date +'%_d'`
 
-version.mk:
-	cat ../version.mk version.mk.in > version.mk
-
 SEDSPEC += \
         -e 's%@NAME@%$(NAME)%g' \
         -e 's%@LMHOME@%$(LMHOME)%g' \
@@ -101,6 +98,9 @@ PROGS = \
 	$(SED) $(SEDSPEC) $^ > $@
 
 .SUFFIXES:
+
+version.mk:
+	cat ../version.mk version.mk.in > version.mk
 
 build: $(CONFIGS) $(PROFILES) $(PROGS) 
 

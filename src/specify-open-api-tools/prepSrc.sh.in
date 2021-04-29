@@ -27,7 +27,7 @@ SETUP_URL=$PYPI_URL/ae/42/2876a3a136f8bfa9bd703518441c8db78ff1eeaddf174baa85c083
 SETUP=setuptools-56.0.0-py3-none-any.whl
 
 # importlib-metadata
-IMP_URL=https://files.pythonhosted.org/packages/8e/58/cdea07eb51fc2b906db0968a94700866fc46249bdc75cac23f9d13168929
+IMP_URL=$PYPI_URL/8e/58/cdea07eb51fc2b906db0968a94700866fc46249bdc75cac23f9d13168929
 IMP=importlib_metadata-1.7.0-py2.py3-none-any.whl
 
 # zipp
