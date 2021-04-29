@@ -101,4 +101,9 @@ Look for Errors
    
    * /tmp/post-99-lifemapper-lab.debug (calls init-lmlab on reboot) 
    * /state/partition1/lmscratch/log/init_lab.log
-     
+   
+   
+TODO:
+------
+update java-1.8.0-openjdk  java-1.8.0-openjdk-headless
+look at libusb

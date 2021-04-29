@@ -42,6 +42,7 @@ order_wheel_installs () {
     # pyrsistent, parse, termcolor, open-api-tools (specify-oat)
     #   are all pip-installable tar.gz file
     DEPENDENCIES=("$@")
+    echo "***" >> $LOG
     echo "Install ordered dependencies " $DEPENDENCIES >> $LOG
     for d in $DEPENDENCIES
         do
@@ -94,6 +95,5 @@ time_stamp () {
 ####### Main #######
 set_defaults
 time_stamp "# Start"
-define_python_dependencies
 finish_wheel_installs
 time_stamp "# End"
