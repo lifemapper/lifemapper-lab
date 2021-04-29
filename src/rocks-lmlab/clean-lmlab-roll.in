@@ -72,11 +72,31 @@ del-lifemapper() {
     $RM opt-lifemapper-lmpy
     $RM opt-lifemapper-lmtest
     $RM opt-lifemapper-matplotlib
+    $RM     lifemapper-proj
     $RM opt-lifemapper-requests
-    $RM rocks-lmlab
+    $RM     rocks-lmlab
+    $RM     lifemapper-solr
     $RM opt-lifemapper-specify-oat
     $RM roll-lifemapper-lab-usersguide
     $RM roll-lifemapper-lab-kickstart
+}
+
+del-python-packages() {
+    echo "Removing python packages" >> $LOG
+    $PIP3 uninstall -y biotaphypy cython
+    $PIP3 uninstall -y chardet certifi idna urllib3 requests
+    $PIP3 uninstall -y MarkupSafe Jinja2 click itsdangerous Werkzeug Flask
+    $PIP3 uninstall -y more-itertools pytz tempora portend jaraco.functools six cheroot 
+    $PIP3 uninstall -y zc.lockfile jaraco.classes zipp importlib-resources jaraco.text 
+    $PIP3 uninstall -y jaraco.collections CherryPy
+    $PIP3 uninstall -y httpagentparser cherrypy-cors
+    $PIP3 uninstall -y Rtree DendroPy numpy scipy lmpy
+    $PIP3 uninstall -y six cycler numpy kiwisolver Pillow python-dateutil pyparsing matplotlib
+    $PIP3 uninstall -y attrs zipp importlib-metadata pyrsistent jsonschema 
+    $PIP3 uninstall -y openapi-schema-validator isodate more-itertools Werkzeug 
+    $PIP3 uninstall -y lazy-object-proxy PyYAML openapi-spec-validator six parse openapi-core 
+    $PIP3 uninstall -y PyYAML openAPI3
+    $PIP3 uninstall -y simplejson termcolor dataclasses specify-oat
 }
 
 del-lmtrex() {
@@ -130,7 +150,8 @@ set_defaults
 TimeStamp "# Start"
 
 del-lifemapper
-# del-lmtrex
+del-lmtrex
+del-python-packages
 del-third-party-libs
 del-config
 del-directories
