@@ -114,6 +114,7 @@ del-config () {
 del-directories () {   
    echo "Removing lifemapper lab data directory" >> $LOG
    rm -rf @LMLABDISK@
+   rm -rf @LMSCRATCHDISK@
 }
 
 # remove obsolete Lifemapper cron jobs
@@ -123,13 +124,8 @@ del-cron-jobs () {
 }
 
 del-automount-entry () {
-   if [[ $LMROLL_COUNT -eq 1 ]]; then
-       cat /etc/auto.share  | grep -v "^lmlab " | grep -v "^lm " > /tmp/auto.share.nolmlab
-       /bin/cp /tmp/auto.share.nolmlab /etc/auto.share
-   else
-       cat /etc/auto.share  | grep -v "^lmlab " > /tmp/auto.share.nolmlab
-       /bin/cp /tmp/auto.share.nolmlab /etc/auto.share
-   fi
+   cat /etc/auto.share  | grep -v "^lmlab " > /tmp/auto.share.nolmlab
+   /bin/cp /tmp/auto.share.nolmlab /etc/auto.share
 }
 
 finish-cleanup () {

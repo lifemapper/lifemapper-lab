@@ -87,13 +87,13 @@ finish_wheel_installs () {
         done
 }
 
-TimeStamp () {
+time_stamp () {
     echo $1 `/bin/date` >> $LOG
 }
 
 ####### Main #######
 set_defaults
 time_stamp "# Start"
-define_dependencies
+define_python_dependencies
 finish_wheel_installs
 time_stamp "# End"

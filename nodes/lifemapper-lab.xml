@@ -68,7 +68,7 @@ fi
 
 # Mounts /export/lmlab to /share/lmlab
 <file name="/etc/auto.share" mode="append">
-lm &Kickstart_PrivateHostname;:/export/&amp;
+lmlab &Kickstart_PrivateHostname;:/export/&amp;
 </file>
 
 </post>

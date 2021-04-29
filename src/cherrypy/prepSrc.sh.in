@@ -14,8 +14,11 @@ TEMPORA=tempora-4.0.1-py3-none-any.whl
 PORTEND_URL=$PYPI_URL/b8/a1/fd29409cced540facdd29abb986d988cb1f22c8170d10022ea73af77fa55
 PORTEND=portend-2.7.1-py3-none-any.whl
 
-JFTOOLS_URL=$PYPI_URL/44/de/f387dbe1a7738e97220e52934dd95fca9e2e7bc238cacd103de60c01a61f
-JFTOOLS=jaraco.functools-3.2.1-py3-none-any.whl
+# JFTOOLS_URL=$PYPI_URL/44/de/f387dbe1a7738e97220e52934dd95fca9e2e7bc238cacd103de60c01a61f
+# JFTOOLS=jaraco.functools-3.2.1-py3-none-any.whl
+
+JFTOOLS_URL=$PYPI_URL/b5/da/e51e7b58c8fe132990edd1e3ef25bcd9801eb7f91d0f642ac7f8d97e4a36
+JFTOOLS=jaraco.functools-3.3.0-py3-none-any.whl
 
 SIX_URL=$PYPI_URL/ee/ff/48bde5c0f013094d729fe4b0316ba2a24774b3ff1c52d924a8a4cb04078a
 SIX=six-1.15.0-py2.py3-none-any.whl
@@ -42,8 +45,11 @@ JTEXT=jaraco.text-3.5.0-py3-none-any.whl
 JCLASSES_URL=$PYPI_URL/b8/74/bee5fc11594974746535117546404678fc7b899476e769c3c55bc0cfaa02
 JCLASSES=jaraco.classes-3.2.1-py3-none-any.whl
 
-JCOLLS_URL=$PYPI_URL/7c/38/2b10ed4e0fbd1e12e98e9acb1e2ab942087ec911cfeaf302c14b39fce4f0
-JCOLLS=jaraco.collections-3.2.0-py3-none-any.whl
+# JCOLLS_URL=$PYPI_URL/7c/38/2b10ed4e0fbd1e12e98e9acb1e2ab942087ec911cfeaf302c14b39fce4f0
+# JCOLLS=jaraco.collections-3.2.0-py3-none-any.whl
+
+JCOLLS_URL=$PYPI_URL/d5/1a/a0d6861d2aca6df92643c755966c8a60e40353e4c5e7a5c2f4e5ed733817
+JCOLLS=jaraco.collections-3.3.0-py3-none-any.whl
 
 # cherrypy
 DL_URL=$PYPI_URL/a8/f9/e11f893dcabe6bc222a1442bf5e14f0322a2d363c92910ed41947078a35a
