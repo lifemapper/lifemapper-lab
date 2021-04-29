@@ -5,8 +5,9 @@
 
 DL_URL=https://github.com/lifemapper/t-rex/archive/refs/tags
 DL_PKG=@VERSION@.@TARBALL_POSTFIX@
+
 NEW_PKG=@PKGNAME@-@VERSION@.@TARBALL_POSTFIX@
-TOPDIR=$REPONAME-@VERSION@
+TOPDIR=@REPONAME@-@VERSION@
 
 # download archive from lifemapper git
 download_git () {
