@@ -3,14 +3,16 @@
 # Purpose: checkout distro from lifemapper SVN and create *.tar.gz files to use in RPM. 
 # NOTE: for svn checkout will be prompted for valid user/passwd.
 
-URL=https://github.com/lifemapper/
-TOPDIR=@REPONAME@-@VERSION@
+DL_URL=https://github.com/lifemapper/t-rex/archive/refs/tags
+DL_PKG=@VERSION@.@TARBALL_POSTFIX@
+NEW_PKG=@PKGNAME@-@VERSION@.@TARBALL_POSTFIX@
+TOPDIR=$REPONAME-@VERSION@
 
 # download archive from lifemapper git
 download_git () {
       echo "Starting GIT checkout from $URL"
-      wget "$URL/@REPONAME@/archive/refs/tags/@VERSION@.@TARBALL_POSTFIX@" 
-      tar xzvf @VERSION@.@TARBALL_POSTFIX@
+      wget "$DL_URL/$DL_PKG" 
+      tar xzvf $DL_PKG
       
       if [ -d $TOPDIR ]; then
           echo "Removing .git in $TOPDIR:"
@@ -30,7 +32,7 @@ create_distro () {
   if [ -d $TOPDIR ]; then
       # create lmtrex src distro
       echo "Creating lmtrex src archive from Github archive download"
-      tar czf @PKGNAME@-@VERSION@.@TARBALL_POSTFIX@ --strip-components=1 \
+      tar czf $NEW_PKG --strip-components=1 \
           $TOPDIR/@PKGNAME@ \
           $TOPDIR/tests \
           $TOPDIR/solrcores

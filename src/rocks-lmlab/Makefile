@@ -66,7 +66,6 @@ MO=`date +'%_m'`
 DY=`date +'%_d'`
 
 SEDSPEC += \
-        -e 's%@NAME@%$(NAME)%g' \
         -e 's%@LMHOME@%$(LMHOME)%g' \
         -e 's%@VERSION@%$(VERSION)%g' \
         -e 's%@LMLABDISK@%$(LMLABDISK)%g' \

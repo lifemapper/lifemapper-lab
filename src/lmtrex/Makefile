@@ -66,7 +66,6 @@ PY.PATH = /opt/python/bin/$(PYTHONVER)
 SEDSPEC += \
         -e 's%@PKGROOT@%$(PKGROOT)%g' \
         -e 's%@LMHOME@%$(LMHOME)%g' \
-        -e 's%@NAME@%$(NAME)%g' \
         -e 's%@REPONAME@%$(REPONAME)%g' \
         -e 's%@PKGNAME@%$(PKGNAME)%g' \
         -e 's%@VERSION@%$(VERSION)%g'  \

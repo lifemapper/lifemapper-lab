@@ -32,9 +32,9 @@ define_python_dependencies () {
     CHERRYPY_CORS_DEPS="wheel httpagentparser cherrypy_cors"
     LMPY_DEPS="Rtree DendroPy numpy scipy lmpy"
     MATPLOTLIB_DEPS="six cycler numpy kiwisolver Pillow python_dateutil pyparsing matplotlib"
-    OPENAPICORE_DEPS="attrs zipp importlib_metadata setuptools pyrsistent jsonschema openapi-schema-validator isodate more_itertools Werkzeug lazy-object-proxy PyYAML openapi-spec-validator six parse" 
+    OPENAPICORE_DEPS="attrs zipp importlib_metadata setuptools pyrsistent jsonschema openapi_schema_validator isodate more_itertools Werkzeug lazy_object_proxy PyYAML openapi_spec_validator six parse openapi_core" 
     OPENAPI3_DEPS="PyYAML openAPI3" # and requests
-    SPECIFY_OAT_DEPS="simplejson termcolor setuptools dataclasses open_api_tools"
+    SPECIFY_OAT_DEPS="simplejson termcolor setuptools dataclasses specify-oat"
 }
 
 order_wheel_installs () {

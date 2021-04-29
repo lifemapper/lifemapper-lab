@@ -130,7 +130,7 @@ set_defaults
 TimeStamp "# Start"
 
 del-lifemapper
-del-lmtrex
+# del-lmtrex
 del-third-party-libs
 del-config
 del-directories

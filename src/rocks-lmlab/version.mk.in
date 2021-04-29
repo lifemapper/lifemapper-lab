@@ -1,5 +1,5 @@
 NAME = rocks-lmlab
-VERSION = 2021.04.28
+VERSION = $(shell date +%F | tr - .)
 RELEASE = 0
 
 TARBALL_POSTFIX = tar.gz
