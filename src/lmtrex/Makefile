@@ -85,7 +85,7 @@ version.mk:
 	cat ../version.mk version.mk.in > version.mk
 
 build: 
-	tar xzvf $(PKGNAME)-$(VERSION).tar.gz
+	tar xzvf $(PKGNAME)-$(VERSION).$(TARBALL_POSTFIX)
 
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)
