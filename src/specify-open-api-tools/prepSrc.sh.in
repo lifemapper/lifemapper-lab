@@ -88,7 +88,7 @@ DC_URL=$PYPI_URL/fe/ca/75fac5856ab5cfa51bbbcefa250182e50441074fdc3f803f6e76451fa
 DC=dataclasses-0.8-py3-none-any.whl
 
 # specify/open_api_tools
-OAT_URL=https://github.com/specify/@REPONAME@/archive/refs/tags
+OAT_URL=https://github.com/specify/open_api_tools/archive/refs/tags
 OAT=@VERSION@.tar.gz
 
 get_source_files () {
