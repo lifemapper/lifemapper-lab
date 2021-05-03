@@ -27,6 +27,8 @@ set_defaults() {
 
     echo "-- enable modules"  | tee -a $LOG
     source /usr/share/Modules/init/bash
+
+    NEED_SYNC=0
 }
 
 del-third-party-libs() {
@@ -75,7 +77,6 @@ del-lifemapper() {
     $RM     lifemapper-proj
     $RM opt-lifemapper-requests
     $RM     rocks-lmlab
-    $RM     lifemapper-solr
     $RM opt-lifemapper-specify-oat
     $RM roll-lifemapper-lab-usersguide
     $RM roll-lifemapper-lab-kickstart
@@ -104,6 +105,32 @@ del-lmtrex() {
    rm -rf @LMHOME@/lmtrex
    $RM opt-lifemapper-lmtrex
 }
+
+del-solr () {
+    SOLR_PROCESSES=`ps -Af | grep solr | grep -v "grep" | wc -l`
+    if [[ $LMROLL_COUNT -eq 0  &&  $SOLR_PROCESSES -eq 1 ]]; then
+        echo "-- stop Solr process " >> $LOG
+        /usr/sbin/service solr stop
+    fi
+
+    $RM lifemapper-solr
+    rm -rf  @SOLRDATA@
+
+    /bin/egrep -i "^solr" /etc/passwd
+    if [[ $? -eq 0 ]]; then
+        echo "Remove solr user" >> $LOG
+        userdel solr
+        /bin/rm -f /var/spool/mail/solr
+        /bin/rm -rf /export/home/solr
+        NEED_SYNC=1
+    fi
+
+    if [[ $NEED_SYNC -eq 1 ]]; then
+        echo "Syncing users info" >> $LOG
+        $ROCKS_CMD sync users
+    fi
+}
+
 
 del-config () {
     echo "Removing system configuration files used by lifemapper-lab" >> $LOG
