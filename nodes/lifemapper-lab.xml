@@ -23,6 +23,7 @@
     <!-- Lifemapper-packaged, build from source or wheel dependencies -->
     <package>opt-lifemapper-cherrypy</package>
     <package>opt-lifemapper-flask</package>
+    <package>opt-lifemapper-mod-wsgi</package>
     <package>    lifemapper-solr</package>
 
     <!-- lifemapper distro -->

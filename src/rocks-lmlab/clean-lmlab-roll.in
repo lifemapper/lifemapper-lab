@@ -74,6 +74,7 @@ del-lmlab() {
     $RM opt-lifemapper-lmpy
     $RM opt-lifemapper-lmtest
     $RM opt-lifemapper-matplotlib
+    $RM opt-lifemapper-mod-wsgi
     $RM     lifemapper-proj
     $RM opt-lifemapper-requests
     $RM     rocks-lmlab

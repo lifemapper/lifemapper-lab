@@ -69,6 +69,11 @@ finish_wheel_installs () {
     order_wheel_installs "${OPENAPI3_DEPS[@]}"
     order_wheel_installs "${SPECIFY_OAT_DEPS[@]}"
     
+    # install mod-wsgi from tar.gz file
+    echo "-- install mod-wsgi ..." >> $LOG
+    tarname=$WHL_DIR/mod_wsgi*tar.gz
+    $PY3 -m pip install $tarname >> $LOG
+
     INSTALLED_PKGS=`$PY3 -m pip list | /usr/bin/grep -v Package | /usr/bin/grep -v "^----" | /usr/bin/awk '{print $1}'`
     # install rest of wheel files, ignore previously installed files
     echo "-- install remaining wheel dependencies ..." >> $LOG
