@@ -20,57 +20,74 @@
 
     <package>screen</package>
 
+    <!-- Lifemapper-packaged, build from source or wheel dependencies -->
+    <package>opt-lifemapper-cherrypy</package>
+    <package>opt-lifemapper-flask</package>
+    <package>    lifemapper-solr</package>
+
     <!-- lifemapper distro -->
     <package>roll-lifemapper-lab-kickstart</package>
     <package>roll-lifemapper-lab-usersguide</package>
 
-<post>
-
-ID=`/bin/egrep -i "^lmwriter" /etc/group`
-if [ "$ID" == "" ] ; then
-    # adding lmwriter user with group
-    /usr/sbin/useradd -c "Lifemapper user" lmwriter
-else
-    # adding lmwriter user, group already exists
-    /usr/sbin/useradd -c "Lifemapper user" -g lmwriter lmwriter
-fi
-
-/usr/bin/systemctl restart autofs.service
-/opt/rocks/bin/rocks sync users
-/opt/rocks/bin/rocks run host compute "/usr/bin/systemctl restart autofs.service"
-
-/bin/mkdir -p /var/www/tmp
-/bin/chown apache:apache /var/www/tmp
-
-# for writing web logs
-/usr/sbin/usermod -G lmwriter apache
-
-
-# FE directory NOT exported to /share, for web logs, uploads, cherrypy sessions
-/bin/mkdir -p          /state/partition1/lmscratch/log/apache
-/bin/mkdir -p          /state/partition1/lmscratch/sessions
-/bin/mkdir -p          /state/partition1/lmscratch/tmpUpload
-/bin/chgrp -R lmwriter /state/partition1/lmscratch
-/bin/chmod -R g+ws     /state/partition1/lmscratch
-
-
-/usr/bin/systemctl restart autofs.service
-/opt/rocks/bin/rocks sync users
-/opt/rocks/bin/rocks run host compute "/usr/bin/systemctl restart autofs.service"
-
-# FE directory exported to /share
-/bin/mkdir -p /state/partition1/lmlab
-/bin/mkdir -p /state/partition1/lmlab/data
-/bin/chgrp -R lmwriter /state/partition1/lmlab
-/bin/chmod -R g+ws     /state/partition1/lmlab
-
-/usr/bin/systemctl restart httpd.service
-
-# Mounts /export/lmlab to /share/lmlab
-<file name="/etc/auto.share" mode="append">
-lmlab &Kickstart_PrivateHostname;:/export/&amp;
-</file>
-
-</post>
+    <post>
+    
+    ID=`/bin/egrep -i "^lmwriter" /etc/group`
+    if [ "$ID" == "" ] ; then
+        # adding lmwriter user with group
+        /usr/sbin/useradd -c "Lifemapper user" lmwriter
+    else
+        # adding lmwriter user, group already exists
+        /usr/sbin/useradd -c "Lifemapper user" -g lmwriter lmwriter
+    fi
+    
+    # set up solr user
+    ID=`/bin/egrep -i "^solr" /etc/group`
+    if [ "$ID" == "" ] ; then
+        # adding solr user
+        /usr/sbin/useradd -c "Solr user" solr
+    fi
+    
+    /usr/bin/systemctl restart autofs.service
+    /opt/rocks/bin/rocks sync users
+    /opt/rocks/bin/rocks run host compute "/usr/bin/systemctl restart autofs.service"
+    
+    # for writing web logs
+    /usr/sbin/usermod -G lmwriter apache
+    /bin/mkdir -p /var/www/tmp
+    /bin/chown apache:apache /var/www/tmp
+    
+    # FE directory NOT exported to /share, for web logs, uploads, cherrypy sessions
+    /bin/mkdir -p          /state/partition1/lmscratch/log/apache
+    /bin/mkdir -p          /state/partition1/lmscratch/sessions
+    /bin/mkdir -p          /state/partition1/lmscratch/tmpUpload
+    /bin/chgrp -R lmwriter /state/partition1/lmscratch
+    /bin/chmod -R g+ws     /state/partition1/lmscratch    
+    
+    # FE directory exported to /share
+    /bin/mkdir -p       /state/partition1/lmlab
+    /bin/mkdir -p       /state/partition1/lmlab/data
+    /bin/mkdir -p       /state/partition1/lmlab/solr/data/cores
+    /bin/mkdir -p       /state/partition1/lmlab/solr/data/logs
+    # set lmwriter permissions on all of lmlab
+    /bin/chgrp -R lmwriter /state/partition1/lmlab
+    /bin/chmod -R g+ws     /state/partition1/lmlab
+    # reset solr permissions on solr subdir
+    /bin/chown -R solr:solr /state/partition1/lmlab/solr
+    /bin/chmod -R 775       /state/partition1/lmlab/solr
+    
+    # Mounts /export/lmlab to /share/lmlab
+    <file name="/etc/auto.share" mode="append">
+    lmlab &Kickstart_PrivateHostname;:/export/&amp;
+    </file>
+    
+    # add solr index files
+    /opt/lifemapper/rocks/bin/solr-lmlab-index
+    chkconfig --add solr 
+    chkconfig  solr on
+    
+    /usr/bin/systemctl restart httpd.service
+    
+    
+    </post>
 
 </kickstart>

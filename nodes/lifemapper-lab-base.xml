@@ -62,6 +62,7 @@
     
     <!-- java for nodes -->
     <package>copy-jdk-configs</package>
+    <package>java-1.8.0-openjdk</package>
     <package>java-1.8.0-openjdk-headless</package>
     <package>javapackages-tools</package>
     <package>lksctp-tools</package>
@@ -72,75 +73,51 @@
     
     <!-- Lifemapper-packaged, build from source or wheel dependencies -->
     <package>opt-lifemapper-biotaphypy</package>
-    <package>opt-lifemapper-cherrypy</package>
     <package>opt-lifemapper-cython</package>
-    <package>opt-lifemapper-flask</package>
     <package>opt-lifemapper-gdal</package>
     <package>opt-lifemapper-lmpy</package>
     <package>opt-lifemapper-lmtest</package>    
-    <package>opt-lifemapper-lmtrex</package>    
+    <package>opt-lifemapper-lmtrex</package>
     <package>opt-lifemapper-matplotlib</package>
     <package>    lifemapper-proj</package>
     <package>opt-lifemapper-requests</package>
     <package>    rocks-lmlab</package>
-    <package>    lifemapper-solr</package>
     <package>opt-lifemapper-specify-oat</package>
 
-
-<post>
-
-/sbin/ldconfig
-
-# set up lmwriter user
-ID=`/bin/egrep -i "^lmwriter" /etc/group`
-if [ "$ID" == "" ] ; then
-    # adding lmwriter user
-    /usr/sbin/useradd -c "Lifemapper user" lmwriter
-else
-    # adding lmwriter user, group already exists (from lifemapper-compute roll)
-    /usr/sbin/useradd -c "Lifemapper user" -g lmwriter lmwriter
-fi
-
-# set up solr user
-ID=`/bin/egrep -i "^solr" /etc/group`
-if [ "$ID" == "" ] ; then
-    # adding solr user
-    /usr/sbin/useradd -c "Solr user" solr
-fi
-
-# Sync users on Frontend
-HN=`eval hostname`
-isFE=`rocks list host $HN | grep Frontend | wc -l`
-if [ $isFE = 1 ]; then
-    echo "Executing lifemapper-lab-base on FE" | tee -a $LOG
-    /opt/rocks/bin/rocks sync users
-else  
-    echo "Executing lifemapper-compute-base on node" | tee -a $LOG
-fi    
-
-</post>
-
-<post>
-
-# Node directory NOT shared from frontend
-/bin/mkdir -p /state/partition1/lmscratch/.java/.systemPrefs
-/bin/mkdir -p /state/partition1/lmscratch/.java/.userPrefs
-/bin/mkdir -p /state/partition1/lmscratch/log
-/bin/mkdir -p /state/partition1/lmscratch/temp
-/bin/mkdir -p /state/partition1/lmscratch/test
-/bin/chgrp -R lmwriter /state/partition1/lmscratch
-/bin/chmod -R g+ws     /state/partition1/lmscratch
-
-<file name="/etc/rc.d/rocksconfig.d/post-99-lifemapper-lab" perms="0700">
-#!/bin/bash
-# do LM initialization
-
-/sbin/ldconfig
-/opt/lifemapper/rocks/bin/init-lmlab
-rm -rf /etc/rc.d/rocksconfig.d/post-99-lifemapper-lab
-
-</file>
-
-</post>
+    <post>
+    
+    /sbin/ldconfig
+    
+    # Sync users on Frontend
+    HN=`eval hostname`
+    isFE=`rocks list host $HN | grep Frontend | wc -l`
+    if [ $isFE = 1 ]; then
+        echo "Executing lifemapper-lab-base on FE" | tee -a $LOG
+        /opt/rocks/bin/rocks sync users
+    else  
+        echo "Executing lifemapper-lab-base on node" | tee -a $LOG
+    fi    
+    
+    # Node directory NOT shared from frontend
+    /bin/mkdir -p /state/partition1/lmscratch/.java/.systemPrefs
+    /bin/mkdir -p /state/partition1/lmscratch/.java/.userPrefs
+    /bin/mkdir -p /state/partition1/lmscratch/log
+    /bin/mkdir -p /state/partition1/lmscratch/temp
+    /bin/mkdir -p /state/partition1/lmscratch/test
+    /bin/chgrp -R lmwriter /state/partition1/lmscratch
+    /bin/chmod -R g+ws     /state/partition1/lmscratch
+    
+        # Execute on reboot. Log output goes to /tmp/post-99-lifemapper-lmserver.debug
+        <file name="/etc/rc.d/rocksconfig.d/post-99-lifemapper-lab" perms="0700">
+        #!/bin/bash
+        # do LMLab initialization
+        
+        /sbin/ldconfig
+        /opt/lifemapper/rocks/bin/init-lmlab
+        rm -rf /etc/rc.d/rocksconfig.d/post-99-lifemapper-lab
+        
+        </file>
+    
+    </post>
 
 </kickstart>

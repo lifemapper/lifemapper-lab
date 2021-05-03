@@ -7,6 +7,8 @@
 # No opt-python for yum
 module unload opt-python
 
+# yumdownloader --resolve --enablerepo base java-1.8.0-openjdk-headless
+
 # add dynamic libs
 echo "/etc/alternatives/jre/lib/amd64" > /etc/ld.so.conf.d/lifemapper-lab-ld.conf
 echo "/etc/alternatives/jre/lib/amd64/server" >> /etc/ld.so.conf.d/lifemapper-lab-ld.conf
