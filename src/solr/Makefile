@@ -12,7 +12,6 @@ include Rules.mk
 
 SCRIPTS = \
         solr.txt \
-        solr \
         solr-lmlab-index
 
 SEDSPEC += \
@@ -35,9 +34,6 @@ version.mk:
 	cat ../version.mk version.mk.in > version.mk
 
 solr.txt: solr.txt.in
-	$(SED) $(SEDSPEC) $^ > $@
-
-solr: solr.in
 	$(SED) $(SEDSPEC) $^ > $@
 
 solr-lmlab-index: solr-lmlab-index.in
@@ -64,7 +60,7 @@ install::
 	mkdir -p $(ROOT)/$(SOLRDATA)/logs
 	cp $(ROOT)/$(SOLRDIR)/server/solr/solr.xml $(ROOT)/$(SOLRDATA)/data
 	cp $(ROOT)/$(SOLRDIR)/server/solr/zoo.cfg $(ROOT)/$(SOLRDATA)/data
- 	cp $(ROOT)/$(SOLRDIR)/server/resources/log4j2.xml  $(ROOT)/$(SOLRDATA)/log4j2.xml
+	cp $(ROOT)/$(SOLRDIR)/server/resources/log4j2.xml  $(ROOT)/$(SOLRDATA)/log4j2.xml
 	
 	mkdir -p $(ROOT)/etc/default
 	cat $(ROOT)/$(SOLRDIR)/bin/solr.in.sh solr.txt > $(ROOT)/etc/default/solr.in.sh
@@ -78,7 +74,7 @@ install::
 	
 	# Use defaults for SOLR_INSTALL_DIR, SOLR_ENV, and RUNAS, so no var substitution here
 	mkdir -p $(ROOT)/etc/rc.d/init.d
-    install -m 755 $(ROOT)/$(SOLRDIR)/bin/init.d/solr  $(ROOT)/etc/rc.d/init.d
+	install -m 755 $(ROOT)/$(SOLRDIR)/bin/init.d/solr  $(ROOT)/etc/rc.d/init.d
 	
 	mkdir -p $(ROOT)/$(LMHOME)/rocks/bin
 	install -m 755 solr-lmlab-index  $(ROOT)/$(LMHOME)/rocks/bin
