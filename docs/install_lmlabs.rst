@@ -102,6 +102,10 @@ Look for Errors
    * /tmp/post-99-lifemapper-lab.debug (calls init-lmlab on reboot) 
    * /state/partition1/lmscratch/log/init_lab.log
    
+#. **Check solr** ::
+
+    service solr status
+   
    
 TODO:
 ------
