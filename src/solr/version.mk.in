@@ -1,14 +1,13 @@
 NAME			= lifemapper-solr
 ARCHIVENAME		= solr
-VERSION			= 8.6.2
+VERSION			= 8.8.2
 JTS				= jts-core-1.15.0.jar
 RELEASE			= 0
 TARBALL_POSTFIX	= tgz
 
 SOLRDIR			= /opt/solr
 JTSDIR			= /opt/solr/server/solr-webapp/webapp/WEB-INF/lib
-# Defined in roll src/version.mk file
-# SOLRDATA		= /var/solr 
+# SOLRDATA		= /state/partition1/lmlab/solr  # Defined in roll src/version.mk
 SOLRUSER		= solr
 
 SOLR_PORT		= 8983
@@ -23,6 +22,5 @@ RPM.FILES =  \
     $(PKGROOT)/*                \n\
     $(SOLRDIR)/*                \n\
     $(SOLRDATA)/*               \n\
-    /etc/default/solr.in.sh     \n\
     /etc/rc.d/init.d/solr       \n\
     /etc/security/limits.d/lifemapper.solr.conf

@@ -1,24 +1,24 @@
 #!/bin/bash
 
-# Purpose: Fetch Solr source  
-SRC_URL=http://archive.apache.org/dist/lucene/@ARCHIVENAME@/@VERSION@
-SRC_PKG=@ARCHIVENAME@-@VERSION@.@TARBALL_POSTFIX@
-SRC_SHA=$SRC_PKG.sha512
+# Purpose: Fetch Solr binary package
+DL_URL=https://apache.osuosl.org/lucene/@ARCHIVENAME@/@VERSION@
+DL_PKG=@ARCHIVENAME@-@VERSION@.tgz
+SHA=https://downloads.apache.org/lucene/@ARCHIVENAME@/@VERSION@/$DL_PKG.sha512
 
 get_source_file () {
-  echo "Fetch @ARCHIVENAME@ code"
-  wget "$SRC_URL/$SRC_PKG" 
+  echo "Fetch @ARCHIVENAME@ package"
+  wget "$DL_URL/$DL_PKG" 
 }
 
 check_source_file() {
-  echo "Check downloaded @ARCHIVENAME@ code"
-  wget "$SRC_URL/$SRC_SHA" 
+  echo "Check downloaded @ARCHIVENAME@ package"
+  wget "$SHA" 
   
   IS_OK=`/usr/bin/sha512sum -c $SRC_SHA | awk '{print $2}'`
   if [ $IS_OK = 'OK' ]; then
-  	 echo "$SRC_PKG is verified."
+  	 echo "$DL_PKG is verified."
   else
-  	 echo "$SRC_PKG sha512 sum does not match, do NOT proceed."
+  	 echo "$DL_PKG sha512 sum does not match, do NOT proceed."
   fi
 }
 

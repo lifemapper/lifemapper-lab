@@ -2,9 +2,10 @@ PKGROOT			= /opt/lifemapper
 LMHOME			= /opt/lifemapper
 APACHE_TMP	    = /var/www/tmp
 
+LMSCRATCHDISK   = /state/partition1/lmscratch
 LMLABDISK       = /share/lmlab
-SOLRDATA        = /var/solr
-LMSCRATCHDISK	= /state/partition1/lmscratch
+
+SOLRDATA        = /state/partition1/lmlab/solr
 
 PYTHONVER			= python3.6
 PYTHON36			= /opt/python/bin/$(PYTHONVER)
