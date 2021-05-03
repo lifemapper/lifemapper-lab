@@ -64,7 +64,7 @@ del-third-party-libs() {
     $RM spatialindex-devel
 }
 
-del-lifemapper() {
+del-lmlab() {
     echo "Removing *lifemapper-* and prerequisite RPMS" >> $LOG
     $RM opt-lifemapper-biotaphypy
     $RM opt-lifemapper-cherrypy
@@ -172,13 +172,13 @@ finish-cleanup () {
 set_defaults
 TimeStamp "# Start"
 
-del-lifemapper
-del-lmtrex
+del-lmlab
 del-python-packages
 del-third-party-libs
 del-config
 del-directories
 del-cron-jobs
+del-lmtrex
 del-directories
 del-automount-entry
 
