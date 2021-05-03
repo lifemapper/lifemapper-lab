@@ -75,10 +75,10 @@
     /bin/chown -R solr:solr /state/partition1/lmlab/solr
     /bin/chmod -R 775       /state/partition1/lmlab/solr
     
-    # Mounts /export/lmlab to /share/lmlab
-    <file name="/etc/auto.share" mode="append">
-    lmlab &Kickstart_PrivateHostname;:/export/&amp;
-    </file>
+# Mounts /export/lmlab to /share/lmlab
+<file name="/etc/auto.share" mode="append">
+lmlab &Kickstart_PrivateHostname;:/export/&amp;
+</file>
     
     # add solr index files
     /opt/lifemapper/rocks/bin/solr-lmlab-index
