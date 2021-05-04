@@ -68,6 +68,7 @@ SEDSPEC += \
         -e 's%@PYTHON36_PACKAGES@%$(PYTHON36_PACKAGES)%g' \
         -e 's%@ARCHIVENAME@%$(ARCHIVENAME)%g'  \
         -e 's%@VERSION@%$(VERSION)%g'  \
+        -e 's%@LMHOME@%$(LMHOME)%g'  \
         -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g'
 
 prepSrc.sh: prepSrc.sh.in
@@ -94,7 +95,7 @@ build: wsgi.conf
 install::
     mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
     install -m 664 @ARCHIVENAME@-@VERSION@.tar.gz   $(ROOT)/$(PKGROOT)/rocks/etc
-       
+    
 	mkdir -p $(ROOT)/etc/httpd/conf.modules.d
 	install --mode 644  -T wsgi.conf $(ROOT)/etc/httpd/conf.modules.d/02-wsgi.conf
 

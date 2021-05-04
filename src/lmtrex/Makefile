@@ -94,6 +94,9 @@ install::
 	
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
 	mv $(TOPDIR)/solrcores  $(ROOT)/$(PKGROOT)/rocks/etc 
+    
+    mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
+    install -m 755 wsgi-cp.py  $(ROOT)/$(PKGROOT)/rocks/bin 
 
 clean::
 	rm -rf version.mk prepSrc.sh
