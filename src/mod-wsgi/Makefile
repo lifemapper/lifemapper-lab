@@ -90,12 +90,12 @@ wsgi.conf: wsgi.conf.in
 
 
 build: wsgi.conf
-    echo $(ARCHIVENAME)-$(VERSION)
+	echo $(ARCHIVENAME)-$(VERSION)
 
 install::
-    mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
-    install -m 664 @ARCHIVENAME@-@VERSION@.tar.gz   $(ROOT)/$(PKGROOT)/rocks/etc
-    
+	mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
+	install -m 664 $(ARCHIVENAME)-$(VERSION).tar.gz   $(ROOT)/$(PKGROOT)/rocks/etc
+	
 	mkdir -p $(ROOT)/etc/httpd/conf.modules.d
 	install --mode 644  -T wsgi.conf $(ROOT)/etc/httpd/conf.modules.d/02-wsgi.conf
 

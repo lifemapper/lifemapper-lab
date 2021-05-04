@@ -25,6 +25,16 @@ set_defaults() {
     rm -f $LOG
     touch $LOG
 
+    REQUESTS_DEPS="chardet certifi idna urllib3 requests"
+    FLASK_DEPS="MarkupSafe Jinja2 click itsdangerous Werkzeug Flask"
+    CHERRYPY_DEPS="more_itertools pytz tempora portend jaraco.functools six cheroot setuptools zc.lockfile jaraco.classes zipp importlib_resources jaraco.text jaraco.collections CherryPy"
+    CHERRYPY_CORS_DEPS="wheel httpagentparser cherrypy_cors"
+    LMPY_DEPS="Rtree DendroPy numpy scipy lmpy"
+    MATPLOTLIB_DEPS="six cycler numpy kiwisolver Pillow python_dateutil pyparsing matplotlib"
+    OPENAPICORE_DEPS="attrs zipp importlib_metadata setuptools pyrsistent jsonschema openapi_schema_validator isodate more_itertools Werkzeug lazy_object_proxy PyYAML openapi_spec_validator six parse openapi_core" 
+    OPENAPI3_DEPS="PyYAML openAPI3" # and requests
+    SPECIFY_OAT_DEPS="simplejson termcolor setuptools dataclasses specify-oat"
+
     echo "-- enable modules"  | tee -a $LOG
     source /usr/share/Modules/init/bash
 
@@ -85,7 +95,7 @@ del-lmlab() {
 
 del-python-packages() {
     echo "Removing python packages" >> $LOG
-    $PIP3 uninstall -y biotaphypy cython
+    $PIP3 uninstall -y biotaphypy cython mod-wsgi
     $PIP3 uninstall -y chardet certifi idna urllib3 requests
     $PIP3 uninstall -y MarkupSafe Jinja2 click itsdangerous Werkzeug Flask
     $PIP3 uninstall -y more-itertools pytz tempora portend jaraco.functools six cheroot 

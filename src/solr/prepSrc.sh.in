@@ -3,7 +3,8 @@
 # Purpose: Fetch Solr binary package
 DL_URL=https://apache.osuosl.org/lucene/@ARCHIVENAME@/@VERSION@
 DL_PKG=@ARCHIVENAME@-@VERSION@.tgz
-SHA=https://downloads.apache.org/lucene/@ARCHIVENAME@/@VERSION@/$DL_PKG.sha512
+SHA_URL=https://downloads.apache.org/lucene/@ARCHIVENAME@/@VERSION@
+SHA_FNAME=$DL_PKG.sha512
 
 get_source_file () {
   echo "Fetch @ARCHIVENAME@ package"
@@ -12,9 +13,9 @@ get_source_file () {
 
 check_source_file() {
   echo "Check downloaded @ARCHIVENAME@ package"
-  wget "$SHA" 
+  wget "$SHA_URL/$SHA_FNAME" 
   
-  IS_OK=`/usr/bin/sha512sum -c $SRC_SHA | awk '{print $2}'`
+  IS_OK=`/usr/bin/sha512sum -c $SHA_FNAME | awk '{print $2}'`
   if [ $IS_OK = 'OK' ]; then
   	 echo "$DL_PKG is verified."
   else

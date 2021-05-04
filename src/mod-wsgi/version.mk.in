@@ -5,5 +5,5 @@ RELEASE         = 0
 TARBALL_POSTFIX	= tar.gz
 
 RPM.FILES = \
-    $(PYTHON36_PACKAGES)/*  \n\
+    $(PKGROOT)/*  \n\
     /etc/httpd/conf.modules.d/02-wsgi.conf
