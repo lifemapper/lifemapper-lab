@@ -25,16 +25,6 @@ set_defaults() {
     rm -f $LOG
     touch $LOG
 
-    REQUESTS_DEPS="chardet certifi idna urllib3 requests"
-    FLASK_DEPS="MarkupSafe Jinja2 click itsdangerous Werkzeug Flask"
-    CHERRYPY_DEPS="more_itertools pytz tempora portend jaraco.functools six cheroot setuptools zc.lockfile jaraco.classes zipp importlib_resources jaraco.text jaraco.collections CherryPy"
-    CHERRYPY_CORS_DEPS="wheel httpagentparser cherrypy_cors"
-    LMPY_DEPS="Rtree DendroPy numpy scipy lmpy"
-    MATPLOTLIB_DEPS="six cycler numpy kiwisolver Pillow python_dateutil pyparsing matplotlib"
-    OPENAPICORE_DEPS="attrs zipp importlib_metadata setuptools pyrsistent jsonschema openapi_schema_validator isodate more_itertools Werkzeug lazy_object_proxy PyYAML openapi_spec_validator six parse openapi_core" 
-    OPENAPI3_DEPS="PyYAML openAPI3" # and requests
-    SPECIFY_OAT_DEPS="simplejson termcolor setuptools dataclasses specify-oat"
-
     echo "-- enable modules"  | tee -a $LOG
     source /usr/share/Modules/init/bash
 
@@ -74,6 +64,7 @@ del-third-party-libs() {
     $RM spatialindex-devel
 }
 
+
 del-lmlab() {
     echo "Removing *lifemapper-* and prerequisite RPMS" >> $LOG
     $RM opt-lifemapper-biotaphypy
@@ -93,22 +84,19 @@ del-lmlab() {
     $RM roll-lifemapper-lab-kickstart
 }
 
-del-python-packages() {
+del-python-dependencies () {
+    module load opt-python
     echo "Removing python packages" >> $LOG
-    $PIP3 uninstall -y biotaphypy cython mod-wsgi
-    $PIP3 uninstall -y chardet certifi idna urllib3 requests
-    $PIP3 uninstall -y MarkupSafe Jinja2 click itsdangerous Werkzeug Flask
-    $PIP3 uninstall -y more-itertools pytz tempora portend jaraco.functools six cheroot 
-    $PIP3 uninstall -y zc.lockfile jaraco.classes zipp importlib-resources jaraco.text 
-    $PIP3 uninstall -y jaraco.collections CherryPy
-    $PIP3 uninstall -y httpagentparser cherrypy-cors
-    $PIP3 uninstall -y Rtree DendroPy numpy scipy lmpy
-    $PIP3 uninstall -y six cycler numpy kiwisolver Pillow python-dateutil pyparsing matplotlib
-    $PIP3 uninstall -y attrs zipp importlib-metadata pyrsistent jsonschema 
-    $PIP3 uninstall -y openapi-schema-validator isodate more-itertools Werkzeug 
-    $PIP3 uninstall -y lazy-object-proxy PyYAML openapi-spec-validator six parse openapi-core 
-    $PIP3 uninstall -y PyYAML openAPI3
-    $PIP3 uninstall -y simplejson termcolor dataclasses specify-oat
+    $PY3 -m pip uninstall -y chardet certifi idna urllib3 requests
+    $PY3 -m pip uninstall -y biotaphypy Cython mod-wsgi idigbio psycopg2-binary
+    $PY3 -m pip uninstall -y MarkupSafe Jinja2 click itsdangerous Werkzeug Flask
+    $PY3 -m pip uninstall -y more-itertools pytz tempora portend jaraco.functools six cheroot setuptools zc.lockfile jaraco.classes zipp importlib-resources jaraco.text jaraco.collections CherryPy
+    $PY3 -m pip uninstall -y wheel httpagentparser cherrypy-cors
+    $PY3 -m pip uninstall -y Rtree DendroPy numpy scipy lmpy
+    $PY3 -m pip uninstall -y six cycler numpy kiwisolver Pillow python-dateutil pyparsing matplotlib
+    $PY3 -m pip uninstall -y attrs zipp importlib-metadata setuptools pyrsistent jsonschema openapi-schema-validator isodate more-itertools Werkzeug lazy-object-proxy PyYAML openapi-spec-validator six parse openapi-core 
+    $PY3 -m pip uninstall -y PyYAML openapi3 simplejson termcolor dataclasses specify-oat lm-test GDAL
+    module load opt-python
 }
 
 del-lmtrex() {

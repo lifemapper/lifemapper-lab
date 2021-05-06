@@ -23,8 +23,8 @@ set_defaults() {
     source /usr/share/Modules/init/bash
 }
 
-# REQUESTS_DEPS, CHERRYPY_DEPS, CHERRYPY_CORS_DEPS, FLASK_DEPS, LMPY_DEPS, MATPLOTLIB_DEPS
-# OPENAPICORE_DEPS, OPENAPI3_DEPS, SPECIFY_OAT_DEPS
+# uses filename prefixes, which sometimes differ from package names
+# filenames may have underscore (_) while prefixes always replace with dash (-)
 define_python_dependencies () {
     REQUESTS_DEPS="chardet certifi idna urllib3 requests"
     FLASK_DEPS="MarkupSafe Jinja2 click itsdangerous Werkzeug Flask"
