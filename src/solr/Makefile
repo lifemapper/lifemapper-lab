@@ -12,16 +12,15 @@ include Rules.mk
 
 SCRIPTS = \
         solr.txt \
-        solr-lmlab-index
+        solr-index
 
 SEDSPEC += \
         -e 's%@LMHOME@%$(LMHOME)%g' \
-        -e 's%@LMLABDISK@%$(LMLABDISK)%g' \
+        -e 's%@LMCOREDISK@%$(LMCOREDISK)%g' \
         -e 's%@SOLRDATA@%$(SOLRDATA)%g' \
         -e 's%@SOLRDIR@%$(SOLRDIR)%g' \
         -e 's%@SOLRUSER@%$(SOLRUSER)%g' \
         -e 's%@SOLR_PORT@%$(SOLR_PORT)%g' \
-        -e 's%@SOLR_PORT2@%$(SOLR_PORT2)%g' \
         -e 's%@ZK_HOST@%$(ZK_HOST)%g' \
         -e 's%@LMURL@%$(LMURL)%g' \
         -e 's%@ARCHIVENAME@%$(ARCHIVENAME)%g' \
@@ -36,7 +35,7 @@ version.mk:
 solr.txt: solr.txt.in
 	$(SED) $(SEDSPEC) $^ > $@
 
-solr-lmlab-index: solr-lmlab-index.in
+solr-index: solr-index.in
 	$(SED) $(SEDSPEC) $^ > $@
 
 prepSrc.sh: prepSrc.sh.in
@@ -77,11 +76,10 @@ install::
 	install -m 755 $(ROOT)/$(SOLRDIR)/bin/init.d/solr  $(ROOT)/etc/rc.d/init.d
 	
 	mkdir -p $(ROOT)/$(LMHOME)/rocks/bin
-	install -m 755 solr-lmlab-index  $(ROOT)/$(LMHOME)/rocks/bin
-    
-    mkdir -p $(ROOT)/$(LMHOME)/rocks/etc
-    install -m 644 pysolr*tar.gz $(ROOT)/$(LMHOME)/rocks/etc
-
+	install -m 755 solr-index  $(ROOT)/$(LMHOME)/rocks/bin
+	
+	mkdir -p $(ROOT)/$(LMHOME)/rocks/etc
+	install -m 644 pysolr*tar.gz $(ROOT)/$(LMHOME)/rocks/etc
 
 clean::
 	rm -rf $(ARCHIVENAME)-$(VERSION) 
