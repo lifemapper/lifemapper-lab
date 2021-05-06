@@ -76,13 +76,28 @@ finish_wheel_installs () {
 
     INSTALLED_PKGS=`$PY3 -m pip list | /usr/bin/grep -v Package | /usr/bin/grep -v "^----" | /usr/bin/awk '{print $1}'`
     # install rest of wheel files, ignore previously installed files
-    echo "-- install remaining wheel dependencies ..." >> $LOG
+    echo "-- install remaining pip-installable wheel files ..." >> $LOG
     FILES=$WHL_DIR/*whl
     startidx=$((${#WHL_DIR} + 2))
     for f in $FILES
         do
             filelen=${#f}
             # filename prefix sometimes differs from package name
+            pkgname=$(echo $f | cut -c$startidx-$filelen | cut -d'-' -f1)
+            if [[ ${INSTALLED_PKGS[*]} =~ $pkgname ]]; then
+                echo "$pkgname installed already ..."
+            else
+                echo "install remaining dependency $pkgname ..."
+                $PY3 -m pip install $f
+            fi
+        done
+
+    echo "-- install remaining pip-installable tar.gz files ..." >> $LOG
+    FILES=$WHL_DIR/*tar.gz
+    startidx=$((${#WHL_DIR} + 2))
+    for f in $FILES
+        do
+            filelen=${#f}
             pkgname=$(echo $f | cut -c$startidx-$filelen | cut -d'-' -f1)
             if [[ ${INSTALLED_PKGS[*]} =~ $pkgname ]]; then
                 echo "$pkgname installed already ..."
