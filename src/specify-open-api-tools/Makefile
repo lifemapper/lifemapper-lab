@@ -85,7 +85,9 @@ build: version.mk
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
 	install -m 664 *.whl  $(ROOT)/$(PKGROOT)/rocks/etc
-	install -m 664 *.gz  $(ROOT)/$(PKGROOT)/rocks/etc
+	install -m 664 parse*.gz  $(ROOT)/$(PKGROOT)/rocks/etc
+	install -m 664 pyrsistent*.gz  $(ROOT)/$(PKGROOT)/rocks/etc
+	install -m 664 termcolor*.gz  $(ROOT)/$(PKGROOT)/rocks/etc
 
 clean::
 	rm -rf version.mk prepSrc.sh

@@ -19,7 +19,7 @@ REQ_URL=$PYPI_URL/29/c1/24814557f1d22c56d50280771a17307e6bf87b70727d975fd6b2ce6b
 REQ=@ARCHIVENAME@-@VERSION@-py2.py3-none-any.whl
 
 get_wheels () {
-    echo "Fetch `requests` dependencies"
+    echo "Fetch @ARCHIVENAME@ dependencies"
     wget $CHARDET_URL/$CHARDET
     wget $CERTIFI_URL/$CERTIFI
     wget $IDNA_URL/$IDNA
