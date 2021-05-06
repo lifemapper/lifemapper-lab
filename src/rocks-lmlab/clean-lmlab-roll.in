@@ -113,6 +113,7 @@ del-solr () {
     fi
 
     $RM lifemapper-solr
+    $PY3 -m pip uninstall -y pysolr
     rm -rf  @SOLRDATA@
 
     /bin/egrep -i "^solr" /etc/passwd

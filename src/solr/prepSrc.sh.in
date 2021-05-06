@@ -6,9 +6,18 @@ DL_PKG=@ARCHIVENAME@-@VERSION@.tgz
 SHA_URL=https://downloads.apache.org/lucene/@ARCHIVENAME@/@VERSION@
 SHA_FNAME=$DL_PKG.sha512
 
+PYPI_URL=https://files.pythonhosted.org/packages
+PS_URL=$PYPI_URL/9c/c6/9f0b80f17747db12acbdf421a22acdad23c93eea7046181ae6ebdf427bfd
+PS=pysolr-3.9.0.tar.gz
+
 get_source_file () {
-  echo "Fetch @ARCHIVENAME@ package"
+  echo "Fetch @ARCHIVENAME@ source"
   wget "$DL_URL/$DL_PKG" 
+}
+
+get_helper_wheel () {
+    echo "Fetch pysolr wheel"
+    wget "$PS_URL/$PS"
 }
 
 check_source_file() {
@@ -25,4 +34,5 @@ check_source_file() {
 
 ### main ###
 get_source_file
+get_helper_wheel
 check_source_file
