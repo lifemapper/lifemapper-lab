@@ -27,7 +27,7 @@ set_defaults() {
 # filenames may have underscore (_) while prefixes always replace with dash (-)
 define_python_dependencies () {
     REQUESTS_DEPS="chardet certifi idna urllib3 requests"
-    FLASK_DEPS="MarkupSafe Jinja2 click itsdangerous Werkzeug Flask"
+    FLASK_DEPS="MarkupSafe Jinja2 click itsdangerous Werkzeug Flask six Flask_Cors"
     CHERRYPY_DEPS="more_itertools pytz tempora portend jaraco.functools six cheroot setuptools zc.lockfile jaraco.classes zipp importlib_resources jaraco.text jaraco.collections CherryPy"
     CHERRYPY_CORS_DEPS="wheel httpagentparser cherrypy_cors"
     LMPY_DEPS="Rtree DendroPy numpy scipy lmpy"

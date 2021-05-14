@@ -20,6 +20,12 @@ WRK=Werkzeug-1.0.1-py2.py3-none-any.whl
 FLASK_URL=$PYPI_URL/f2/28/2a03252dfb9ebf377f40fba6a7841b47083260bf8bd8e737b0c6952df83f
 FLASK=@ARCHIVENAME@-@VERSION@-py2.py3-none-any.whl
 
+SIX_URL=$PYPI_URL/ee/ff/48bde5c0f013094d729fe4b0316ba2a24774b3ff1c52d924a8a4cb04078a
+SIX=six-1.15.0-py2.py3-none-any.whl
+
+FLCORS_URL=$PYPI_URL/db/84/901e700de86604b1c4ef4b57110d4e947c218b9997adf5d38fa7da493bce
+FLCORS=Flask_Cors-3.0.10-py2.py3-none-any.whl
+
 
 get_wheel_files () {
   echo "Fetch @ARCHIVENAME@ and dependencies"
@@ -29,6 +35,7 @@ get_wheel_files () {
   wget $DANGER_URL/$DANGER
   wget $WRK_URL/$WRK
   wget $FLASK_URL/$FLASK
+  wget $FLCORS_URL/$FLCORS
 }
 
 ### main ###
