@@ -2,13 +2,13 @@
 #
 # @Copyright@
 # 
-#               Rocks(r)
-#                www.rocksclusters.org
-#                version 5.6 (Emerald Boa)
-#                version 6.1 (Emerald Boa)
+# 				Rocks(r)
+# 		         www.rocksclusters.org
+# 		         version 5.6 (Emerald Boa)
+# 		         version 6.1 (Emerald Boa)
 # 
 # Copyright (c) 2000 - 2013 The Regents of the University of California.
-# All rights reserved.  
+# All rights reserved.	
 # 
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -25,9 +25,9 @@
 # 3. All advertising and press materials, printed or electronic, mentioning
 # features or use of this software must display the following acknowledgement: 
 # 
-#   "This product includes software developed by the Rocks(r)
-#   Cluster Group at the San Diego Supercomputer Center at the
-#   University of California, San Diego and its contributors."
+# 	"This product includes software developed by the Rocks(r)
+# 	Cluster Group at the San Diego Supercomputer Center at the
+# 	University of California, San Diego and its contributors."
 # 
 # 4. Except as permitted for the purposes of acknowledgment in paragraph 3,
 # neither the name or logo of this software nor the names of its
@@ -57,38 +57,39 @@
 # $Log$
 
 REDHAT.ROOT = $(CURDIR)/../../
+
 -include $(ROCKSROOT)/etc/Rules.mk
 include Rules.mk
 
 PY.PATH = /opt/python/bin/$(PYTHONVER)
 
 SEDSPEC += \
+        -e 's%@PKGROOT@%$(PKGROOT)%g' \
+        -e 's%@LMHOME@%$(LMHOME)%g' \
+        -e 's%@REPONAME@%$(REPONAME)%g' \
+        -e 's%@PKGNAME@%$(PKGNAME)%g' \
         -e 's%@VERSION@%$(VERSION)%g'  \
-        -e 's%@ARCHIVENAME@%$(ARCHIVENAME)%g'
+        -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g'
 
-prepSrc.sh: prepSrc.sh.in
+TOPDIR = $(PKGNAME)
+
+prepSrc.sh: prepSrc.sh.in 
+	make version.mk
 	$(SED) $(SEDSPEC) $^ > $@
 	chmod 755 $@
 
 prep: prepSrc.sh
-	rm -rf version.mk
-	make version.mk
-	make prepSrc.sh
 	./prepSrc.sh
 
 version.mk:
 	cat ../version.mk version.mk.in > version.mk
 
-build: version.mk
-	echo $(ARCHIVENAME)-$(VERSION)
+build: 
+	tar xzvf $(PKGNAME)-$(VERSION).$(TARBALL_POSTFIX)
 
 install::
-	mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
-	install -m 664 *.whl  $(ROOT)/$(PKGROOT)/rocks/etc
-	install -m 664 parse*.tar.gz  $(ROOT)/$(PKGROOT)/rocks/etc
-	install -m 664 pyrsistent*.tar.gz  $(ROOT)/$(PKGROOT)/rocks/etc
-	install -m 664 termcolor*.tar.gz  $(ROOT)/$(PKGROOT)/rocks/etc
-	install -m 664 $(VERSION).tar.gz  $(ROOT)/$(PKGROOT)/rocks/etc
+	mkdir -p $(ROOT)/$(PKGROOT)
+	mv $(PKGNAME)  $(ROOT)/$(PKGROOT)
 
 clean::
-	rm -rf version.mk prepSrc.sh
+	rm -rf version.mk prepSrc.sh $(TOPDIR)

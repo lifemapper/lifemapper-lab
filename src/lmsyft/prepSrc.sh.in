@@ -6,8 +6,9 @@
 DL_URL=https://github.com/lifemapper/@REPONAME@/archive/refs/tags
 DL_PKG=@VERSION@.@TARBALL_POSTFIX@
 
-NEW_PKG=@PKGNAME@-@VERSION@.@TARBALL_POSTFIX@
 TOPDIR=@REPONAME@-@VERSION@
+NEW_TOPDIR=@PKGNAME@
+NEW_PKG=@PKGNAME@-@VERSION@.@TARBALL_POSTFIX@
 
 # download archive from lifemapper git
 download_git () {
@@ -30,16 +31,14 @@ download_git () {
 
 # create distro files for lmcompute
 create_distro () {
-  if [ -d $TOPDIR ]; then
-      # create lmtrex src distro
-      echo "Creating lmtrex src archive from Github archive download"
-      tar czf $NEW_PKG --strip-components=1 \
-          $TOPDIR/@PKGNAME@ \
-          $TOPDIR/tests \
-          $TOPDIR/solrcores
-  else
-      echo "GIT downloaded directory $TOPDIR is not present"
-  fi
+	if [ -d $TOPDIR ]; then
+		mv $TOPDIR $NEW_TOPDIR
+		# create lmtrex src distro
+		echo "Creating lmsyft archive from Github archive download"
+		tar czf $NEW_PKG $NEW_TOPDIR/@PKGNAME@
+	else
+		echo "GIT downloaded directory $TOPDIR is not present"
+	fi
 }
 
 ### main ###

@@ -43,7 +43,7 @@ TimeStamp "# Start"
 
 # uses service instead of systemctl
 /usr/sbin/service solr stop
-$BIN/solr-lmlab-index
+$BIN/solr-index
 /usr/sbin/service solr start
 
 TimeStamp "# End"

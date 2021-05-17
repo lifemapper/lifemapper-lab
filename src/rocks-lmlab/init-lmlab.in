@@ -41,6 +41,12 @@ set_defaults() {
     BIN=@PKGROOT@/rocks/bin
     PY3=@PYBIN@
     WHL_DIR=@PKGROOT@/rocks/etc
+
+    LMYSFT_CORE_DIR=@PKGROOT@/lmsyft/solr_cores
+	SOLR_CORE_DIR=@SOLRDATA@/data/cores
+	
+	LMYSFT_APACHE_DIR=@LMHOME@/lmsyft/apache
+	LMYSFT_WEB_DIR=/var/www/syftorium
     
     # Source function library.
     INITD=/etc/rc.d/init.d
@@ -78,6 +84,22 @@ finish_wheel_installs () {
     echo "-- End install_wheels script" >> $LOG
 }
 
+make_lmsyft_link () {
+    if [[ -d $LMYSFT_WEB_DIR ]] ; then
+        echo "-- create lmsyft wsgi link" >> $LOG
+        (cd $LMYSFT_WEB_DIR; /usr/bin/ln -s $LMYSFT_APACHE_DIR/syftorium.wsgi)
+    fi
+}
+
+install_lmsyft_solrcores () {
+    if [[ -d $SOLR_CORE_DIR ]] ; then
+        echo "-- move lmsyft solr cores" >> $LOG
+        mv  $LMYSFT_CORE_DIR/*      $SOLR_CORE_DIR
+        /usr/bin/chown -R solr:solr $SOLR_CORE_DIR
+        /usr/bin/chmod -R 775       $SOLR_CORE_DIR
+    fi
+}
+
 
 # update linker paths
 run_ldconfig () {
@@ -85,13 +107,6 @@ run_ldconfig () {
     /sbin/ldconfig
 }
 
-# need to update openssl for postgres
-update_openssl() {
-    echo "-- yum update openssl" >> $LOG
-    cmd_opt_python unload 
-    /usr/bin/yum --enablerepo base update openssl >> $LOG 
-    cmd_opt_python load 
-}
 
 # install cron jobs for daily execution
 install_cron_jobs () {
@@ -100,10 +115,25 @@ install_cron_jobs () {
     echo "-- End install-lmlab-cron" >> $LOG
 }
 
-# run update-lmlab to do any updates
-update_config() {
-    echo "-- update configuration" >> $LOG
-    $BIN/update-lmlab >> $LOG  2>&1
+get_address () {
+    # public host address
+    Addr=`/opt/rocks/bin/rocks list host attr localhost | grep Kickstart_PublicFQDN | awk '{print $3}'`
+    # IPAddr=`/usr/sbin/ifconfig eth1 | grep inet | grep broadcast  | awk '{print $2}'`
+}
+
+update_lmsyft_apache_config () {
+    infile=$LMYSFT_APACHE_DIR/syftorium.conf.in
+    outfile=/etc/httpd/conf.d/syftorium.conf
+    
+    if [ -f $outfile ] ; then
+        bakext=`/bin/date +%F`
+        echo '  File ' $outfile ' exists, saving to ' $outfile.$bakext  >> $LOG
+        mv -f $outfile $outfile.$bakext
+    fi
+    
+    echo '  Creating ' $outfile ' from ' $infile >> $LOG
+    # replace variables
+    sed  "s%@FQDN@%$Addr%g" $infile > $outfile
 }
 
 
@@ -116,12 +146,12 @@ set_defaults
 TimeStamp "# Start"
 
 finish_wheel_installs
-# Code does not currently exist in this roll
-#set_permissions
 run_ldconfig
 # Cron jobs do not currently exist in this roll
-# install_cron_jobs
-# Configuration files do not currently exist in this roll
-# update_config
+install_cron_jobs
+
+make_lmsyft_link
+install_lmsyft_solrcores
+update_lmsyft_apache_config
 
 TimeStamp "# End"

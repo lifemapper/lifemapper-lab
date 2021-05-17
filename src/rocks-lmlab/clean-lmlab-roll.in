@@ -89,7 +89,7 @@ del-python-dependencies () {
     echo "Removing python packages" >> $LOG
     $PY3 -m pip uninstall -y chardet certifi idna urllib3 requests
     $PY3 -m pip uninstall -y biotaphypy Cython mod-wsgi idigbio psycopg2-binary
-    $PY3 -m pip uninstall -y MarkupSafe Jinja2 click itsdangerous Werkzeug Flask
+    $PY3 -m pip uninstall -y MarkupSafe Jinja2 click itsdangerous Werkzeug Flask Flask-Cors
     $PY3 -m pip uninstall -y more-itertools pytz tempora portend jaraco.functools six cheroot setuptools zc.lockfile jaraco.classes zipp importlib-resources jaraco.text jaraco.collections CherryPy
     $PY3 -m pip uninstall -y wheel httpagentparser cherrypy-cors
     $PY3 -m pip uninstall -y Rtree DendroPy numpy scipy lmpy
@@ -103,6 +103,13 @@ del-lmtrex() {
    echo "Removing lifemapper t-rex and directory" >> $LOG
    rm -rf @LMHOME@/lmtrex
    $RM opt-lifemapper-lmtrex
+   echo "Removing lifemapper syftorium and code/data directories" >> $LOG
+   rm -rf @LMHOME@/lmsyft
+   rm -rf /state/partition1/lmlab/syftorium_data
+      
+   $RM opt-lifemapper-lmsyft
+   echo "Removing lmsyft web directory" >> $LOG
+   rm -rf /var/www/syftorium
 }
 
 del-solr () {
@@ -139,9 +146,9 @@ del-config () {
 }
 
 del-directories () {   
-   echo "Removing lifemapper lab data directory" >> $LOG
-   rm -rf @LMLABDISK@
+   echo "Removing lifemapper lab scratch directory" >> $LOG
    rm -rf @LMSCRATCHDISK@
+   echo "Leaving lifemapper lab data directory @LMLABDISK@" >> $LOG
 }
 
 # remove obsolete Lifemapper cron jobs

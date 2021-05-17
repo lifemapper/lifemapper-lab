@@ -62,13 +62,23 @@
     /bin/mkdir -p          /state/partition1/lmscratch/sessions
     /bin/mkdir -p          /state/partition1/lmscratch/tmpUpload
     /bin/chgrp -R lmwriter /state/partition1/lmscratch
-    /bin/chmod -R g+ws     /state/partition1/lmscratch    
+    /bin/chmod -R g+ws     /state/partition1/lmscratch
+    
+	# for apache/wsgi  files    
+	/bin/mkdir -p  /var/www/syftorium
+	/bin/chmod 755 /var/www/syftorium
+
     
     # FE directory exported to /share
     /bin/mkdir -p       /state/partition1/lmlab
-    /bin/mkdir -p       /state/partition1/lmlab/data
+    
+    /bin/mkdir -p       /state/partition1/lmlab/syftorium_data/collections
+    /bin/mkdir -p       /state/partition1/lmlab/syftorium_data/new_dwcas
+    /bin/mkdir -p       /state/partition1/lmlab/syftorium_data/processed_dwcas/
+    
     /bin/mkdir -p       /state/partition1/lmlab/solr/data/cores
     /bin/mkdir -p       /state/partition1/lmlab/solr/data/logs
+    
     # set lmwriter permissions on all of lmlab
     /bin/chgrp -R lmwriter /state/partition1/lmlab
     /bin/chmod -R g+ws     /state/partition1/lmlab
