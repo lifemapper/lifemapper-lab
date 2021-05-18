@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Purpose: checkout distro from lifemapper SVN and create *.tar.gz files to use in RPM. 
-# NOTE: for svn checkout will be prompted for valid user/passwd.
+# Purpose: checkout distro from github and create *.tar.gz files to use in RPM. 
 
+OLDVER=1.0.0-beta.1
 DL_URL=https://github.com/lifemapper/@REPONAME@/archive/refs/tags
-DL_PKG=@VERSION@.@TARBALL_POSTFIX@
+DL_PKG=$OLDVER.@TARBALL_POSTFIX@
 
-TOPDIR=@REPONAME@-@VERSION@
+TOPDIR=@REPONAME@-$OLDVER
 NEW_TOPDIR=@PKGNAME@
 NEW_PKG=@PKGNAME@-@VERSION@.@TARBALL_POSTFIX@
 
@@ -35,7 +35,7 @@ create_distro () {
 		mv $TOPDIR $NEW_TOPDIR
 		# create lmtrex src distro
 		echo "Creating lmsyft archive from Github archive download"
-		tar czf $NEW_PKG $NEW_TOPDIR/@PKGNAME@
+		tar czf $NEW_PKG $NEW_TOPDIR
 	else
 		echo "GIT downloaded directory $TOPDIR is not present"
 	fi
