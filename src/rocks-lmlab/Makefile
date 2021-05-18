@@ -89,9 +89,7 @@ PROGS = \
 	clean-lmlab-roll \
 	init-lmlab \
 	install-lmlab-cron \
-	install-wheels \
-	update-lmlab \
-	update-solr
+	install-lmlab-wheels
 
 %: %.in
 	$(SED) $(SEDSPEC) $^ > $@

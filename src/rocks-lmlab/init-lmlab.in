@@ -80,7 +80,7 @@ finish_wheel_installs () {
     $PY3 -m ensurepip --default-pip
     $PY3 -m pip install --upgrade pip
     echo "-- Start install_wheels script" >> $LOG
-    $BIN/install-wheels
+    $BIN/install-lmlab-wheels
     echo "-- End install_wheels script" >> $LOG
 }
 
@@ -93,10 +93,14 @@ make_lmsyft_link () {
 
 install_lmsyft_solrcores () {
     if [[ -d $SOLR_CORE_DIR ]] ; then
+		/usr/sbin/service solr stop
         echo "-- move lmsyft solr cores" >> $LOG
         mv  $LMYSFT_CORE_DIR/*      $SOLR_CORE_DIR
         /usr/bin/chown -R solr:solr $SOLR_CORE_DIR
         /usr/bin/chmod -R 775       $SOLR_CORE_DIR
+		/usr/sbin/service solr start
+	else
+        echo "-- Error: missing $SOLR_CORE_DIR directory!" >> $LOG
     fi
 }
 
