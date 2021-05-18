@@ -88,7 +88,7 @@ install::
 	install -m 664 parse*.tar.gz  $(ROOT)/$(PKGROOT)/rocks/etc
 	install -m 664 pyrsistent*.tar.gz  $(ROOT)/$(PKGROOT)/rocks/etc
 	install -m 664 termcolor*.tar.gz  $(ROOT)/$(PKGROOT)/rocks/etc
-	install -m 664 $(VERSION).tar.gz  $(ROOT)/$(PKGROOT)/rocks/etc
+	install -m 664 $(ARCHIVENAME)-$(VERSION).tar.gz  $(ROOT)/$(PKGROOT)/rocks/etc
 
 clean::
 	rm -rf version.mk prepSrc.sh
