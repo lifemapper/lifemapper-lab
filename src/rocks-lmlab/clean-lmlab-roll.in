@@ -95,7 +95,7 @@ del-python-dependencies () {
     $PY3 -m pip uninstall -y Rtree DendroPy numpy scipy lmpy
     $PY3 -m pip uninstall -y six cycler numpy kiwisolver Pillow python-dateutil pyparsing matplotlib
     $PY3 -m pip uninstall -y attrs zipp importlib-metadata setuptools pyrsistent jsonschema openapi-schema-validator isodate more-itertools Werkzeug lazy-object-proxy PyYAML openapi-spec-validator six parse openapi-core 
-    $PY3 -m pip uninstall -y PyYAML openapi3 simplejson termcolor dataclasses specify-oat lm-test GDAL
+    $PY3 -m pip uninstall -y PyYAML openapi3 simplejson termcolor dataclasses specify-oat lm-test GDAL pysolr
     module load opt-python
 }
 
@@ -103,6 +103,7 @@ del-lmtrex() {
    echo "Removing lifemapper t-rex and directory" >> $LOG
    rm -rf @LMHOME@/lmtrex
    $RM opt-lifemapper-lmtrex
+   
    echo "Removing lifemapper syftorium and code/data directories" >> $LOG
    rm -rf @LMHOME@/lmsyft
    rm -rf /state/partition1/lmlab/syftorium_data
@@ -110,6 +111,17 @@ del-lmtrex() {
    $RM opt-lifemapper-lmsyft
    echo "Removing lmsyft web directory" >> $LOG
    rm -rf /var/www/syftorium
+   
+    /bin/egrep -i "^lmwriter" /etc/passwd
+    if [[ $? -eq 0 ]]; then
+        echo "Remove lmwriter user" >> $LOG
+        /usr/bin/gpasswd -d apache lmwriter
+        /user/sbin/userdel lmwriter
+        /bin/rm -f /var/spool/mail/lmwriter
+        /bin/rm -rf /export/home/lmwriter
+        NEED_SYNC=1
+    fi
+   
 }
 
 del-solr () {
