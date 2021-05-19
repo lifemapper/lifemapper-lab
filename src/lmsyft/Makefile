@@ -69,9 +69,11 @@ SEDSPEC += \
         -e 's%@REPONAME@%$(REPONAME)%g' \
         -e 's%@PKGNAME@%$(PKGNAME)%g' \
         -e 's%@VERSION@%$(VERSION)%g'  \
+        -e 's%@SOLRDATA@%$(SOLRDATA)%g'  \
         -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g'
 
 TOPDIR = $(PKGNAME)
+SOLR_CORE_DIR = $(SOLRDATA)/data/cores
 
 prepSrc.sh: prepSrc.sh.in 
 	make version.mk
@@ -88,8 +90,17 @@ build:
 	tar xzvf $(PKGNAME)-$(VERSION).$(TARBALL_POSTFIX)
 
 install::
-	mkdir -p $(ROOT)/$(PKGROOT)
-	mv $(PKGNAME)  $(ROOT)/$(PKGROOT)
+	mkdir -p $(ROOT)/var/www/syftorium
+	mv $(TOPDIR)/apache/syftorium.wsgi  $(ROOT)/var/www/syftorium/
 
+	mkdir -p $(ROOT)/etc/httpd/conf.d
+	mv $(TOPDIR)/apache/syftorium.conf.in  $(ROOT)/etc/httpd/conf.d/
+
+	mkdir -p $(ROOT)/$(PKGROOT)/rocks/solrcores/
+	mv $(TOPDIR)/solr_cores/* $(ROOT)/$(SOLR_CORE_DIR)/
+
+	mkdir -p $(ROOT)/$(PKGROOT)
+	mv $(TOPDIR)  $(ROOT)/$(PKGROOT)
+	
 clean::
 	rm -rf version.mk prepSrc.sh $(TOPDIR)
