@@ -3,11 +3,13 @@
 # Purpose: checkout distro from lifemapper SVN and create *.tar.gz files to use in RPM. 
 # NOTE: for svn checkout will be prompted for valid user/passwd.
 
-DL_URL=https://github.com/lifemapper/@REPONAME@/archive/refs/tags
+DL_URL=https://github.com/lifemapper/@PKGNAME@/archive/refs/tags
 DL_PKG=@VERSION@.@TARBALL_POSTFIX@
 
 NEW_PKG=@PKGNAME@-@VERSION@.@TARBALL_POSTFIX@
-TOPDIR=@REPONAME@-@VERSION@
+
+OLD_TOPDIR=@PKGNAME@-@VERSION@
+NEW_TOPDIR=@PKGNAME@
 
 # download archive from lifemapper git
 download_git () {
@@ -15,28 +17,28 @@ download_git () {
       wget "$DL_URL/$DL_PKG" 
       tar xzvf $DL_PKG
       
-      if [ -d $TOPDIR ]; then
-          echo "Removing .git in $TOPDIR:"
-          DIRS=`find $TOPDIR -name .git`
+      if [ -d $OLD_TOPDIR ]; then
+          echo "Removing .git in $OLD_TOPDIR:"
+          DIRS=`find $OLD_TOPDIR -name .git`
           for i in $DIRS; do
               rm -rf $i
           done
 
       else
-          echo "Error with GIT archive download from $URL/$SRC: directory $TOPDIR is not created"
+          echo "Error with GIT archive download from $URL/$SRC: directory $OLD_TOPDIR is not created"
       fi
 }
 
 
-# create distro files for lmcompute
+# create distro files from source
 create_distro () {
-  if [ -d $TOPDIR ]; then
-      # create lmtrex src distro
-      echo "Creating lmtrex src archive from Github archive download"
-      tar czf $NEW_PKG --strip-components=1 \
-          $TOPDIR/@PKGNAME@ \
-          $TOPDIR/tests \
-          $TOPDIR/solrcores
+	if [ -d $OLD_TOPDIR ]; then
+		# create lmtrex src distro stripping old topdir
+		echo "Creating lmtrex src archive from Github archive download"
+		tar czf $NEW_PKG --strip-components=1 \
+          $OLD_TOPDIR/$NEW_TOPDIR \
+          $OLD_TOPDIR/tests \
+          $OLD_TOPDIR/solrcores
   else
       echo "GIT downloaded directory $TOPDIR is not present"
   fi

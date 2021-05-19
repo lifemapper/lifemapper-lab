@@ -66,7 +66,6 @@ PY.PATH = /opt/python/bin/$(PYTHONVER)
 SEDSPEC += \
         -e 's%@PKGROOT@%$(PKGROOT)%g' \
         -e 's%@LMHOME@%$(LMHOME)%g' \
-        -e 's%@REPONAME@%$(REPONAME)%g' \
         -e 's%@PKGNAME@%$(PKGNAME)%g' \
         -e 's%@VERSION@%$(VERSION)%g'  \
         -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g'
@@ -89,14 +88,14 @@ build:
 
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)
-	mv $(TOPDIR)/$(PKGNAME)  $(ROOT)/$(PKGROOT)
-	mv $(TOPDIR)/tests  $(ROOT)/$(PKGROOT)/$(PKGNAME)
+	mv $(TOPDIR)  $(ROOT)/$(PKGROOT)
+	mv tests  $(ROOT)/$(PKGROOT)/$(TOPDIR)/
 	
-	mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
-	mv $(TOPDIR)/solrcores  $(ROOT)/$(PKGROOT)/rocks/etc 
+	mkdir -p $(ROOT)/$(PKGROOT)/rocks/solrcores
+	mv solrcores/*  $(ROOT)/$(PKGROOT)/rocks/solrcores/
 		
-	mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
-	install -m 755 wsgi-cp.py  $(ROOT)/$(PKGROOT)/rocks/bin 
+	mkdir -p $(ROOT)/var/www/lmtrex
+	install -m 755 wsgi-cp.py  $(ROOT)/var/www/lmtrex
 
 clean::
 	rm -rf version.mk prepSrc.sh $(TOPDIR)
