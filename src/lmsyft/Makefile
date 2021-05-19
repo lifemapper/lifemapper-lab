@@ -66,14 +66,11 @@ PY.PATH = /opt/python/bin/$(PYTHONVER)
 SEDSPEC += \
         -e 's%@PKGROOT@%$(PKGROOT)%g' \
         -e 's%@LMHOME@%$(LMHOME)%g' \
-        -e 's%@REPONAME@%$(REPONAME)%g' \
         -e 's%@PKGNAME@%$(PKGNAME)%g' \
         -e 's%@VERSION@%$(VERSION)%g'  \
-        -e 's%@SOLRDATA@%$(SOLRDATA)%g'  \
         -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g'
 
 TOPDIR = $(PKGNAME)
-SOLR_CORE_DIR = $(SOLRDATA)/data/cores
 
 prepSrc.sh: prepSrc.sh.in 
 	make version.mk
@@ -97,7 +94,7 @@ install::
 	mv $(TOPDIR)/apache/syftorium.conf.in  $(ROOT)/etc/httpd/conf.d/
 
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/solrcores/
-	mv $(TOPDIR)/solr_cores/* $(ROOT)/$(SOLR_CORE_DIR)/
+	mv $(TOPDIR)/solr_cores/* $(ROOT)/rocks/solrcores/
 
 	mkdir -p $(ROOT)/$(PKGROOT)
 	mv $(TOPDIR)  $(ROOT)/$(PKGROOT)
