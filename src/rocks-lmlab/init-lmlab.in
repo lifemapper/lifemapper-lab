@@ -42,12 +42,9 @@ set_defaults() {
     PY3=@PYBIN@
     WHL_DIR=@PKGROOT@/rocks/etc
 
-    LMYSFT_CORE_DIR=@PKGROOT@/lmsyft/solr_cores
+    INSTALL_CORE_DIR=@LMHOME@/rocks/solrcores
 	SOLR_CORE_DIR=@SOLRDATA@/data/cores
-	
-	LMYSFT_APACHE_DIR=@LMHOME@/lmsyft/apache
-	LMYSFT_WEB_DIR=/var/www/syftorium
-    
+
     # Source function library.
     INITD=/etc/rc.d/init.d
     . $INITD/functions
@@ -84,20 +81,14 @@ finish_wheel_installs () {
     echo "-- End install_wheels script" >> $LOG
 }
 
-make_lmsyft_link () {
-    if [[ -d $LMYSFT_WEB_DIR ]] ; then
-        echo "-- create lmsyft wsgi link" >> $LOG
-        (cd $LMYSFT_WEB_DIR; /usr/bin/ln -s $LMYSFT_APACHE_DIR/syftorium.wsgi)
-    fi
-}
 
-install_lmsyft_solrcores () {
+install_all_solrcores () {
     if [[ -d $SOLR_CORE_DIR ]] ; then
 		/usr/sbin/service solr stop
-        echo "-- move lmsyft solr cores" >> $LOG
-        mv  $LMYSFT_CORE_DIR/*      $SOLR_CORE_DIR
-        /usr/bin/chown -R solr:solr $SOLR_CORE_DIR
-        /usr/bin/chmod -R 775       $SOLR_CORE_DIR
+        echo "-- move all solr cores" >> $LOG
+        mv  $INSTALL_CORE_DIR/*      $SOLR_CORE_DIR/
+        /usr/bin/chown -R solr:solr  $SOLR_CORE_DIR
+        /usr/bin/chmod -R 775        $SOLR_CORE_DIR
 		/usr/sbin/service solr start
 	else
         echo "-- Error: missing $SOLR_CORE_DIR directory!" >> $LOG
@@ -126,7 +117,7 @@ get_address () {
 }
 
 update_lmsyft_apache_config () {
-    infile=$LMYSFT_APACHE_DIR/syftorium.conf.in
+    infile=/etc/httpd/conf.d/syftorium.conf.in
     outfile=/etc/httpd/conf.d/syftorium.conf
     
     if [ -f $outfile ] ; then
@@ -154,8 +145,7 @@ run_ldconfig
 # Cron jobs do not currently exist in this roll
 install_cron_jobs
 
-make_lmsyft_link
-install_lmsyft_solrcores
+install_all_solrcores
 update_lmsyft_apache_config
 
 TimeStamp "# End"

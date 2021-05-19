@@ -103,14 +103,13 @@ del-lmtrex() {
    echo "Removing lifemapper t-rex and directory" >> $LOG
    rm -rf @LMHOME@/lmtrex
    $RM opt-lifemapper-lmtrex
+   rm -rf /var/www/lmtrex
    
    echo "Removing lifemapper syftorium and code/data directories" >> $LOG
    rm -rf @LMHOME@/lmsyft
-   rm -rf /state/partition1/lmlab/syftorium_data
-      
+   rm -rf /state/partition1/lmlab/syftorium_data   
    $RM opt-lifemapper-lmsyft
-   echo "Removing lmsyft web directory" >> $LOG
-   rm -rf /var/www/syftorium
+   rm -rf /var/www/lmsyft
    
     /bin/egrep -i "^lmwriter" /etc/passwd
     if [[ $? -eq 0 ]]; then
@@ -153,8 +152,10 @@ del-solr () {
 
 del-config () {
     echo "Removing system configuration files used by lifemapper-lab" >> $LOG
-    rm -rf  /etc/ld.so.conf.d/lifemapper-lab-ld.conf
-    rm -rf  /etc/profile.d/lifemapper-lab.*
+    rm -f  /etc/httpd/conf.modules.d/02-wsgi.conf
+    rm -f  /etc/httpd/conf.d/syftorium.conf
+    rm -rf /etc/ld.so.conf.d/lifemapper-lab-ld.conf
+    rm -rf /etc/profile.d/lifemapper-lab.*
 }
 
 del-directories () {   
