@@ -70,7 +70,8 @@ SEDSPEC += \
         -e 's%@VERSION@%$(VERSION)%g'  \
         -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g'
 
-TOPDIR = $(REPONAME)-$(VERSION)
+TOPDIR = $(ARCHIVENAME)-$(VERSION)
+PKGDIR = $(ARCHIVENAME)
 
 prepSrc.sh: prepSrc.sh.in 
 	make version.mk
@@ -84,18 +85,18 @@ version.mk:
 	cat ../version.mk version.mk.in > version.mk
 
 build: 
-	tar xzvf $(PKGNAME)-$(VERSION).$(TARBALL_POSTFIX)
+	tar xzvf $(ARCHIVENAME)-$(VERSION).$(TARBALL_POSTFIX)
 
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)
-	mv $(TOPDIR)  $(ROOT)/$(PKGROOT)
-	mv tests  $(ROOT)/$(PKGROOT)/$(TOPDIR)/
+	mv $(TOPDIR)/$(PKGDIR)  $(ROOT)/$(PKGROOT)/
+	mv $(TOPDIR)/tests  $(ROOT)/$(PKGROOT)/$(PKGDIR)/
 	
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/solrcores
-	mv solrcores/*  $(ROOT)/$(PKGROOT)/rocks/solrcores/
+	mv $(TOPDIR)/solrcores/*  $(ROOT)/$(PKGROOT)/rocks/solrcores/
 		
 	mkdir -p $(ROOT)/var/www/lmtrex
 	install -m 755 wsgi-cp.py  $(ROOT)/var/www/lmtrex
 
 clean::
-	rm -rf version.mk prepSrc.sh $(TOPDIR)
+	rm -rf version.mk prepSrc.sh
