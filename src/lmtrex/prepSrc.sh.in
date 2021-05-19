@@ -3,13 +3,13 @@
 # Purpose: checkout distro from lifemapper SVN and create *.tar.gz files to use in RPM. 
 # NOTE: for svn checkout will be prompted for valid user/passwd.
 
-DL_URL=https://github.com/lifemapper/@PKGNAME@/archive/refs/tags
+DL_URL=https://github.com/lifemapper/@ARCHIVENAME@/archive/refs/tags
 DL_PKG=@VERSION@.@TARBALL_POSTFIX@
 
-NEW_PKG=@PKGNAME@-@VERSION@.@TARBALL_POSTFIX@
+NEW_PKG=@ARCHIVENAME@-@VERSION@.@TARBALL_POSTFIX@
 
-OLD_TOPDIR=@PKGNAME@-@VERSION@
-NEW_TOPDIR=@PKGNAME@
+OLD_TOPDIR=@ARCHIVENAME@-@VERSION@
+NEW_TOPDIR=@ARCHIVENAME@
 
 # download archive from lifemapper git
 download_git () {

@@ -3,7 +3,7 @@
 # Purpose: checkout distro from github and create *.tar.gz files to use in RPM. 
 
 DL_URL=https://github.com/lifemapper/@PKGNAME@/archive/refs/tags
-DL_PKG=$VERSION.@TARBALL_POSTFIX@
+DL_PKG=@VERSION@.@TARBALL_POSTFIX@
 
 OLD_TOPDIR=@PKGNAME@-@VERSION@
 NEW_TOPDIR=@PKGNAME@
