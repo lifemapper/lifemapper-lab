@@ -87,8 +87,8 @@ build:
 	tar xzvf $(PKGNAME)-$(VERSION).$(TARBALL_POSTFIX)
 
 install::
-	mkdir -p $(ROOT)/var/www/syftorium
-	mv $(TOPDIR)/apache/syftorium.wsgi  $(ROOT)/var/www/syftorium/
+	mkdir -p $(ROOT)/var/www/lmsyft
+	mv $(TOPDIR)/apache/syftorium.wsgi  $(ROOT)/var/www/lmsyft/
 
 	mkdir -p $(ROOT)/etc/httpd/conf.d
 	mv $(TOPDIR)/apache/syftorium.conf.in  $(ROOT)/etc/httpd/conf.d/

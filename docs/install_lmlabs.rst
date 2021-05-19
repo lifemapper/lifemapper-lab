@@ -52,10 +52,11 @@ New roll install or update existing roll
 (If update) Stop processes
 --------------------------
 
-#. **Stop solr**::
+#. TODO: modify clean script to keep data
 
-     root# /usr/sbin/service solr stop
 
+(If complete reinstall) Destroy!
+---------------------------------
 #. To **destroy** existing install, including solr index, run::
 
    # bash /opt/lifemapper/rocks/etc/clean-lmlab-roll.sh

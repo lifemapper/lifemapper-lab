@@ -64,9 +64,11 @@
     /bin/chgrp -R lmwriter /state/partition1/lmscratch
     /bin/chmod -R g+ws     /state/partition1/lmscratch
     
-	# for apache/wsgi  files    
-	/bin/mkdir -p  /var/www/syftorium
-	/bin/chmod 755 /var/www/syftorium
+	# for lmtrex, lmsyft apache/wsgi  files    
+	/bin/mkdir -p  /var/www/lmsyft
+	/bin/chmod 755 /var/www/lmsyft
+	/bin/mkdir -p  /var/www/lmtrex
+	/bin/chmod 755 /var/www/lmtrex
 
     
     # FE directory exported to /share
