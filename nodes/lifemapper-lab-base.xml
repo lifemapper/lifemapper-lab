@@ -76,6 +76,7 @@
     <package>opt-lifemapper-cython</package>
     <package>opt-lifemapper-gdal</package>
     <package>opt-lifemapper-lmpy</package>
+    <package>opt-lifemapper-lmsyft</package>    
     <package>opt-lifemapper-lmtest</package>    
     <package>opt-lifemapper-lmtrex</package>
     <package>opt-lifemapper-matplotlib</package>
