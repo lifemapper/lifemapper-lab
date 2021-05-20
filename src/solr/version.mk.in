@@ -1,4 +1,6 @@
-NAME			= lifemapper-solr
+
+
+qNAME			= lifemapper-solr
 ARCHIVENAME		= solr
 VERSION			= 8.8.2
 JTS				= jts-core-1.15.0.jar
@@ -9,7 +11,6 @@ TARBALL_POSTFIX	= tgz
 
 SOLRDIR			= /opt/solr
 JTSDIR			= /opt/solr/server/solr-webapp/webapp/WEB-INF/lib
-SOLRDATA		= /state/partition1/lmserver/data/solr
 SOLRUSER		= solr
 
 SOLR_PORT		= 8983
