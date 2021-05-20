@@ -93,7 +93,7 @@ install::
 	mv $(TOPDIR)/tests  $(ROOT)/$(PKGROOT)/$(PKGDIR)/
 	
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/solrcores
-	mv $(TOPDIR)/solrcores/*  $(ROOT)/$(PKGROOT)/rocks/solrcores/
+	cp -r $(TOPDIR)/solrcores/*  $(ROOT)/$(PKGROOT)/rocks/solrcores/
 		
 	mkdir -p $(ROOT)/var/www/lmtrex
 	install -m 755 lmtrex.wsgi  $(ROOT)/var/www/lmtrex
