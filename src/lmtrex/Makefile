@@ -96,7 +96,7 @@ install::
 	mv $(TOPDIR)/solrcores/*  $(ROOT)/$(PKGROOT)/rocks/solrcores/
 		
 	mkdir -p $(ROOT)/var/www/lmtrex
-	install -m 755 wsgi-cp.py  $(ROOT)/var/www/lmtrex
+	install -m 755 lmtrex.wsgi  $(ROOT)/var/www/lmtrex
 
 clean::
 	rm -rf version.mk prepSrc.sh
