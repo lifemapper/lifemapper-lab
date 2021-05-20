@@ -25,6 +25,10 @@ SEDSPEC += \
         -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g' \
         -e 's%@VERSION@%$(VERSION)%g'
 
+SCRIPTS = \
+        solr.txt \
+        solr-index
+
 version.mk:
 	cat ../version.mk version.mk.in > version.mk
 
@@ -44,7 +48,7 @@ prep: prepSrc.sh
 	make prepSrc.sh
 	./prepSrc.sh
 
-build: solr.txt
+build: $(SCRIPTS)
 
 install::
 	mkdir -p $(ROOT)/$(SOLRDIR)

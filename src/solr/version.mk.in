@@ -2,8 +2,9 @@ NAME			= lifemapper-solr
 ARCHIVENAME		= solr
 VERSION			= 8.8.2
 JTS				= jts-core-1.15.0.jar
-# Release 1 includes pysolr
-RELEASE         = 2
+# Release 3 expects cores from other packages to be deposited in 
+# 	$(LMHOME)/rocks/solrcores/ for installation
+RELEASE         = 3
 TARBALL_POSTFIX	= tgz
 
 SOLRDIR			= /opt/solr
