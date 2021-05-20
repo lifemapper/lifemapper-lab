@@ -131,6 +131,7 @@ del-solr () {
     fi
 
     $RM lifemapper-solr
+    /usr/sbin/chkconfig --del solr 
     $PY3 -m pip uninstall -y pysolr
     rm -rf  @SOLRDATA@
 
