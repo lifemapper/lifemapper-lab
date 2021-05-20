@@ -33,7 +33,7 @@ define_python_dependencies () {
     LMPY_DEPS="Rtree DendroPy numpy scipy lmpy"
     MATPLOTLIB_DEPS="six cycler numpy kiwisolver Pillow python_dateutil pyparsing matplotlib"
     OPENAPICORE_DEPS="attrs zipp importlib_metadata setuptools pyrsistent jsonschema openapi_schema_validator isodate more_itertools Werkzeug lazy_object_proxy PyYAML openapi_spec_validator six parse openapi_core" 
-    OPENAPI3_DEPS="PyYAML openAPI3" # and requests
+    OPENAPI3_DEPS="PyYAML openapi3" # and requests
     SPECIFY_OAT_DEPS="simplejson termcolor setuptools dataclasses specify-oat"
 }
 
