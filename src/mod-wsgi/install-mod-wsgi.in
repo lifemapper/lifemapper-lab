@@ -1,0 +1,25 @@
+#!/bin/bash 
+
+# Purpose: install mod-wsgi before other python wheels so httpd is immediately available
+# 
+# Called during roll install, prior to reboot with configuration and python wheel install
+
+BIN=@PKGROOT@/rocks/bin
+PY3=@PYBIN@
+WHL_DIR=@PKGROOT@/rocks/etc
+WHLNAME=@ARCHIVENAME@-@VERSION@
+WSGI_MODULE=@PYTHON36_PACKAGES@/mod_wsgi/server/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so
+
+echo "Load opt-python for pip"
+source /usr/share/Modules/init/bash
+module load opt-python
+
+echo "Installing $WHLNAME python package"
+$PY3 -m pip install $WHL_DIR/$WHLNAME.tar.gz
+
+# Check if file referenced in configuration is present
+if [[ -f $WSGI_MODULE ]] ; then
+    echo "Have correct $WSGI_MODULE"
+else
+    echo "ERROR: missing wsgi module for wsgi.conf $WSGI_MODULE"
+fi

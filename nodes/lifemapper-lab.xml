@@ -94,10 +94,13 @@ lmlab &Kickstart_PrivateHostname;:/export/&amp;
 </file>
     
     # add solr index files
-    /opt/lifemapper/rocks/bin/solr-lmlab-index
+    /opt/lifemapper/rocks/bin/solr-index
     chkconfig --add solr 
     chkconfig  solr on
     
+    # enable mod-wsgi for httpd
+    /opt/lifemapper/rocks/bin/install-mod-wsgi
+
     /usr/bin/systemctl restart httpd.service
     
     
