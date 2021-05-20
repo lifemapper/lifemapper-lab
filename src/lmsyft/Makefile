@@ -94,8 +94,7 @@ install::
 	rmdir $(TOPDIR)/apache
 
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/solrcores/
-	mv $(TOPDIR)/solr_cores/* $(ROOT)/$(PKGROOT)/rocks/solrcores/
-	rmdir $(TOPDIR)/solr_cores
+	cp -r $(TOPDIR)/solr_cores/* $(ROOT)/$(PKGROOT)/rocks/solrcores/
 	
 	mkdir -p $(ROOT)/$(PKGROOT)
 	mv $(TOPDIR)  $(ROOT)/$(PKGROOT)/
