@@ -79,8 +79,6 @@ prep: prepSrc.sh
 	rm -rf version.mk
 	make version.mk
 	make prepSrc.sh
-	make wsgi.conf
-	make install-mod-wsgi
 	./prepSrc.sh
 
 version.mk:
@@ -92,8 +90,9 @@ wsgi.conf: wsgi.conf.in
 install-mod-wsgi: install-mod-wsgi.in
 	$(SED) $(SEDSPEC) $^ > $@
 
-build: wsgi.conf
-	echo $(ARCHIVENAME)-$(VERSION)
+build:
+	make wsgi.conf
+	make install-mod-wsgi
 
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
