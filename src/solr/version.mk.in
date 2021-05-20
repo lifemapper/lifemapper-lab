@@ -1,6 +1,4 @@
-
-
-qNAME			= lifemapper-solr
+NAME			= lifemapper-solr
 ARCHIVENAME		= solr
 VERSION			= 8.8.2
 JTS				= jts-core-1.15.0.jar
