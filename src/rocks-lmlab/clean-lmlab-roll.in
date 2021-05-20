@@ -142,7 +142,7 @@ del-solr () {
         /bin/rm -f /var/spool/mail/solr
         /bin/rm -rf /export/home/solr
         NEED_SYNC=1
-    fi
+    fipip
 
     if [[ $NEED_SYNC -eq 1 ]]; then
         echo "Syncing users info" >> $LOG
@@ -194,7 +194,8 @@ set_defaults
 TimeStamp "# Start"
 
 del-lmlab
-del-python-packages
+del-solr
+del-python-dependencies
 del-third-party-libs
 del-config
 del-directories
