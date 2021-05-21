@@ -85,7 +85,7 @@ finish_wheel_installs () {
 install_all_solrcores () {
     if [[ -d $SOLR_CORE_DIR ]] ; then
 		/usr/sbin/service solr stop
-        echo "-- move all solr cores" >> $LOG
+        echo "-- move any solr cores" >> $LOG
         mv  $INSTALL_CORE_DIR/*      $SOLR_CORE_DIR/
         /usr/bin/chown -R solr:solr  $SOLR_CORE_DIR
         /usr/bin/chmod -R 775        $SOLR_CORE_DIR
