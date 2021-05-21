@@ -1,7 +1,7 @@
 NAME            = opt-lifemapper-lmtrex
 ARCHIVENAME     = lmtrex
 VERSION         = 0.1.4
-RELEASE         = 0
+RELEASE         = 1
 TARBALL_POSTFIX = tar.gz
 
 # Dependencies 

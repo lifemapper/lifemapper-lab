@@ -37,8 +37,7 @@ create_distro () {
 		echo "Creating lmtrex src archive from Github archive download"
 		tar czf $NEW_PKG --strip-components=1 \
           $OLD_TOPDIR/$NEW_TOPDIR \
-          $OLD_TOPDIR/tests \
-          $OLD_TOPDIR/solrcores
+          $OLD_TOPDIR/tests
   else
       echo "GIT downloaded directory $TOPDIR is not present"
   fi
