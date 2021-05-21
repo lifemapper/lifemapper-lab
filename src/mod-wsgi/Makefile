@@ -65,6 +65,7 @@ RPM.EXTRAS += "AutoReq: 0"
 PY.PATH = /opt/python/bin/$(PYTHONVER)
 
 SEDSPEC += \
+        -e 's%@PKGROOT@%$(PKGROOT)%g' \
         -e 's%@PYTHON36_PACKAGES@%$(PYTHON36_PACKAGES)%g' \
         -e 's%@PYBIN@%$(PY.PATH)%g' \
         -e 's%@ARCHIVENAME@%$(ARCHIVENAME)%g'  \
