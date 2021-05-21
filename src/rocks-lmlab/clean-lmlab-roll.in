@@ -142,7 +142,7 @@ del-solr () {
         /bin/rm -f /var/spool/mail/solr
         /bin/rm -rf /export/home/solr
         NEED_SYNC=1
-    fipip
+    fi
 
     if [[ $NEED_SYNC -eq 1 ]]; then
         echo "Syncing users info" >> $LOG
