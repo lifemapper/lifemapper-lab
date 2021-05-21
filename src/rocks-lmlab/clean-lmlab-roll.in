@@ -95,7 +95,7 @@ del-python-dependencies () {
     $PY3 -m pip uninstall -y Rtree DendroPy numpy scipy lmpy
     $PY3 -m pip uninstall -y six cycler numpy kiwisolver Pillow python-dateutil pyparsing matplotlib
     $PY3 -m pip uninstall -y attrs zipp importlib-metadata setuptools pyrsistent jsonschema openapi-schema-validator isodate more-itertools Werkzeug lazy-object-proxy PyYAML openapi-spec-validator six parse openapi-core 
-    $PY3 -m pip uninstall -y PyYAML openapi3 simplejson termcolor dataclasses specify-oat lm-test GDAL pysolr
+    $PY3 -m pip uninstall -y PyYAML openapi3 simplejson termcolor dataclasses specify-open-api lm-test GDAL pysolr
     module load opt-python
 }
 
@@ -160,9 +160,12 @@ del-config () {
 }
 
 del-directories () {   
-   echo "Removing lifemapper lab scratch directory" >> $LOG
+   echo "Removing lifemapper lab scratch dir @LMSCRATCHDISK@" >> $LOG
    rm -rf @LMSCRATCHDISK@
-   echo "Leaving lifemapper lab data directory @LMLABDISK@" >> $LOG
+   echo "Removing lifemapper lab data dir @LMLABDISK@" >> $LOG
+   rm -rf @LMLABDISK@
+   echo "Removing lifemapper home dir @LMHOME@" >> $LOG
+   rm -rf @LMHOME@
 }
 
 # remove obsolete Lifemapper cron jobs

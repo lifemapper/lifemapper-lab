@@ -29,10 +29,7 @@ New roll install or update existing roll
 #. **Create distribution**::
 
    # rocks enable roll lifemapper-lab
-   # (module unload opt-python; \
-      cd /export/rocks/install; \
-      rocks create distro; \
-      yum clean all)
+   # (module unload opt-python; cd /export/rocks/install; rocks create distro; yum clean all)
 
 #. **Create and run install script**::
 
