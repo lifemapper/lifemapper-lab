@@ -10,16 +10,52 @@ WHL_DIR=@PKGROOT@/rocks/etc
 WHLNAME=@ARCHIVENAME@-@VERSION@
 WSGI_MODULE=@PYTHON36_PACKAGES@/mod_wsgi/server/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so
 
-echo "Load opt-python for pip"
-source /usr/share/Modules/init/bash
-module load opt-python
+set-defaults () {
+	echo "Load opt-python for pip"
+	source /usr/share/Modules/init/bash
+	module load opt-python
 
-echo "Installing $WHLNAME python package"
-$PY3 -m pip install $WHL_DIR/$WHLNAME.tar.gz
+	HAS_WSGI=`$PY3 -m pip list | grep wsgi | grep @VERSION@ | wc -l`
+	HAS_SETUP=`$PY3 -m pip list | grep setuptools`
+}
 
-# Check if file referenced in configuration is present
-if [[ -f $WSGI_MODULE ]] ; then
-    echo "Have correct $WSGI_MODULE"
-else
-    echo "ERROR: missing wsgi module for wsgi.conf $WSGI_MODULE"
+
+install-setuptools () {
+	# need setuptools
+	if [[ $HAS_SETUP -eq 0 ]]; then
+		echo "Installing setuptools python package"
+		$PY3 -m pip install $WHL_DIR/setuptools*whl
+	else
+		echo "Python setuptools module is installed"
+	fi
+}
+
+install-wsgi () {
+	echo "Installing $WHLNAME python package"
+	$PY3 -m pip install $WHL_DIR/$WHLNAME.tar.gz
+}
+
+test-config () {
+	# Check if file referenced in configuration is present
+	if [[ -f $WSGI_MODULE ]] ; then
+	    echo "Have correct $WSGI_MODULE"
+	else
+	    echo "ERROR: missing wsgi module for wsgi.conf $WSGI_MODULE"
+	fi
+}
+
+time-stamp () {
+    echo $1 `/bin/date`
+}
+
+####### Main #######
+time-stamp "# Start"
+set-defaults
+
+if [[ $HAS_WSGI -eq 0 ]]; then
+	install-setuptools
+	install-wsgi
 fi
+
+test-config
+time-stamp "# Start"
