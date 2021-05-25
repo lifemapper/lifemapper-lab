@@ -96,7 +96,7 @@ version.mk:
 build: 
 	tar xzvf $(ARCHIVENAME)-$(VERSION).$(TARBALL_POSTFIX)
 
-install:: $(CONFIGS)
+install::
 	mkdir -p $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)
 	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.py.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/broker.py.in
 	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/cherrypy.conf.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/cherrypy.conf.in
