@@ -66,6 +66,7 @@ PY.PATH = /opt/python/bin/$(PYTHONVER)
 SEDSPEC += \
         -e 's%@PKGROOT@%$(PKGROOT)%g' \
         -e 's%@LMHOME@%$(LMHOME)%g' \
+        -e 's%@LMLABDISK@%$(LMLABDISK)%g' \
         -e 's%@LMSCRATCHDISK@%$(LMSCRATCHDISK)%g' \
         -e 's%@ARCHIVENAME@%$(ARCHIVENAME)%g' \
         -e 's%@VERSION@%$(VERSION)%g'  \
@@ -97,9 +98,9 @@ build:
 
 install:: $(CONFIGS)
 	mkdir -p $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.py.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/broker.py
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/cherrypy.conf.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/cherrypy.conf
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/config.lmtrex.py.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/config.lmtrex.py
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.py.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/broker.py.in
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/cherrypy.conf.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/cherrypy.conf.in
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/config.lmtrex.py.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/config.lmtrex.py.in
 	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/lmtrex.httpd.conf.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/lmtrex.httpd.conf
 	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/lmtrex.wsgi.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/lmtrex.wsgi
 
