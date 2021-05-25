@@ -99,8 +99,9 @@ install:: $(CONFIGS)
 	mkdir -p $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)
 	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.py.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/broker.py
 	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/cherrypy.conf.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/cherrypy.conf
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.py.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/broker.py
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.py.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/broker.py
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/config.lmtrex.py.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/config.lmtrex.py
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/lmtrex.httpd.conf.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/lmtrex.httpd.conf
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/lmtrex.wsgi.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/lmtrex.wsgi
 
 	mkdir -p $(ROOT)/$(PKGROOT)
 	mv $(TOPDIR)/$(PKGDIR)  $(ROOT)/$(PKGROOT)/
