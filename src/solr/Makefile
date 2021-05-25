@@ -61,8 +61,12 @@ install::
 	cp $(ROOT)/$(SOLRDIR)/server/solr/zoo.cfg $(ROOT)/$(SOLRDATA)/data
 	cp $(ROOT)/$(SOLRDIR)/server/resources/log4j2.xml  $(ROOT)/$(SOLRDATA)/log4j2.xml
 	
-	cat $(ROOT)/$(SOLRDIR)/bin/solr.in.sh solr.txt > solrenv.tmp 
-	mv -f solrenv.tmp  $(ROOT)/$(SOLRDIR)/bin/solr.in.sh
+	mkdir -p $(ROOT)/etc/default
+	cat $(ROOT)/$(SOLRDIR)/bin/solr.in.sh solr.txt > solrenv.tmp	
+	cp solrenv.tmp $(ROOT)/etc/default/solr.in.sh
+	chmod 755 $(ROOT)/etc/default/solr.in.sh
+	cp solrenv.tmp  $(ROOT)/$(SOLRDIR)/bin/solr.in.sh
+	chmod 755  $(ROOT)/$(SOLRDIR)/bin/solr.in.sh
 	
 	mkdir -p $(ROOT)/$(JTSDIR)
 	cp  $(JTS)  $(ROOT)/$(JTSDIR)/
