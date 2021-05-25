@@ -22,5 +22,6 @@ RPM.FILES =  \
     $(PKGROOT)/*                \n\
     $(SOLRDIR)/*                \n\
     $(SOLRDATA)/*               \n\
+    /etc/default/solr.in.sh     \n\
     /etc/rc.d/init.d/solr       \n\
     /etc/security/limits.d/lifemapper.solr.conf
