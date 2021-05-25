@@ -1,7 +1,7 @@
 NAME            = opt-lifemapper-lmtrex
 ARCHIVENAME     = lmtrex
-VERSION         = 0.1.4
-RELEASE         = 1
+VERSION         = 0.1.5
+RELEASE         = 0
 TARBALL_POSTFIX = tar.gz
 
 # Dependencies 
@@ -13,5 +13,4 @@ TARBALL_POSTFIX = tar.gz
 RPM.EXTRAS = %define __os_install_post %{nil}
 
 RPM.FILES =  \
-    $(PKGROOT)/*  \n\
-	/var/www/lmtrex/lmtrex.wsgi
+    $(PKGROOT)/*
