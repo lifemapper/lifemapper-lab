@@ -111,10 +111,10 @@ install_cron_jobs () {
     echo "-- End install-lmlab-cron" >> $LOG
 }
 
-get_address () {
+get_ip_address () {
     # public host address
-    Addr=`/opt/rocks/bin/rocks list host attr localhost | grep Kickstart_PublicFQDN | awk '{print $3}'`
-    # IPAddr=`/usr/sbin/ifconfig eth1 | grep inet | grep broadcast  | awk '{print $2}'`
+    # Addr=`/opt/rocks/bin/rocks list host attr localhost | grep Kickstart_PublicFQDN | awk '{print $3}'`
+    IPAddr=`/usr/sbin/ifconfig eth1 | grep inet | grep broadcast  | awk '{print $2}'`
 }
 
 update_lmsyft_apache_config () {
@@ -128,8 +128,8 @@ update_lmsyft_apache_config () {
     fi
     
     echo '  Creating ' $outfile ' from ' $infile >> $LOG
-    # replace variables
-    sed  "s%@FQDN@%$Addr%g" $infile > $outfile
+	# TODO: also replace SSL certificate variables
+    sed  "s%@FQDN@%$IPAddr%g" $infile > $outfile
 }
 
 update_lmtrex_apache_config () {
@@ -147,7 +147,7 @@ update_lmtrex_apache_config () {
     
     echo '  Creating ' $outfile ' from ' $infile >> $LOG
     # replace variables
-    sed  "s%@FQDN@%$Addr%g" $infile > $outfile
+    sed  "s%@FQDN@%$IPAddr%g" $infile > $outfile
 }
 
 
@@ -161,10 +161,14 @@ time_stamp "# Start"
 
 finish_wheel_installs
 run_ldconfig
+
 # Cron jobs do not currently exist in this roll
 install_cron_jobs
 
+# solrcores should be moved from each package to central location, then installed to solrdata dir here
 install_all_solrcores
+
+get_ip_address
 update_lmsyft_apache_config
 update_lmtrex_apache_config
 
