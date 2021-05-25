@@ -87,11 +87,9 @@ build:
 	tar xzvf $(ARCHIVENAME)-$(VERSION).$(TARBALL_POSTFIX)
 
 install::
-	mkdir -p $(ROOT)/var/www/lmsyft
-	mv $(TOPDIR)/apache/syftorium.wsgi  $(ROOT)/var/www/lmsyft/
-	mkdir -p $(ROOT)/etc/httpd/conf.d
-	mv $(TOPDIR)/apache/syftorium.conf.in  $(ROOT)/etc/httpd/conf.d/
-	rmdir $(TOPDIR)/apache
+	mkdir -p $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)
+	cp  $(TOPDIR)/apache/syftorium.wsgi  $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/
+	$(SED) $(SEDSPEC)  $(TOPDIR)/apache/syftorium.conf.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/syftorium.conf.in
 
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/solrcores/
 	cp -r $(TOPDIR)/solr_cores/* $(ROOT)/$(PKGROOT)/rocks/solrcores/
