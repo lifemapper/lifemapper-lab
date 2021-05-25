@@ -88,13 +88,13 @@ del-python-dependencies () {
     module load opt-python
     echo "Removing python packages" >> $LOG
     $PY3 -m pip uninstall -y chardet certifi idna urllib3 requests
-    $PY3 -m pip uninstall -y biotaphypy Cython mod-wsgi idigbio psycopg2-binary
+    $PY3 -m pip uninstall -y biotaphypy Cython idigbio psycopg2-binary
     $PY3 -m pip uninstall -y MarkupSafe Jinja2 click itsdangerous Werkzeug Flask Flask-Cors
-    $PY3 -m pip uninstall -y more-itertools pytz tempora portend jaraco.functools six cheroot setuptools zc.lockfile jaraco.classes zipp importlib-resources jaraco.text jaraco.collections CherryPy
+    $PY3 -m pip uninstall -y more-itertools pytz tempora portend jaraco.functools six cheroot  zc.lockfile jaraco.classes zipp importlib-resources jaraco.text jaraco.collections CherryPy
     $PY3 -m pip uninstall -y wheel httpagentparser cherrypy-cors
     $PY3 -m pip uninstall -y Rtree DendroPy numpy scipy lmpy
     $PY3 -m pip uninstall -y six cycler numpy kiwisolver Pillow python-dateutil pyparsing matplotlib
-    $PY3 -m pip uninstall -y attrs zipp importlib-metadata setuptools pyrsistent jsonschema openapi-schema-validator isodate more-itertools Werkzeug lazy-object-proxy PyYAML openapi-spec-validator six parse openapi-core 
+    $PY3 -m pip uninstall -y attrs zipp importlib-metadata  pyrsistent jsonschema openapi-schema-validator isodate more-itertools Werkzeug lazy-object-proxy PyYAML openapi-spec-validator six parse openapi-core 
     $PY3 -m pip uninstall -y PyYAML openapi3 simplejson termcolor dataclasses specify-open-api lm-test GDAL pysolr
     module load opt-python
 }
