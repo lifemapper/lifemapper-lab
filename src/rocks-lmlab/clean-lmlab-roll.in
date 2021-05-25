@@ -99,15 +99,13 @@ del-python-dependencies () {
     module load opt-python
 }
 
-del-lmtrex() {
-   echo "Removing lifemapper t-rex and directory" >> $LOG
+del-lmxxx() {
    rm -rf @LMHOME@/lmtrex
    $RM opt-lifemapper-lmtrex
    rm -rf /var/www/lmtrex
    
    echo "Removing lifemapper syftorium and code/data directories" >> $LOG
    rm -rf @LMHOME@/lmsyft
-   rm -rf /state/partition1/lmlab/syftorium_data   
    $RM opt-lifemapper-lmsyft
    rm -rf /var/www/lmsyft
    
@@ -174,7 +172,10 @@ del-cron-jobs () {
    echo "Removed old cron jobs on frontend in /etc directories cron.d, cron.daily and cron.monthly ..."  >> $LOG
 }
 
-del-automount-entry () {
+del-shared-dir-automount () {
+   echo "Removing lifemapper shared directory" >> $LOG
+   rm -rf /state/partition1/lmlab
+   
    cat /etc/auto.share  | grep -v "^lmlab " > /tmp/auto.share.nolmlab
    /bin/cp /tmp/auto.share.nolmlab /etc/auto.share
 }
@@ -205,7 +206,7 @@ del-directories
 del-cron-jobs
 del-lmtrex
 del-directories
-del-automount-entry
+del-shared-dir-automount
 
 finish-cleanup
 
