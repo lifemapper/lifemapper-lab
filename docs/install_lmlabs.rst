@@ -33,9 +33,8 @@ New roll install or update existing roll
 
 #. **Create and run install script**::
 
-    # (module unload opt-python; \
-       rocks run roll lifemapper-lab > add-lab.sh; \
-       bash add-lab.sh 2>&1 | tee add-lab.out)
+   # (module unload opt-python; \
+       rocks run roll lifemapper-lab > add-lab.sh;  bash add-lab.sh 2>&1 | tee add-lab.out)
 
 #. **Finish FE with reboot** ::  
 
