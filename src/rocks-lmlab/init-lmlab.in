@@ -39,6 +39,7 @@ set_defaults() {
     ROCKS_VER=`/opt/rocks/bin/rocks list roll | grep base | awk '{print $2}'`
    
     BIN=@PKGROOT@/rocks/bin
+    CONFIG=@PKGROOT@/config
     PY3=@PYBIN@
     WHL_DIR=@PKGROOT@/rocks/etc
 
@@ -117,8 +118,8 @@ get_address () {
 }
 
 update_lmsyft_apache_config () {
-    infile=/etc/httpd/conf.d/syftorium.conf.in
-    outfile=/etc/httpd/conf.d/syftorium.conf
+    infile=$CONFIG/lmsyft/syftorium.conf.in
+    outfile=$CONFIG/lmsyft/syftorium.conf
     
     if [ -f $outfile ] ; then
         bakext=`/bin/date +%F`
@@ -131,14 +132,32 @@ update_lmsyft_apache_config () {
     sed  "s%@FQDN@%$Addr%g" $infile > $outfile
 }
 
+update_lmtrex_apache_config () {
+	FILES=$CONFIG/lmtrex/*.in
+	for f in $FILES
+        do
+		    infile=$CONFIG/lmtrex/$f
+		    outfile=${infile%.*}
+    
+		    if [ -f $outfile ] ; then
+		        bakext=`/bin/date +%F`
+		        echo '  File ' $outfile ' exists, saving to ' $outfile.$bakext  >> $LOG
+		        mv -f $outfile $outfile.$bakext
+    fi
+    
+    echo '  Creating ' $outfile ' from ' $infile >> $LOG
+    # replace variables
+    sed  "s%@FQDN@%$Addr%g" $infile > $outfile
+}
 
-TimeStamp () {
+
+time_stamp () {
     echo $1 `/bin/date` >> $LOG
 }
 
 ####### Main #######
 set_defaults
-TimeStamp "# Start"
+time_stamp "# Start"
 
 finish_wheel_installs
 run_ldconfig
@@ -147,5 +166,6 @@ install_cron_jobs
 
 install_all_solrcores
 update_lmsyft_apache_config
+update_lmtrex_apache_config
 
-TimeStamp "# End"
+time_stamp "# End"
