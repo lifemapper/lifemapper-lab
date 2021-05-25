@@ -11,7 +11,4 @@ TARBALL_POSTFIX = tar.gz
 
 RPM.EXTRAS = %define __os_install_post %{nil}
 
-RPM.FILES =  \
-    $(PKGROOT)/*                		\n\
-    /etc/httpd/conf.d/syftorium.conf.*  \n\
-    /var/www/lmsyft/syftorium.wsgi
+RPM.FILES =  $(PKGROOT)/*
