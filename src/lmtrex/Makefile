@@ -66,9 +66,17 @@ PY.PATH = /opt/python/bin/$(PYTHONVER)
 SEDSPEC += \
         -e 's%@PKGROOT@%$(PKGROOT)%g' \
         -e 's%@LMHOME@%$(LMHOME)%g' \
+        -e 's%@LMSCRATCHDISK@%$(LMSCRATCHDISK)%g' \
         -e 's%@ARCHIVENAME@%$(ARCHIVENAME)%g' \
         -e 's%@VERSION@%$(VERSION)%g'  \
         -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g'
+
+CONFIGS = \
+	broker.py \
+	cherrypy.conf \
+	config.lmtrex.py \
+	lmtrex.httpd.conf \
+	lmtrex.wsgi
 
 TOPDIR = $(ARCHIVENAME)-$(VERSION)
 PKGDIR = $(ARCHIVENAME)
@@ -87,13 +95,17 @@ version.mk:
 build: 
 	tar xzvf $(ARCHIVENAME)-$(VERSION).$(TARBALL_POSTFIX)
 
-install::
+install:: $(CONFIGS)
+	mkdir -p $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.py.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/broker.py
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/cherrypy.conf.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/cherrypy.conf
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.py.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/broker.py
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.py.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/broker.py
+
 	mkdir -p $(ROOT)/$(PKGROOT)
 	mv $(TOPDIR)/$(PKGDIR)  $(ROOT)/$(PKGROOT)/
 	mv $(TOPDIR)/tests  $(ROOT)/$(PKGROOT)/$(PKGDIR)/
-			
-	mkdir -p $(ROOT)/var/www/lmtrex
-	install -m 755 lmtrex.wsgi  $(ROOT)/var/www/lmtrex
+
 
 clean::
 	rm -rf version.mk prepSrc.sh
