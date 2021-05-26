@@ -9,5 +9,6 @@ LMHOME=@LMHOME@
 cp -rp $LMHOME/rocks/solrcores/*    $SOLR_HOME/cores/
 
 # set owner of newly installed cores
-/bin/chown -R @SOLRUSER@:@SOLRUSER@ $SOLR_HOME
+/usr/bin/chown -R @SOLRUSER@:@SOLRUSER@ $SOLR_HOME
+/usr/bin/chmod -R 775        			$SOLR_HOME
 
