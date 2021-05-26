@@ -6,7 +6,6 @@ TARBALL_POSTFIX = tar.gz
 
 RPM.FILES =  \
     $(PKGROOT)/*  \n\
-    /etc/httpd/conf.d/lifemapper-lab-http.conf  \n\
     /etc/ld.so.conf.d/lifemapper-lab-ld.conf  \n\
     /etc/logrotate.d/lifemapper-lab-httpdlog  \n\
     /etc/profile.d/lifemapper-lab.*

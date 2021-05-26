@@ -84,13 +84,13 @@ finish_wheel_installs () {
 
 
 install_all_solrcores () {
+	/usr/sbin/chkconfig --add solr 
+	/usr/sbin/chkconfig  solr on
     if [[ -d $SOLR_CORE_DIR ]] ; then
-		/usr/sbin/service solr stop
+		/usr/bin/systemctl stop solr.service
         echo "-- move any solr cores" >> $LOG
-        mv  $INSTALL_CORE_DIR/*      $SOLR_CORE_DIR/
-        /usr/bin/chown -R solr:solr  $SOLR_CORE_DIR
-        /usr/bin/chmod -R 775        $SOLR_CORE_DIR
-		/usr/sbin/service solr start
+        /opt/lifemapper/rocks/bin/solr-index
+		/usr/bin/systemctl restart solr.service
 	else
         echo "-- Error: missing $SOLR_CORE_DIR directory!" >> $LOG
     fi
@@ -143,7 +143,8 @@ update_lmtrex_apache_config () {
 		        bakext=`/bin/date +%F`
 		        echo '  File ' $outfile ' exists, saving to ' $outfile.$bakext  >> $LOG
 		        mv -f $outfile $outfile.$bakext
-    fi
+    		fi
+    	done
     
     echo '  Creating ' $outfile ' from ' $infile >> $LOG
     # replace variables
@@ -165,8 +166,8 @@ run_ldconfig
 # Cron jobs do not currently exist in this roll
 install_cron_jobs
 
-# solrcores should be moved from each package to central location, then installed to solrdata dir here
-install_all_solrcores
+# done in lifemapper-lab.xml file
+# install_all_solrcores
 
 get_ip_address
 update_lmsyft_apache_config
