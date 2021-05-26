@@ -75,9 +75,8 @@ SEDSPEC += \
 CONFIGS = \
 	broker.py \
 	cherrypy.conf \
-	config.lmtrex.py \
-	lmtrex.httpd.conf \
-	lmtrex.wsgi
+	broker.conf \
+	broker.wsgi
 
 TOPDIR = $(ARCHIVENAME)-$(VERSION)
 PKGDIR = $(ARCHIVENAME)
@@ -98,11 +97,10 @@ build:
 
 install::
 	mkdir -p $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.py.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/broker.py.in
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/cherrypy.conf.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/cherrypy.conf.in
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/config.lmtrex.py.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/config.lmtrex.py.in
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/lmtrex.httpd.conf.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/lmtrex.httpd.conf
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/lmtrex.wsgi.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/lmtrex.wsgi
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/cherrypy.conf.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/cherrypy.conf
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.py.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/broker.py
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.conf.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/broker.conf
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.wsgi.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/broker.wsgi
 
 	mkdir -p $(ROOT)/$(PKGROOT)
 	mv $(TOPDIR)/$(PKGDIR)  $(ROOT)/$(PKGROOT)/
