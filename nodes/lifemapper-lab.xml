@@ -32,6 +32,8 @@
 
     <post>
     
+    echo "Executing lifemapper-lab on FE" | tee -a $LOG
+    
     ID=`/bin/egrep -i "^lmwriter" /etc/group`
     if [ "$ID" == "" ] ; then
         # adding lmwriter user with group
@@ -72,12 +74,9 @@
 
     
     # FE directory exported to /share
-    /bin/mkdir -p       /state/partition1/lmlab
-    
     /bin/mkdir -p       /state/partition1/lmlab/syftorium_data/collections
     /bin/mkdir -p       /state/partition1/lmlab/syftorium_data/new_dwcas
-    /bin/mkdir -p       /state/partition1/lmlab/syftorium_data/processed_dwcas/
-    
+    /bin/mkdir -p       /state/partition1/lmlab/syftorium_data/processed_dwcas
     /bin/mkdir -p       /state/partition1/lmlab/solr/data/cores
     /bin/mkdir -p       /state/partition1/lmlab/solr/data/logs
     
@@ -93,14 +92,15 @@
 lmlab &Kickstart_PrivateHostname;:/export/&amp;
 </file>
     
-    # add solr index files
+    # Set run-level management of solr, copy solr cores to solr data dir
+	/usr/bin/systemctl stop solr.service
+	/usr/sbin/chkconfig --add solr 
+	/usr/sbin/chkconfig  solr on
     /opt/lifemapper/rocks/bin/solr-index
-    chkconfig --add solr 
-    chkconfig  solr on
+	/usr/bin/systemctl restart solr.service
     
     # enable mod-wsgi for httpd
     /opt/lifemapper/rocks/bin/install-mod-wsgi
-
     /usr/bin/systemctl restart httpd.service
     
     
