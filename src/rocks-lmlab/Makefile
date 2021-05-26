@@ -82,7 +82,6 @@ PROFILES = \
 	lifemapper-lab.csh 
 
 CONFIGS = \
-	lifemapper-lab-http.conf \
 	lifemapper-lab-ld.conf
 
 PROGS = \
