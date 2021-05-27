@@ -78,7 +78,7 @@
     /bin/mkdir -p       /state/partition1/lmlab/syftorium_data/new_dwcas
     /bin/mkdir -p       /state/partition1/lmlab/syftorium_data/processed_dwcas
     /bin/mkdir -p       /state/partition1/lmlab/solr/data/cores
-    /bin/mkdir -p       /state/partition1/lmlab/solr/data/logs
+    /bin/mkdir -p       /state/partition1/lmlab/solr/logs
     
     # set lmwriter permissions on all of lmlab
     /bin/chgrp -R lmwriter /state/partition1/lmlab
