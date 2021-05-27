@@ -55,8 +55,6 @@ install::
 	tar -xzf  $(ARCHIVENAME)-$(VERSION).tgz  -C  $(ROOT)/$(SOLRDIR) --strip 1 --exclude docs --exclude contrib	
 	
 	mkdir -p $(ROOT)/$(SOLRDATA)/data
-	mkdir -p $(ROOT)/$(SOLRDATA)/cores
-	mkdir -p $(ROOT)/$(SOLRDATA)/logs
 	cp $(ROOT)/$(SOLRDIR)/server/solr/solr.xml $(ROOT)/$(SOLRDATA)/data
 	cp $(ROOT)/$(SOLRDIR)/server/solr/zoo.cfg $(ROOT)/$(SOLRDATA)/data
 	cp $(ROOT)/$(SOLRDIR)/server/resources/log4j2.xml  $(ROOT)/$(SOLRDATA)/log4j2.xml
