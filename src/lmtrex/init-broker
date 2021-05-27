@@ -1,0 +1,45 @@
+#!/bin/bash
+#
+# This script enables the S^n Broker web services, disabling S^n Syftorium web services if necessary.  
+# 
+
+usage () 
+{
+    echo "Usage: $0"
+    echo "This script can be run by the administrator to enable S^n Broker Services."
+    echo "     It symlinks /var/www/broker.conf to the apache conf directory\n"
+    echo "   "
+}
+
+if [ $# -ne 0 ]; then
+    usage
+    exit 0
+fi 
+
+set_defaults ()
+{
+	APACHE_CONF_PATH=/etc/httpd/conf.d
+	BROKER_DIR=lmtrex
+	SYFT_DIR=lmsyft
+	BROKER=broker
+	SYFT=syftorium
+}	
+	
+delete-old-link () 
+{
+	if [[ -L $APACHE_CONF_PATH/$SYFT.conf ]] ; then
+		rm -f $APACHE_CONF_PATH/$SYFT.conf
+	fi
+}
+
+add-new-link () 
+{
+	(cd $APACHE_CONF_PATH; /usr/bin/ln -s /var/www/$BROKER_DIR/$BROKER.conf)
+}
+
+
+# **** Main ****
+set_defaults
+delete-old-link
+add-new-link
+

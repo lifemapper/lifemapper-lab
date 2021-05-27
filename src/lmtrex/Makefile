@@ -96,15 +96,18 @@ build:
 	tar xzvf $(ARCHIVENAME)-$(VERSION).$(TARBALL_POSTFIX)
 
 install::
-	mkdir -p $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/cherrypy.conf.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/cherrypy.conf
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.py.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/broker.py
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.conf.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/broker.conf
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.wsgi.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/broker.wsgi
+	mkdir -p $(ROOT)/var/www/$(ARCHIVENAME)
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/cherrypy.conf.in > $(ROOT)/var/www/$(ARCHIVENAME)/cherrypy.conf
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.py.in > $(ROOT)/var/www/$(ARCHIVENAME)/broker.py
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.conf.in > $(ROOT)/var/www/$(ARCHIVENAME)/broker.conf
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.wsgi.in > $(ROOT)/var/www/$(ARCHIVENAME)/broker.wsgi
 
 	mkdir -p $(ROOT)/$(PKGROOT)
 	mv $(TOPDIR)/$(PKGDIR)  $(ROOT)/$(PKGROOT)/
 	mv $(TOPDIR)/tests  $(ROOT)/$(PKGROOT)/$(PKGDIR)/
+	
+	mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
+	install -m 755 init-broker  $(ROOT)/$(PKGROOT)/rocks/bin/
 
 
 clean::

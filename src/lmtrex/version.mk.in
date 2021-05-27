@@ -13,4 +13,5 @@ TARBALL_POSTFIX = tar.gz
 RPM.EXTRAS = %define __os_install_post %{nil}
 
 RPM.FILES =  \
-    $(PKGROOT)/*
+    $(PKGROOT)/*  \n\
+    /var/www/lmtrex/*
