@@ -11,4 +11,5 @@ TARBALL_POSTFIX = tar.gz
 
 RPM.EXTRAS = %define __os_install_post %{nil}
 
-RPM.FILES =  $(PKGROOT)/*
+RPM.FILES =  $(PKGROOT)/*  \n\
+    /var/www/lmsyft/*

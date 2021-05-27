@@ -87,15 +87,19 @@ build:
 	tar xzvf $(ARCHIVENAME)-$(VERSION).$(TARBALL_POSTFIX)
 
 install::
-	mkdir -p $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)
-	cp  $(TOPDIR)/apache/syftorium.wsgi  $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/
-	$(SED) $(SEDSPEC)  $(TOPDIR)/apache/syftorium.conf.in > $(ROOT)/$(PKGROOT)/config/$(ARCHIVENAME)/syftorium.conf.in
+	mkdir -p $(ROOT)/var/www/$(ARCHIVENAME)
+	cp  $(TOPDIR)/apache/syftorium.wsgi  $(ROOT)/var/www/$(ARCHIVENAME)/
+	$(SED) $(SEDSPEC)  $(TOPDIR)/apache/syftorium.conf.in > $(ROOT)/var/www/$(ARCHIVENAME)/syftorium.conf.in
 
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/solrcores/
 	cp -r $(TOPDIR)/solr_cores/* $(ROOT)/$(PKGROOT)/rocks/solrcores/
 	
 	mkdir -p $(ROOT)/$(PKGROOT)
 	mv $(TOPDIR)  $(ROOT)/$(PKGROOT)/
+		
+	mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
+	install -m 755 init-syft  $(ROOT)/$(PKGROOT)/rocks/bin/
+	
 	
 clean::
 	rm -rf version.mk prepSrc.sh $(TOPDIR)
