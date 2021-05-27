@@ -118,8 +118,8 @@ get_ip_address () {
 }
 
 update_lmsyft_apache_config () {
-    infile=$CONFIG/lmsyft/syftorium.conf.in
-    outfile=$CONFIG/lmsyft/syftorium.conf
+    infile=/var/www/lmsyft/syftorium.conf.in
+    outfile=/var/www/lmsyft/syftorium.conf
     
     if [ -f $outfile ] ; then
         bakext=`/bin/date +%F`
@@ -132,24 +132,6 @@ update_lmsyft_apache_config () {
     sed  "s%@FQDN@%$IPAddr%g" $infile > $outfile
 }
 
-update_lmtrex_apache_config () {
-	FILES=$CONFIG/lmtrex/*.in
-	for f in $FILES
-        do
-		    infile=$CONFIG/lmtrex/$f
-		    outfile=${infile%.*}
-    
-		    if [ -f $outfile ] ; then
-		        bakext=`/bin/date +%F`
-		        echo '  File ' $outfile ' exists, saving to ' $outfile.$bakext  >> $LOG
-		        mv -f $outfile $outfile.$bakext
-    		fi
-    	done
-    
-    echo '  Creating ' $outfile ' from ' $infile >> $LOG
-    # replace variables
-    sed  "s%@FQDN@%$IPAddr%g" $infile > $outfile
-}
 
 
 time_stamp () {
@@ -171,6 +153,5 @@ install_cron_jobs
 
 get_ip_address
 update_lmsyft_apache_config
-update_lmtrex_apache_config
 
 time_stamp "# End"
