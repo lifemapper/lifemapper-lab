@@ -88,7 +88,8 @@ PROGS = \
 	clean-lmlab-roll \
 	init-lmlab \
 	install-lmlab-cron \
-	install-lmlab-wheels
+	install-lmlab-wheels \
+	update-apache-config
 
 %: %.in
 	$(SED) $(SEDSPEC) $^ > $@

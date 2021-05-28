@@ -89,6 +89,7 @@ build:
 install::
 	mkdir -p $(ROOT)/var/www/$(ARCHIVENAME)
 	cp  $(TOPDIR)/apache/syftorium.wsgi  $(ROOT)/var/www/$(ARCHIVENAME)/
+	# Retain .in extension because syftorium.conf.in contains vars that must be replaced post-install
 	$(SED) $(SEDSPEC)  $(TOPDIR)/apache/syftorium.conf.in > $(ROOT)/var/www/$(ARCHIVENAME)/syftorium.conf.in
 
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/solrcores/

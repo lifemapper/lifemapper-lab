@@ -99,8 +99,9 @@ install::
 	mkdir -p $(ROOT)/var/www/$(ARCHIVENAME)
 	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/cherrypy.conf.in > $(ROOT)/var/www/$(ARCHIVENAME)/cherrypy.conf
 	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.py.in > $(ROOT)/var/www/$(ARCHIVENAME)/broker.py
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.conf.in > $(ROOT)/var/www/$(ARCHIVENAME)/broker.conf
 	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.wsgi.in > $(ROOT)/var/www/$(ARCHIVENAME)/broker.wsgi
+	# Retain .in extension because broker.conf.in contains vars that must be replaced post-install
+	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.conf.in > $(ROOT)/var/www/$(ARCHIVENAME)/broker.conf.in
 
 	mkdir -p $(ROOT)/$(PKGROOT)
 	mv $(TOPDIR)/$(PKGDIR)  $(ROOT)/$(PKGROOT)/

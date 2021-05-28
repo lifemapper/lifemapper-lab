@@ -1,0 +1,90 @@
+#!/bin/bash
+#
+# This script fills in the hostname and host IP address for apache config files.
+# 
+
+usage () 
+{
+    echo "Usage: $0"
+    echo "This script is run during the roll install and will:"
+    echo "     - inserts hostname and IP in "
+    echo "       /var/www/lmsyft/syftorium.conf and /var/www/lmtrex/broker.conf\n"
+    echo "   "
+}
+
+if [ $# -ne 0 ]; then
+    usage
+    exit 0
+fi 
+
+set_defaults() {
+    LOG=@LMSCRATCHDISK@/log/`/bin/basename $0`.log
+    rm -f $LOG
+    touch $LOG
+
+    # Source function library.
+    INITD=/etc/rc.d/init.d
+    . $INITD/functions
+}
+
+time_stamp () {
+    echo $1 `/bin/date` >> $LOG
+}
+
+get_sedspec () {
+    # public host address
+    # Addr=`/opt/rocks/bin/rocks list host attr localhost | grep Kickstart_PublicFQDN | awk '{print $3}'`
+    # IPAddr=`/usr/sbin/ifconfig eth1 | grep inet | grep broadcast  | awk '{print $2}'`
+    HOSTNAME=`/usr/bin/hostname`
+    CERTFILE=/etc/letsencrypt/live/$HOSTNAME/fullchain.pem
+    CERTKEYFILE=/etc/letsencrypt/live/$HOSTNAME/privkey.pem
+    SSL_OPTIONS_FILE=/etc/letsencrypt/options-ssl-apache.conf
+    CHAIN_FILE=/etc/letsencrypt/live/$HOSTNAME/chain.pem
+    SEDSPEC="s%@FQDN@%$HOSTNAME%g; \
+    		 s%@CERTFILE@%$CERTFILE%g;  \
+    		 s%@CERTKEYFILE@%$CERTKEYFILE%g;  \
+    		 s%@SSL_OPTIONS_FILE@%$SSL_OPTIONS_FILE%g;  \
+    		 s%@CHAIN_FILE@%$CHAIN_FILE%g;"
+}
+
+update_apache_config () {
+    infile=$1
+    outfile=$2
+    
+    if [[ -f $outfile ]] ; then
+        bakext=`/bin/date +%F`
+        echo '  File ' $outfile ' exists, saving to ' $outfile.$bakext  >> $LOG
+        mv -f $outfile $outfile.$bakext
+    fi
+    
+    if [[ -f $infile ]] ; then 
+	    echo '  Creating ' $outfile ' from ' $infile >> $LOG
+	    sed $SEDSPEC  $infile > $outfile
+	else
+	    echo '  Missing input ' $infile  >> $LOG
+	fi
+}
+
+update_lmsyft_apache_config () {
+    infile=/var/www/lmsyft/syftorium.conf.in
+    outfile=/var/www/lmsyft/syftorium.conf
+    
+    update_apache_config $infile  $outfile
+}
+
+update_lmtrex_apache_config () {
+    infile=/var/www/lmtrex/broker.conf.in
+    outfile=/var/www/lmtrex/broker.conf
+
+    update_apache_config $infile  $outfile
+}
+
+####### Main #######
+set_defaults
+time_stamp "# Start"
+
+get_sedspec
+update_lmsyft_apache_config
+update_lmtrex_apache_config
+
+time_stamp "# End"

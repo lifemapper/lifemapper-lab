@@ -111,28 +111,10 @@ install_cron_jobs () {
     echo "-- End install-lmlab-cron" >> $LOG
 }
 
-get_ip_address () {
-    # public host address
-    # Addr=`/opt/rocks/bin/rocks list host attr localhost | grep Kickstart_PublicFQDN | awk '{print $3}'`
-    IPAddr=`/usr/sbin/ifconfig eth1 | grep inet | grep broadcast  | awk '{print $2}'`
+update_web_config () {
+    echo "-- update apache config files" >> $LOG
+    $BIN/update-apache-config
 }
-
-update_lmsyft_apache_config () {
-    infile=/var/www/lmsyft/syftorium.conf.in
-    outfile=/var/www/lmsyft/syftorium.conf
-    
-    if [ -f $outfile ] ; then
-        bakext=`/bin/date +%F`
-        echo '  File ' $outfile ' exists, saving to ' $outfile.$bakext  >> $LOG
-        mv -f $outfile $outfile.$bakext
-    fi
-    
-    echo '  Creating ' $outfile ' from ' $infile >> $LOG
-	# TODO: also replace SSL certificate variables
-    sed  "s%@FQDN@%$IPAddr%g" $infile > $outfile
-}
-
-
 
 time_stamp () {
     echo $1 `/bin/date` >> $LOG
@@ -144,14 +126,9 @@ time_stamp "# Start"
 
 finish_wheel_installs
 run_ldconfig
-
 # Cron jobs do not currently exist in this roll
 install_cron_jobs
 
-# done in lifemapper-lab.xml file
-# install_all_solrcores
-
-get_ip_address
-update_lmsyft_apache_config
+update_web_config
 
 time_stamp "# End"
