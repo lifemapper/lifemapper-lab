@@ -68,14 +68,14 @@ update_apache_config () {
 update_lmsyft_apache_config () {
     infile=/var/www/lmsyft/syftorium.conf.in
     outfile=/var/www/lmsyft/syftorium.conf
-    echo '  *** Create ' $outfile ' from ' $infile
+    
     update_apache_config $infile  $outfile
 }
 
 update_lmtrex_apache_config () {
     infile=/var/www/lmtrex/broker.conf.in
     outfile=/var/www/lmtrex/broker.conf
-    echo '  *** Create ' $outfile ' from ' $infile
+
     update_apache_config $infile  $outfile
 }
 
