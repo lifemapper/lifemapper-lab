@@ -115,20 +115,16 @@ del-lmxxx() {
     if [[ $? -eq 0 ]]; then
         echo "Remove lmwriter user" >> $LOG
         /usr/bin/gpasswd -d apache lmwriter
-        /user/sbin/userdel lmwriter
+        /usr/sbin/userdel lmwriter
         /bin/rm -f /var/spool/mail/lmwriter
         /bin/rm -rf /export/home/lmwriter
         NEED_SYNC=1
-    fi
-   
+    fi   
 }
 
 del-solr () {
-    SOLR_PROCESSES=`ps -Af | grep solr | grep -v "grep" | wc -l`
-    if [[ $LMROLL_COUNT -eq 0  &&  $SOLR_PROCESSES -eq 1 ]]; then
-        echo "-- stop Solr process " >> $LOG
-        /usr/sbin/service solr stop
-    fi
+    echo "-- stop Solr process " >> $LOG
+    /usr/bin/systemctl stop solr
 
     $RM lifemapper-solr
     /usr/sbin/chkconfig --del solr 
@@ -138,7 +134,7 @@ del-solr () {
     /bin/egrep -i "^solr" /etc/passwd
     if [[ $? -eq 0 ]]; then
         echo "Remove solr user" >> $LOG
-        userdel solr
+        /usr/sbin/userdel solr
         /bin/rm -f /var/spool/mail/solr
         /bin/rm -rf /export/home/solr
         NEED_SYNC=1
@@ -206,7 +202,7 @@ del-third-party-libs
 del-config
 del-directories
 del-cron-jobs
-del-lmtrex
+del-lmxxx
 del-directories
 del-shared-dir-automount
 
