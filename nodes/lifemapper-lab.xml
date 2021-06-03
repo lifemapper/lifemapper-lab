@@ -32,8 +32,9 @@
 
     <post>
     
-    echo "Executing lifemapper-lab on FE" | tee -a $LOG
+    echo "Executing lifemapper-lab on FE"
     
+    echo "	Add lmwriter user"
     ID=`/bin/egrep -i "^lmwriter" /etc/group`
     if [ "$ID" == "" ] ; then
         # adding lmwriter user with group
@@ -43,17 +44,19 @@
         /usr/sbin/useradd -c "Lifemapper user" -g lmwriter lmwriter
     fi
     
-    # set up solr user
+    echo "	Add solr user"
     ID=`/bin/egrep -i "^solr" /etc/group`
     if [ "$ID" == "" ] ; then
         # adding solr user
         /usr/sbin/useradd -c "Solr user" solr
     fi
     
+    echo "	Sync users and restart autofs on FE and nodes"
     /usr/bin/systemctl restart autofs.service
     /opt/rocks/bin/rocks sync users
     /opt/rocks/bin/rocks run host compute "/usr/bin/systemctl restart autofs.service"
     
+    echo "	Make FE directories and set permissions"
     # for writing web logs
     /usr/sbin/usermod -G lmwriter apache
     /bin/mkdir -p /var/www/tmp
@@ -71,7 +74,6 @@
 	/bin/chmod 755 /var/www/lmsyft
 	/bin/mkdir -p  /var/www/lmtrex
 	/bin/chmod 755 /var/www/lmtrex
-
     
     # FE directory exported to /share
     /bin/mkdir -p       /state/partition1/lmlab/syftorium_data/collections
@@ -92,14 +94,14 @@
 lmlab &Kickstart_PrivateHostname;:/export/&amp;
 </file>
     
-    # Set run-level management of solr, copy solr cores to solr data dir
+    echo "	Configure solr run-level management and install cores to solr data dir"
 	/usr/bin/systemctl stop solr.service
 	/usr/sbin/chkconfig --add solr 
 	/usr/sbin/chkconfig  solr on
     /opt/lifemapper/rocks/bin/solr-index
 	/usr/bin/systemctl restart solr.service
     
-    # enable mod-wsgi for httpd
+    echo "	Enable mod-wsgi then restart apache"
     /opt/lifemapper/rocks/bin/install-mod-wsgi
     /usr/bin/systemctl restart httpd.service
     
