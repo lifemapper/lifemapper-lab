@@ -10,7 +10,7 @@ WHL_DIR=@PKGROOT@/rocks/etc
 WHLNAME=@ARCHIVENAME@-@VERSION@
 WSGI_MODULE=@PYTHON36_PACKAGES@/mod_wsgi/server/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so
 
-set-defaults () {
+set_defaults () {
 	echo "Load opt-python for pip"
 	source /usr/share/Modules/init/bash
 	module load opt-python
@@ -19,8 +19,15 @@ set-defaults () {
 	HAS_SETUP=`$PY3 -m pip list | grep setuptools`
 }
 
+ensure_pip () {
+	module load opt-python
+	$PY3 -m ensurepip --default-pip
+	$PY3 -m pip install --upgrade pip
+	module unload opt-python
+}
 
-install-setuptools () {
+
+install_setuptools () {
 	# need setuptools
 	if [[ $HAS_SETUP -eq 0 ]]; then
 		echo "Installing setuptools python package"
@@ -30,12 +37,12 @@ install-setuptools () {
 	fi
 }
 
-install-wsgi () {
+install_wsgi () {
 	echo "Installing $WHLNAME python package"
 	$PY3 -m pip install $WHL_DIR/$WHLNAME.tar.gz
 }
 
-test-config () {
+test_config () {
 	# Check if file referenced in configuration is present
 	if [[ -f $WSGI_MODULE ]] ; then
 	    echo "Have correct $WSGI_MODULE"
@@ -44,18 +51,19 @@ test-config () {
 	fi
 }
 
-time-stamp () {
+time_stamp () {
     echo $1 `/bin/date`
 }
 
 ####### Main #######
-time-stamp "# Start"
-set-defaults
+time_stamp "# Start"
+set_defaults
+ensure_pip
 
 if [[ $HAS_WSGI -eq 0 ]]; then
-	install-setuptools
-	install-wsgi
+	install_setuptools
+	install_wsgi
 fi
 
-test-config
-time-stamp "# Start"
+test_config
+time_stamp "# Start"

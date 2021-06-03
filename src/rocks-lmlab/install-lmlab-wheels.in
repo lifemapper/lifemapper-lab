@@ -108,6 +108,13 @@ finish_wheel_installs () {
         done
 }
 
+ensure_pip () {
+	module load opt-python
+	$PY3 -m ensurepip --default-pip
+	$PY3 -m pip install --upgrade pip
+	module unload opt-python
+}
+
 time_stamp () {
     echo $1 `/bin/date` >> $LOG
 }
@@ -115,5 +122,6 @@ time_stamp () {
 ####### Main #######
 set_defaults
 time_stamp "# Start"
+ensure_pip
 finish_wheel_installs
 time_stamp "# End"
