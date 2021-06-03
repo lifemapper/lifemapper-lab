@@ -103,6 +103,16 @@ Look for Errors
 
     service solr status
    
+Testing
+-------------
+
+* enable Syftorium::
+
+	/opt/lifemapper/rocks/bin/init-syft
+	
+* run Syftorium tests::
+
+	run_controller -t {tests directory} -l {log file} start 
    
 TODO:
 ------
