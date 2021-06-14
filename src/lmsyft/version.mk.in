@@ -11,5 +11,7 @@ TARBALL_POSTFIX = tar.gz
 
 RPM.EXTRAS = %define __os_install_post %{nil}
 
-RPM.FILES =  $(PKGROOT)/*  \n\
+RPM.FILES =    \
+    $(PKGROOT)/*  \n\
+	/etc/cron.hourly/lmsyft_process_dwcas	\n\
     /var/www/lmsyft/*

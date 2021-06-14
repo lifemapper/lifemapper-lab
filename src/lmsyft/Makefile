@@ -66,6 +66,7 @@ PY.PATH = /opt/python/bin/$(PYTHONVER)
 SEDSPEC += \
         -e 's%@PKGROOT@%$(PKGROOT)%g' \
         -e 's%@LMHOME@%$(LMHOME)%g' \
+        -e 's%@PYTHON36@%$(PYTHON36)%g' \
         -e 's%@ARCHIVENAME@%$(ARCHIVENAME)%g' \
         -e 's%@VERSION@%$(VERSION)%g'  \
         -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g'
@@ -85,12 +86,17 @@ version.mk:
 
 build: 
 	tar xzvf $(ARCHIVENAME)-$(VERSION).$(TARBALL_POSTFIX)
+	# Retain .in extension because syftorium.conf.in contains vars that must be replaced post-install
+	$(SED) $(SEDSPEC)  $(TOPDIR)/apache/syftorium.conf.in > syftorium.conf.in
+	$(SED) $(SEDSPEC)  $(TOPDIR)/cron/lmsyft_process_dwcas.in > lmsyft_process_dwcas
 
 install::
 	mkdir -p $(ROOT)/var/www/$(ARCHIVENAME)
 	cp  $(TOPDIR)/apache/syftorium.wsgi  $(ROOT)/var/www/$(ARCHIVENAME)/
-	# Retain .in extension because syftorium.conf.in contains vars that must be replaced post-install
-	$(SED) $(SEDSPEC)  $(TOPDIR)/apache/syftorium.conf.in > $(ROOT)/var/www/$(ARCHIVENAME)/syftorium.conf.in
+	install -m 644 syftorium.conf.in $(ROOT)/var/www/$(ARCHIVENAME)/
+	
+	mkdir -p $(ROOT)/etc/cron.hourly
+	install -m 755 lmsyft_process_dwcas  $(ROOT)/etc/cron.hourly/
 
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/solrcores/
 	cp -r $(TOPDIR)/solr_cores/* $(ROOT)/$(PKGROOT)/rocks/solrcores/
