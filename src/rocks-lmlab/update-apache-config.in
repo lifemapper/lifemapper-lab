@@ -18,6 +18,8 @@ if [ $# -ne 0 ]; then
 fi 
 
 set_defaults() {
+	FLASK_PTH=@LMHOME@/lmsyft/config
+	APACHE_PTH=/var/www
     LOG=@LMSCRATCHDISK@/log/`/bin/basename $0`.log
     rm -f $LOG
     touch $LOG
@@ -41,50 +43,37 @@ get_sedspec () {
     SSL_OPTIONS_FILE=/etc/letsencrypt/options-ssl-apache.conf
     CHAIN_FILE=/etc/letsencrypt/live/$HOSTNAME/chain.pem
     SEDSPEC='-e s%@FQDN@%'$HOSTNAME'%g \
-    		 -e s%@CERTFILE@%'$CERTFILE'%g \
-    		 -e s%@CERTKEYFILE@%'$CERTKEYFILE'%g  \
+             -e s%@CERTFILE@%'$CERTFILE'%g \
+             -e s%@CERTKEYFILE@%'$CERTKEYFILE'%g  \
              -e s%@SSL_OPTIONS_FILE@%'$SSL_OPTIONS_FILE'%g \
              -e s%@CHAIN_FILE@%'$CHAIN_FILE'%g'
 }
 
-update_apache_config () {
-    infile=$1
-    outfile=$2
+update_config () {
+    fname=$1
     
-    if [[ -f $outfile ]] ; then
-        bakext=`/bin/date +%F`
-        echo '  File ' $outfile ' exists, saving to ' $outfile.$bakext  >> $LOG
-        mv -f $outfile $outfile.$bakext
+    bakext=`/bin/date +%F`
+    backf=$fname.$bakext
+    
+    if [[ -f $fname ]] ; then 
+	echo '  Saving to ' $fname.$bakext  >> $LOG
+        mv -f $fname  $fname.$bakext
+
+	echo '  Creating ' $outfile ' from ' $fname >> $LOG
+	sed $SEDSPEC  $fname.$bakext  >  $fname
+    else
+	echo '  Missing input ' $$fname  >> $LOG
     fi
-    
-    if [[ -f $infile ]] ; then 
-	    echo '  Creating ' $outfile ' from ' $infile >> $LOG
-	    sed $SEDSPEC   $infile > $outfile
-	else
-	    echo '  Missing input ' $infile  >> $LOG
-	fi
 }
 
-update_lmsyft_apache_config () {
-    infile=/var/www/lmsyft/syftorium.conf.in
-    outfile=/var/www/lmsyft/syftorium.conf
-    
-    update_apache_config $infile  $outfile
-}
-
-update_lmtrex_apache_config () {
-    infile=/var/www/lmtrex/broker.conf.in
-    outfile=/var/www/lmtrex/broker.conf
-
-    update_apache_config $infile  $outfile
-}
 
 ####### Main #######
 set_defaults
 time_stamp "# Start"
 
 get_sedspec
-update_lmsyft_apache_config
-update_lmtrex_apache_config
+update_config  $APACHE_PTH/lmtrex/broker.conf
+update_config  $APACHE_PTH/lmsyft/syftorium.conf
+update_config  $FLASK_PTH/constants.py
 
 time_stamp "# End"

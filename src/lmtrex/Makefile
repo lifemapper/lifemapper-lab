@@ -73,10 +73,22 @@ SEDSPEC += \
         -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g'
 
 CONFIGS = \
-	broker.py \
-	cherrypy.conf \
 	broker.conf \
-	broker.wsgi
+	broker.py \
+	broker.wsgi \
+	cherrypy.conf \
+
+broker.conf: $(TOPDIR)/$(PKGDIR)/config/broker.conf.in
+	$(SED) -i $(SEDSPEC) $^ > $@ 
+
+broker.py: $(TOPDIR)/$(PKGDIR)/config/broker.py.in
+	$(SED) -i $(SEDSPEC) $^ > $@ 
+
+broker.wsgi: $(TOPDIR)/$(PKGDIR)/config/broker.wsgi.in
+	$(SED) -i $(SEDSPEC) $^ > $@ 
+
+cherrypy.conf: $(TOPDIR)/$(PKGDIR)/config/cherrypy.conf.in
+	$(SED) -i $(SEDSPEC) $^ > $@ 
 
 TOPDIR = $(ARCHIVENAME)-$(VERSION)
 PKGDIR = $(ARCHIVENAME)
@@ -94,14 +106,11 @@ version.mk:
 
 build: 
 	tar xzvf $(ARCHIVENAME)-$(VERSION).$(TARBALL_POSTFIX)
+	make $(CONFIGS)
 
 install::
 	mkdir -p $(ROOT)/var/www/$(ARCHIVENAME)
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/cherrypy.conf.in > $(ROOT)/var/www/$(ARCHIVENAME)/cherrypy.conf
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.py.in > $(ROOT)/var/www/$(ARCHIVENAME)/broker.py
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.wsgi.in > $(ROOT)/var/www/$(ARCHIVENAME)/broker.wsgi
-	# Retain .in extension because broker.conf.in contains vars that must be replaced post-install
-	$(SED) $(SEDSPEC)  $(TOPDIR)/$(PKGDIR)/config/broker.conf.in > $(ROOT)/var/www/$(ARCHIVENAME)/broker.conf.in
+	install -m 644 $(CONFIGS)  $(ROOT)/var/www/$(ARCHIVENAME)/
 
 	mkdir -p $(ROOT)/$(PKGROOT)
 	mv $(TOPDIR)/$(PKGDIR)  $(ROOT)/$(PKGROOT)/

@@ -67,11 +67,22 @@ SEDSPEC += \
         -e 's%@PKGROOT@%$(PKGROOT)%g' \
         -e 's%@LMHOME@%$(LMHOME)%g' \
         -e 's%@PYTHON36@%$(PYTHON36)%g' \
+        -e 's%@SOLR_PORT@%$(SOLR_PORT)%g' \
+        -e 's%@LMLABDISK@%$(LMLABDISK)%g' \
         -e 's%@ARCHIVENAME@%$(ARCHIVENAME)%g' \
         -e 's%@VERSION@%$(VERSION)%g'  \
         -e 's%@TARBALL_POSTFIX@%$(TARBALL_POSTFIX)%g'
 
 TOPDIR = $(ARCHIVENAME)
+
+constants.py: $(TOPDIR)/config/constants.py.in
+	$(SED) -i $(SEDSPEC) $^ > $(TOPDIR)/config/$@ 
+
+lmsyft_process_dwcas: $(TOPDIR)/cron/lmsyft_process_dwcas.in
+	$(SED) -i $(SEDSPEC) $^ > $@ 
+
+syftorium.conf: $(TOPDIR)/apache/syftorium.conf.in
+	$(SED) -i $(SEDSPEC) $^ > $@ 
 
 prepSrc.sh: prepSrc.sh.in 
 	make version.mk
@@ -86,14 +97,13 @@ version.mk:
 
 build: 
 	tar xzvf $(ARCHIVENAME)-$(VERSION).$(TARBALL_POSTFIX)
-	# Retain .in extension because syftorium.conf.in contains vars that must be replaced post-install
-	$(SED) $(SEDSPEC)  $(TOPDIR)/apache/syftorium.conf.in > syftorium.conf.in
-	$(SED) $(SEDSPEC)  $(TOPDIR)/cron/lmsyft_process_dwcas.in > lmsyft_process_dwcas
+	make constants.py
+	make lmsyft_process_dwcas
+	make syftorium.conf
 
 install::
 	mkdir -p $(ROOT)/var/www/$(ARCHIVENAME)
-	cp  $(TOPDIR)/apache/syftorium.wsgi  $(ROOT)/var/www/$(ARCHIVENAME)/
-	install -m 644 syftorium.conf.in $(ROOT)/var/www/$(ARCHIVENAME)/
+	install -m 644 syftorium.conf $(ROOT)/var/www/$(ARCHIVENAME)/
 	
 	mkdir -p $(ROOT)/etc/cron.hourly
 	install -m 755 lmsyft_process_dwcas  $(ROOT)/etc/cron.hourly/
