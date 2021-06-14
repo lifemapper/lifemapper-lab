@@ -9,9 +9,8 @@ TARBALL_POSTFIX	= tgz
 
 SOLRDIR			= /opt/solr
 JTSDIR			= /opt/solr/server/solr-webapp/webapp/WEB-INF/lib
-SOLRUSER		= solr
 
-SOLR_PORT		= 8983
+# Moved SOLRUSER and SOLR_PORT to roll version.mk.in
 
 ## Zookeeper connection string; 
 ##   only used when running in SolrCloud mode using -c

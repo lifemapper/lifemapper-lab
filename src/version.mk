@@ -6,6 +6,8 @@ LMSCRATCHDISK   = /state/partition1/lmscratch
 LMLABDISK       = /share/lmlab
 
 SOLRDATA        = /state/partition1/lmlab/solr
+SOLRUSER		= solr
+SOLR_PORT		= 8983
 
 PYTHONVER			= python3.6
 PYTHON36			= /opt/python/bin/$(PYTHONVER)
