@@ -2,10 +2,9 @@
 
 set PYBIN=/opt/python/bin
 set LMBIN=@PKGROOT@/bin
-set CCBIN=@PKGROOT@/cctools/bin
 
 module load opt-python
-set path = ( $PGSQLBIN $PYBIN $LMBIN $CCBIN $path )
+set path = ( $PGSQLBIN $PYBIN $LMBIN $path )
 setenv PYTHON $PYBIN/@PYTHONVER@
 setenv PYTHONPATH "@LMHOME@:@PYTHON36_PACKAGES@"
 
