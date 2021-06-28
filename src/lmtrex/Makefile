@@ -74,20 +74,20 @@ SEDSPEC += \
 
 CONFIGS = \
 	broker.conf \
-	broker.py \
 	broker.wsgi \
 	cherrypy.conf \
+	local_constants
 
 broker.conf: $(TOPDIR)/$(PKGDIR)/config/broker.conf.in
-	$(SED) -i $(SEDSPEC) $^ > $@ 
-
-broker.py: $(TOPDIR)/$(PKGDIR)/config/broker.py.in
 	$(SED) -i $(SEDSPEC) $^ > $@ 
 
 broker.wsgi: $(TOPDIR)/$(PKGDIR)/config/broker.wsgi.in
 	$(SED) -i $(SEDSPEC) $^ > $@ 
 
 cherrypy.conf: $(TOPDIR)/$(PKGDIR)/config/cherrypy.conf.in
+	$(SED) -i $(SEDSPEC) $^ > $@ 
+
+local_constants.py: $(TOPDIR)/$(PKGDIR)/config/local_constants.py.in
 	$(SED) -i $(SEDSPEC) $^ > $@ 
 
 TOPDIR = $(ARCHIVENAME)-$(VERSION)
@@ -106,6 +106,7 @@ version.mk:
 
 build: 
 	tar xzvf $(ARCHIVENAME)-$(VERSION).$(TARBALL_POSTFIX)
+	rm -f $(TOPDIR)/$(PKGDIR)/config/local_constants.py
 	make $(CONFIGS)
 
 install::
