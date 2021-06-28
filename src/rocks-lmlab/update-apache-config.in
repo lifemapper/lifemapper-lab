@@ -18,7 +18,9 @@ if [ $# -ne 0 ]; then
 fi 
 
 set_defaults() {
-	FLASK_PTH=@LMHOME@/lmsyft/config
+	APP_PTH=@LMHOME@
+	FLASK_PTH=$APP_PTH/lmsyft/config
+	TREX_PTH=$APP_PTH/lmtrex/config
 	APACHE_PTH=/var/www
     LOG=@LMSCRATCHDISK@/log/`/bin/basename $0`.log
     rm -f $LOG
@@ -75,5 +77,6 @@ get_sedspec
 update_config  $APACHE_PTH/lmtrex/broker.conf
 update_config  $APACHE_PTH/lmsyft/syftorium.conf
 update_config  $FLASK_PTH/constants.py
+update_config  $TREX_PTH/local_constants.py
 
 time_stamp "# End"
