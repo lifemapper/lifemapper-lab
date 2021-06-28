@@ -106,6 +106,7 @@ version.mk:
 
 build: 
 	tar xzvf $(ARCHIVENAME)-$(VERSION).$(TARBALL_POSTFIX)
+	# Remove testing file, this will be built with roll variables
 	rm -f $(TOPDIR)/$(PKGDIR)/config/local_constants.py
 	make $(CONFIGS)
 
