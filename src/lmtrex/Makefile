@@ -113,6 +113,7 @@ build:
 install::
 	mkdir -p $(ROOT)/var/www/$(ARCHIVENAME)
 	install -m 644 $(CONFIGS)  $(ROOT)/var/www/$(ARCHIVENAME)/
+	mv $(TOPDIR)/$(PKGDIR)/static  $(ROOT)/var/www/$(ARCHIVENAME)/
 
 	mkdir -p $(ROOT)/$(PKGROOT)
 	mv $(TOPDIR)/$(PKGDIR)  $(ROOT)/$(PKGROOT)/
