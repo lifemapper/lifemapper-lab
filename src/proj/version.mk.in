@@ -1,6 +1,6 @@
 NAME        	= lifemapper-proj
 ARCHIVENAME     = proj
-VERSION     	= 4.9.3
+VERSION     	= 5.2.0
 RELEASE			= 0
 TARBALL_POSTFIX	= tar.gz
 
