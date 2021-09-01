@@ -1,0 +1,14 @@
+# Update version number and symlink names in "finish_mapserver_install" 
+#   in rocks-lifemapper/initLM script, executed on roll install
+ 
+NAME			= opt-lifemapper-mapserver
+VERSION         = 7.4.4
+ARCHIVENAME		= mapserver
+RELEASE			= 0
+TARBALL_POSTFIX	= tar.gz
+
+# Make sure to use correct python for byte-compile
+RPM.EXTRAS  = %define __os_install_post /usr/lib/rpm/brp-python-bytecompile  $(PY.PATH)
+
+RPM.FILES = $(PKGROOT)/*            \n\
+            $(PYTHON36_PACKAGES)/*
