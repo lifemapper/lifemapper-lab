@@ -63,6 +63,9 @@ include Rules.mk
 
 PY.PATH = /opt/python/bin/$(PYTHONVER)
 
+TOPDIR = $(ARCHIVENAME)-$(VERSION)
+PKGDIR = $(ARCHIVENAME)
+
 SEDSPEC += \
         -e 's%@PKGROOT@%$(PKGROOT)%g' \
         -e 's%@LMHOME@%$(LMHOME)%g' \
@@ -89,9 +92,6 @@ cherrypy.conf: $(TOPDIR)/$(PKGDIR)/config/cherrypy.conf.in
 
 local_constants.py: $(TOPDIR)/$(PKGDIR)/config/local_constants.py.in
 	$(SED) -i $(SEDSPEC) $^ > $@ 
-
-TOPDIR = $(ARCHIVENAME)-$(VERSION)
-PKGDIR = $(ARCHIVENAME)
 
 prepSrc.sh: prepSrc.sh.in 
 	make version.mk
