@@ -1,10 +1,10 @@
-NAME			= lifemapper-solr
+NAME			= opt-lifemapper-solr
 ARCHIVENAME		= solr
-VERSION			= 8.8.2
+VERSION			= 8.9.0
 JTS				= jts-core-1.15.0.jar
 # Release 3 expects cores from other packages to be deposited in 
 # 	$(LMHOME)/rocks/solrcores/ for installation
-RELEASE         = 3
+RELEASE         = 0
 TARBALL_POSTFIX	= tgz
 
 SOLRDIR			= /opt/solr

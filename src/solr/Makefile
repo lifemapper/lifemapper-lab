@@ -51,6 +51,9 @@ prep: prepSrc.sh
 build: $(SCRIPTS)
 
 install::
+	mkdir -p $(ROOT)/$(PKGROOT)/rocks/etc
+	install -m 664 $(ARCHIVENAME)-$(VERSION)-py3-none-any.whl $(ROOT)/$(PKGROOT)/rocks/etc
+
 	mkdir -p $(ROOT)/$(SOLRDIR)
 	tar -xzf  $(ARCHIVENAME)-$(VERSION).tgz  -C  $(ROOT)/$(SOLRDIR) --strip 1 --exclude docs --exclude contrib	
 	
