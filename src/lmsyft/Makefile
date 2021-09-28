@@ -81,6 +81,9 @@ constants.py: $(TOPDIR)/config/constants.py.in
 lmsyft_process_dwcas: $(TOPDIR)/cron/lmsyft_process_dwcas.in
 	$(SED) -i $(SEDSPEC) $^ > $@ 
 
+lmsyft_process_dwcas_cron: $(TOPDIR)/cron/lmsyft_process_dwcas_cron.in
+	$(SED) -i $(SEDSPEC) $^ > $@ 
+
 syftorium.conf: $(TOPDIR)/apache/syftorium.conf.in
 	$(SED) -i $(SEDSPEC) $^ > $@ 
 
@@ -105,8 +108,8 @@ install::
 	mkdir -p $(ROOT)/var/www/$(ARCHIVENAME)
 	install -m 644 syftorium.conf $(ROOT)/var/www/$(ARCHIVENAME)/
 	
-	mkdir -p $(ROOT)/etc/cron.hourly
-	install -m 755 lmsyft_process_dwcas  $(ROOT)/etc/cron.hourly/
+	mkdir -p $(ROOT)/etc/cron.d
+	install -m 755 lmsyft_process_dwcas_cron  $(ROOT)/etc/cron.d/
 
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/solrcores/
 	cp -r $(TOPDIR)/solr_cores/* $(ROOT)/$(PKGROOT)/rocks/solrcores/
@@ -116,6 +119,7 @@ install::
 		
 	mkdir -p $(ROOT)/$(PKGROOT)/rocks/bin
 	install -m 755 init-syft  $(ROOT)/$(PKGROOT)/rocks/bin/
+	install -m 755 lmsyft_process_dwcas  $(ROOT)/$(PKGROOT)/rocks/bin/
 	
 	
 clean::
