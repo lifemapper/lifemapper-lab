@@ -63,13 +63,17 @@
     /bin/chown apache:apache /var/www/tmp
     
     # FE directory NOT exported to /share, for web logs, uploads, cherrypy sessions
-    /bin/mkdir -p          /state/partition1/lmscratch/log/apache
+    /bin/mkdir -p          /state/partition1/lmscratch/log
     /bin/mkdir -p          /state/partition1/lmscratch/sessions
     /bin/mkdir -p          /state/partition1/lmscratch/tmpUpload
     /bin/chgrp -R lmwriter /state/partition1/lmscratch
     /bin/chmod -R g+ws     /state/partition1/lmscratch
+
+    /bin/mkdir -p          			/state/partition1/lmscratch/log/apache
+    /bin/chown -R apache:lmwriter	/state/partition1/lmscratch/log/apache
+    /bin/chmod -R g-w     			/state/partition1/lmscratch/log/apache
     
-	# for lmtrex, lmsyft apache/wsgi  files    
+	# for lmtrex, lmsyft apache config and wsgi  files    
 	/bin/mkdir -p  /var/www/lmsyft
 	/bin/chmod 755 /var/www/lmsyft
 	/bin/mkdir -p  /var/www/lmtrex
