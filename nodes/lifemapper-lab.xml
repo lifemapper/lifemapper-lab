@@ -81,7 +81,7 @@
     
     # FE directory exported to /share
     /bin/mkdir -p       /state/partition1/lmlab/syftorium_data/collections
-    /bin/mkdir -p	/state/partition1/lmlab/syftorium_data/error_dwcas
+    /bin/mkdir -p		/state/partition1/lmlab/syftorium_data/error_dwcas
     /bin/mkdir -p       /state/partition1/lmlab/syftorium_data/new_dwcas
     /bin/mkdir -p       /state/partition1/lmlab/syftorium_data/processed_dwcas
     /bin/mkdir -p       /state/partition1/lmlab/solr/data/cores
